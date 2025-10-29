@@ -1,0 +1,151 @@
+/* --- 1. CSS Variables for Spacing and Dimensions (Future-Proofing) --- */
+:root {
+    --nav-link-padding-y: 0.5rem; 
+    --nav-link-padding-x: 1rem;
+    --underline-height: 2px;
+    --underline-offset: 5px; 
+}
+
+/* --- 2. Essential Custom Colors & Overrides (Steam Branding) --- */
+.bg-upper    { background:#171a21 !important; }
+.bg-lower    { background:#1b2838 !important; }
+.text-steam  { color:#c6d4df !important; }
+.text-steam:hover { color:#fff !important; }
+.border-steam { border-bottom:1px solid #2f3642; }
+
+/* --- 3. Typography & Hover Effects --- */
+.nav-link { font-weight:500; font-size:0.95rem; }
+.hover-steam:hover, .dropdown-item:hover { background:#2a475e !important; color:#fff !important; } 
+
+/* --- Custom Button Style for Login Button (Styled as a Link) --- */
+.btn-link-steam {
+    color: #c6d4df !important;
+    background: none;
+    border: none;
+    padding: 0;
+    line-height: 1.5;
+    text-decoration: none;
+    font-size: 0.95rem; /* Match nav-link size */
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.btn-link-steam:hover {
+    color: #fff !important;
+    text-decoration: none;
+}
+
+/* --- 4. MAIN NAVBAR LINK UNDERLINE EFFECT (Desktop Only) --- */
+@media (min-width: 768px) {
+    #upperNav .navbar-nav .nav-link {
+        position: relative;
+        color: #c6d4df !important; 
+        /* Calculates final padding based on variables to make room for line */
+        padding-bottom: calc(var(--nav-link-padding-y) + var(--underline-height) + var(--underline-offset)) !important;
+        padding-top: var(--nav-link-padding-y) !important;
+        padding-left: var(--nav-link-padding-x) !important;
+        padding-right: var(--nav-link-padding-x) !important;
+    }
+
+    #upperNav .navbar-nav .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: var(--underline-offset); 
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: #fff;
+        transition: width 0.2s ease-in-out;
+    }
+
+    #upperNav .navbar-nav .nav-link:hover::after {
+        width: 100%;
+    }
+}
+
+/* --- 5. Dropdowns and Headers --- */
+.dropdown-menu { 
+    background:#1b2838 !important; 
+    border:none; 
+    box-shadow:0 4px 12px rgba(0,0,0,.5); 
+}
+.dropdown-item { color:#c6d4df !important; padding:.5rem 1rem; }
+.dropdown-header-steam { 
+    color: #66c0f4; 
+    padding: .5rem 1rem; 
+    font-size: .875em;
+    font-weight: 600;
+    text-transform: uppercase;
+    opacity: 0.8;
+}
+
+/* --- 6. Search Bar Styling (Desktop & Mobile) --- */
+.form-control.search-input {
+    background:#32353c; border:1px solid #3d4450; 
+    color:#c6d4df; height:40px; 
+    border-radius:4px 0 0 4px !important; 
+}
+.form-control.search-input:focus {
+    background:#32353c; border-color:#66c0f4; 
+    box-shadow:0 0 0 1px #66c0f4; color:#fff;
+}
+
+/* Search input placeholder styling - white color for lower navbar */
+.form-control.search-input::placeholder {
+    color: #ffffff !important;
+    opacity: 0.8;
+}
+
+.btn-search {
+    background:#66c0f4; border:none; border-radius:0 4px 4px 0 !important;
+    width:50px; height:40px; 
+}
+.btn-search:hover { background:#4a9ed6; }
+.btn-success:focus, .btn-success:focus-visible {
+    outline: 0; box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.5); 
+}
+
+/* --- 7. Mobile Specific Components (Sub-Navbar Fit) --- */
+.mobile-navbar-links .nav-link,
+.mobile-navbar-links .dropdown-toggle {
+    font-size: 0.85rem; /* Condensed font size for one-line display */
+    font-weight: 500;
+    color: #c6d4df; 
+    padding: 0.5rem 0.5rem !important; /* Condensed padding */
+}
+
+.mobile-navbar-links .dropdown-toggle::after {
+    content:""; display:inline-block; width:0; height:0;
+    margin-left:.3rem; vertical-align:middle; 
+    border-top:5px solid #c6d4df; border-right:4px solid transparent; 
+    border-left:4px solid transparent; transition:transform .2s;
+}
+.mobile-navbar-links .dropdown-toggle.show::after { transform:rotate(180deg); }
+
+/* --- 8. Media Queries and Positioning --- */
+.lower-navbar { 
+    z-index: 1020; 
+}
+
+/* Ensure proper scrolling context for sticky positioning */
+body {
+    overflow-x: hidden; /* Prevent horizontal scroll issues */
+}
+
+@media (min-width: 768px) {
+    /* ACTIVATE STICKY ONLY ON DESKTOP */
+    .lower-navbar { 
+        position: sticky; 
+        top: 0; 
+        z-index: 1020;
+    }
+
+    .desktop-dropdown .dropdown-toggle { padding:.5rem 0; }
+    .desktop-search { width: 360px; } /* Final adjusted desktop search width */
+    .mobile-search-in-header, .mobile-navbar-links { display: none !important; }
+}
+
+@media (max-width: 767.98px) { 
+    .desktop-nav, .desktop-search { display:none !important; }
+  .navbar-brand { display: none !important; } /* Hides logo on mobile as per design */
+}
