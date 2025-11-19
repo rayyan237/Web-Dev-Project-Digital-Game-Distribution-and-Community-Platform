@@ -1,0 +1,2762 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Steam Homepage</title>
+
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+
+    <link href="../css/style.css" rel="stylesheet">
+
+
+
+    <style>
+        /* --- Base Styling --- */
+
+        /* (Container ki max-width ko comment kar raha hoon taake full-width page behtar lage) */
+
+        /* .container {
+
+             max-width: 1000px; 
+
+        } */
+
+
+
+        /* --- Desktop/Base Carousel Structure & Layout --- */
+
+        #gameCarousel .carousel-inner {
+
+            height: 385px;
+
+            background-color: #171a21;
+
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 0, 0, 0.5);
+
+        }
+
+
+
+        /* Left Column (Main Image Display) */
+
+        .col-8 {
+
+            background-color: #171a21;
+
+        }
+
+
+
+        .carousel-item img.main-image {
+
+            object-fit: fill;
+
+            max-height: 385px;
+
+            min-height: 385px;
+
+            height: 100%;
+
+            width: 100%;
+
+            background-color: #171a21;
+
+        }
+
+
+
+        /* Right Column (Game Info/Panel) */
+
+        .game-info {
+
+            background-color: #0d121c;
+
+            color: white;
+
+            padding: 20px;
+
+            height: 100%;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: flex-start;
+
+            box-shadow: none;
+
+        }
+
+
+
+        /* --- Panel Components (Title, Grid, Status) --- */
+
+        .game-panel-title {
+
+            color: #fff;
+
+            font-size: 1.5em;
+
+            font-weight: 600;
+
+            margin: 0;
+
+            padding: 0;
+
+            text-align: left;
+
+            line-height: 1.3;
+
+        }
+
+
+
+        .game-title-wrapper {
+
+            height: 3.9em;
+
+            margin-bottom: 0.5rem;
+
+        }
+
+
+
+        .screenshot-grid {
+
+            display: grid;
+
+            grid-template-columns: repeat(2, 1fr);
+
+            gap: 5px;
+
+            padding: 5px 0;
+
+            background-color: #0d121c;
+
+            margin-top: 0;
+
+            margin-left: -20px;
+
+            margin-right: -20px;
+
+        }
+
+
+
+        .screenshot img {
+
+            width: 100%;
+
+            height: 85px;
+
+            object-fit: cover;
+
+            border-radius: 3px;
+
+            opacity: 0.6;
+
+            transition: opacity 0.3s, transform 0.2s ease-in-out;
+
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+
+        }
+
+
+
+        .screenshot img:hover {
+
+            opacity: 1;
+
+            cursor: pointer;
+
+            transform: scale(1.03);
+
+        }
+
+
+
+        .status-section {
+
+            display: flex;
+
+            align-items: center;
+
+            margin-top: 15px;
+
+            margin-bottom: 15px;
+
+        }
+
+
+
+        .status-text {
+
+            color: #c7d5e0;
+
+            font-size: 0.9rem;
+
+            margin-right: 8px;
+
+            margin-bottom: 0;
+
+        }
+
+
+
+        .badge-top-seller {
+
+            background-color: #3b5a7e;
+
+            color: #e0e6e9;
+
+            padding: 3px 6px;
+
+            border-radius: 3px;
+
+            font-size: 0.75em;
+
+            font-weight: 600;
+
+            text-transform: uppercase;
+
+        }
+
+
+
+        .game-price {
+
+            font-size: 1.2rem;
+
+            font-weight: bold;
+
+            color: #fff;
+
+            margin-bottom: 0;
+
+        }
+
+
+
+        .bottom-info-wrapper {
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: flex-end;
+
+            flex-grow: 1;
+
+        }
+
+
+
+        /* --- Carousel Arrows (Steam Style) --- */
+
+        #gameCarousel .carousel-indicators {
+
+            position: relative;
+
+            margin-top: 15px;
+
+            margin-bottom: 0;
+
+            gap: 5px;
+
+        }
+
+
+
+        #gameCarousel .carousel-control-prev,
+
+        #gameCarousel .carousel-control-next {
+
+            width: 45px;
+
+            height: 90px;
+
+            background-color: rgba(0, 0, 0, 0.7);
+
+            border: none;
+
+            z-index: 10;
+
+            opacity: 0.5;
+
+            transition: all 0.2s ease;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+        }
+
+
+
+        #gameCarousel .carousel-control-prev:hover,
+
+        #gameCarousel .carousel-control-next:hover {
+
+            opacity: 1;
+
+            background-color: rgba(0, 0, 0, 0.9);
+
+        }
+
+
+
+        #gameCarousel .carousel-control-prev-icon,
+
+        #gameCarousel .carousel-control-next-icon {
+
+            filter: none;
+
+            transition: all 0.2s ease;
+
+            opacity: 1;
+
+        }
+
+
+
+        #gameCarousel .carousel-control-prev:hover .carousel-control-prev-icon,
+
+        #gameCarousel .carousel-control-next:hover .carousel-control-next-icon {
+
+            filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.9));
+
+        }
+
+
+        /* ========================================= */
+        /* --- UPDATED KIDS / UNDER $10 SLIDER STYLES --- */
+        /* ========================================= */
+
+        /* Container ko Bootstrap jaisa adjust kia */
+        .kids-container {
+            /* width: 940px;  <-- Yeh line hata di taake width full ho */
+            max-width: 100%;
+            /* margin: 50px auto; */
+            padding: 0 15px;
+            /* Bootstrap standard padding */
+        }
+
+        .kids-section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .kids-section-title {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #ffffff;
+            text-transform: uppercase;
+        }
+
+        .kids-header-buttons button {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: rgba(255, 255, 255, 0.8);
+            padding: 3px 10px;
+            font-size: 11px;
+            border-radius: 2px;
+            cursor: pointer;
+            margin-left: 5px;
+            transition: all 0.2s;
+        }
+
+        .kids-header-buttons button:hover {
+            border-color: white;
+            color: white;
+        }
+
+        .kids-slider-wrapper {
+            position: relative;
+            background: #0f1922;
+            padding: 0;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .kids-slider-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            width: 100%;
+        }
+
+        .kids-slide-group {
+            min-width: 100%;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            /* Gap wohi hai jo upar hai */
+            padding: 0;
+            /* PADDING REMOVED: Ab images full width hongi */
+            box-sizing: border-box;
+        }
+
+        .kids-card {
+            background-color: #16202d;
+            transition: transform 0.2s, filter 0.2s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .kids-card:hover {
+            filter: brightness(1.2);
+        }
+
+        .kids-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .kids-card-info {
+            background-color: #16202d;
+            padding: 5px 8px;
+            display: flex;
+            flex-direction: column;
+            font-size: 12px;
+        }
+
+        .kids-filename-text {
+            color: #9099a1;
+            margin-bottom: 4px;
+            font-family: monospace;
+        }
+
+        .kids-price-tag {
+            color: #acdbf5;
+            font-weight: bold;
+        }
+
+        .kids-discount-badge {
+            background: #4c6b22;
+            color: #a4d007;
+            padding: 1px 4px;
+            font-size: 11px;
+            margin-right: 5px;
+            display: inline-block;
+        }
+
+        /* Navigation Buttons - FIX */
+        .kids-nav-btn {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 45px;
+            /* Thora chora kiya taake click asani se ho */
+            border: none;
+            color: #fff;
+            font-size: 30px;
+            /* Icon size increased */
+            cursor: pointer;
+            z-index: 100;
+            /* Z-index increased taake image k upar aye */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.7;
+            /* Thora transparent */
+            transition: all 0.3s;
+        }
+
+        .kids-nav-btn:hover {
+            background: rgba(0, 0, 0, 0.5);
+            /* Hover pe dark background */
+            opacity: 1;
+        }
+
+        /* Gradient backgrounds taake arrows nazar ayen */
+        .kids-prev-btn {
+            left: 0;
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
+        }
+
+        .kids-next-btn {
+            right: 0;
+            background: linear-gradient(to left, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
+        }
+
+        .kids-pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .kids-page-dot {
+            width: 15px;
+            height: 9px;
+            background-color: #3d4c5d;
+            margin: 0 2px;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .kids-page-dot.active {
+            background-color: #dce6f1;
+        }
+
+        @media (max-width: 767.98px) {
+            .kids-slide-group {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .kids-nav-btn {
+                display: none;
+            }
+
+            /* Mobile pe arrows hide */
+        }
+
+        /* ======================================= */
+
+        /* 📱 Mobile Responsive Styles (Max-width 767.98px) */
+
+        /* ======================================= */
+
+        @media (max-width: 767.98px) {
+
+            /* .container {
+
+                 padding-left: 0;
+
+                 padding-right: 0;
+
+             } */
+
+
+
+            /* Hides the default Bootstrap arrows in mobile view */
+
+            #gameCarousel .carousel-control-prev,
+
+            #gameCarousel .carousel-control-next {
+
+                display: none;
+
+            }
+
+
+
+            /* Remove indicators for a cleaner, card-like look */
+
+            #gameCarousel .carousel-indicators {
+
+                display: none;
+
+            }
+
+
+
+            /* --- FIX: Override Bootstrap's hidden overflow for swiping --- */
+
+            #gameCarousel .carousel-inner.overflow-hidden {
+
+                /* Important fix: enables horizontal scrolling/swiping */
+
+                overflow: auto !important;
+
+                overflow-x: scroll !important;
+
+            }
+
+
+
+            /* --- Carousel Inner (Card Container) --- */
+
+            #gameCarousel .carousel-inner {
+
+                height: auto;
+
+                box-shadow: none;
+
+                /* Crucial for enabling manual swipe: prevent content from wrapping */
+
+                display: flex;
+
+                flex-wrap: nowrap;
+
+                /* Allow scrolling/swiping */
+
+                -webkit-overflow-scrolling: touch;
+
+                scroll-snap-type: x mandatory;
+
+            }
+
+
+
+            /* Ensure all items are inline and fill the inner container */
+
+            #gameCarousel .carousel-item {
+
+                /* Ensures items scroll horizontally, crucial for flex */
+
+                min-width: 90%;
+
+                margin: 0 5%;
+
+                border-radius: 8px;
+
+                overflow: hidden;
+
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+
+                scroll-snap-align: center;
+
+                background-color: #171a21;
+
+                /* FIX 2: Ensure carousel item stays inline-block for proper horizontal flex flow */
+
+                display: flex;
+
+                flex-shrink: 0;
+
+            }
+
+
+
+            /* Resetting Bootstrap's active display for swiping layout */
+
+            #gameCarousel .carousel-item.active {
+
+                display: flex;
+
+            }
+
+
+
+            /* Stack content: col-8 (image) and col-4 (info) become full width */
+
+            #gameCarousel .carousel-item .row {
+
+                flex-direction: column;
+
+                height: auto;
+
+                width: 100%;
+
+            }
+
+
+
+            #gameCarousel .col-8,
+
+            #gameCarousel .col-4 {
+
+                width: 100%;
+
+                max-width: none;
+
+                padding: 0 !important;
+
+            }
+
+
+
+            /* Image height adjusted for mobile card format */
+
+            #gameCarousel .carousel-item img.main-image {
+
+                max-height: 200px;
+
+                min-height: 200px;
+
+                object-fit: cover;
+
+                border-top-left-radius: 8px;
+
+                border-top-right-radius: 8px;
+
+            }
+
+
+
+            /* Game Info Panel Adjustments */
+
+            .game-info {
+
+                padding: 15px;
+
+                height: auto;
+
+                min-height: 250px;
+
+                background-color: #0d121c;
+
+                border-bottom-left-radius: 8px;
+
+                border-bottom-right-radius: 8px;
+
+            }
+
+
+
+            .game-panel-title {
+
+                font-size: 1.3em;
+
+            }
+
+
+
+            /* Hide the screenshot grid on mobile to save space */
+
+            .screenshot-grid {
+
+                display: none;
+
+            }
+
+
+
+            .bottom-info-wrapper {
+
+                flex-grow: 0;
+
+                margin-top: 10px;
+
+            }
+
+
+
+        }
+
+
+
+        /*UNDER 10 */
+        /* --- INTERNAL CSS FOR LAYOUT FIXES --- */
+        body {
+            background-color: #1b2838;
+            color: white;
+            font-family: sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Header Styling */
+        .steam-header .section-title {
+            color: #ffffff;
+            font-family: 'Motiva Sans', Arial, sans-serif;
+            font-weight: 700;
+            font-size: 20px;
+            margin-bottom: 0;
+            margin-right: auto;
+            padding-left: 35px;
+            letter-spacing: 0.05em;
+        }
+
+        .steam-header .buttons .btn {
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: rgba(255, 255, 255, 0.4);
+            border-radius: 3px;
+            margin-left: 5px;
+            font-size: 12px;
+            padding: 4px 15px;
+        }
+
+        .steam-header .buttons .btn:hover,
+        .steam-header .buttons .btn.active {
+            background-color: #fff;
+            color: #1b2838;
+            border-color: #fff;
+        }
+
+        /* --- CARD SIZING FIXES (Uniform Height) --- */
+        .steam-card {
+            background-color: #0a141d;
+            transition: transform 0.2s;
+            cursor: pointer;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            border: none;
+            height: 100%;
+            /* Cards ko same height par rakhta hai */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .steam-card:hover {
+            transform: scale(1.05);
+            z-index: 100;
+            outline: 3px solid #4c6b22;
+            box-shadow: 0 0 10px #000;
+        }
+
+        .steam-card img {
+            width: 100%;
+            aspect-ratio: 16/9;
+            /* Image ka size fixed ratio mein */
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Price Section Fixed Height */
+        .card-body-steam {
+            background: #16202d;
+            padding: 5px 10px;
+            height: 50px;
+            /* Fixed height taaki sab barabar dikhein */
+            display: flex;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        /* Live Badge */
+        .live-tag {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #ff4d4d;
+            padding: 2px 6px;
+            font-size: 11px;
+            font-weight: bold;
+            border: 1px solid #ff4d4d;
+            border-radius: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Price Styling */
+        .price-container {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .final-price-only {
+            color: white;
+            font-size: 13px;
+            margin-left: auto;
+        }
+
+        .price-block {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            margin-left: auto;
+            line-height: 1.1;
+        }
+
+        .discount-badge {
+            background-color: #4c6b22;
+            color: #beee11;
+            font-size: 14px;
+            padding: 1px 5px;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .original-price {
+            color: #738895;
+            text-decoration: line-through;
+            font-size: 11px;
+        }
+
+        .final-price {
+            color: #beee11;
+            font-size: 13px;
+        }
+
+        /* 🚀 CONISTENCY STYLES FROM 1ST CODE APPLIED BELOW 🚀 */
+
+        /* --- CAROUSEL INDICATORS (DOTS) --- */
+        #steamGameCarousel .carousel-indicators {
+            bottom: -40px;
+            margin: 0;
+        }
+
+        #steamGameCarousel .carousel-indicators button {
+            /* Shape and Size */
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            /* Dots (Round Shape) */
+
+            /* Design */
+            background-color: #3a414b;
+            /* Default Color */
+            border: none;
+            opacity: 0.5;
+            margin: 0 4px;
+            /* Default margin added back */
+        }
+
+        #steamGameCarousel .carousel-indicators button.active {
+            background-color: #c6d4df;
+            /* Active Color */
+            opacity: 1;
+        }
+
+        /* --- CAROUSEL ARROWS (PREV/NEXT) --- */
+        #steamGameCarousel .carousel-control-prev,
+        #steamGameCarousel .carousel-control-next {
+            /* Size */
+            width: 45px;
+            height: 90px;
+
+            /* Design & Position */
+            background-color: rgba(0, 0, 0, 0.4);
+            border: none;
+            z-index: 10;
+            opacity: 0.5;
+            transition: all 0.2s ease;
+            top: 50%;
+            transform: translateY(-50%);
+            border-radius: 4px;
+        }
+
+        #steamGameCarousel .carousel-control-prev:hover,
+        #steamGameCarousel .carousel-control-next:hover {
+            opacity: 1;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        /* Icon Size */
+        #steamGameCarousel .carousel-control-prev-icon,
+        #steamGameCarousel .carousel-control-next-icon {
+            width: 32px;
+            /* 2rem = approx 32px */
+            height: 32px;
+            filter: none;
+            /* Bootstrap default white icon istemaal karega */
+        }
+
+        /* Arrow Positioning (Relative to container) */
+        /* Container par `position: relative` hona chahiye */
+        #steamGameCarousel {
+            padding: 0 40px;
+            /* Arrows ke liye jagah, jaisa pehle code mein tha */
+        }
+
+        #steamGameCarousel .carousel-control-prev {
+            left: -5px;
+
+        }
+
+        #steamGameCarousel .carousel-control-next {
+            right: -5px;
+
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 767.98px) {
+
+            /* Mobile par arrows ko andar shift karein */
+            #steamGameCarousel {
+                padding: 0 10px;
+            }
+
+            #steamGameCarousel .carousel-control-prev,
+            #steamGameCarousel .carousel-control-next {
+                width: 30px;
+                height: 60px;
+                opacity: 0.8;
+            }
+
+            #steamGameCarousel .carousel-control-prev {
+                left: 5px;
+            }
+
+            #steamGameCarousel .carousel-control-next {
+                right: 5px;
+            }
+        }
+    </style>
+
+</head>
+
+
+
+<body style="background-color: #1b2838; padding-bottom: 50px;" class="text-white">
+
+
+
+    <header>
+
+        <nav class="navbar navbar-expand-md bg-upper border-steam">
+
+            <div class="container px-3 d-flex justify-content-start align-items-center">
+
+
+
+                <button class="navbar-toggler border-0 me-3" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#upperNav" aria-controls="upperNav" aria-expanded="false"
+                    aria-label="Toggle navigation">
+
+                    <span class="navbar-toggler-icon" style="filter:invert(1)"></span>
+
+                </button>
+
+
+
+                <a class="navbar-brand d-none d-md-block" href="#" aria-label="Steam Home">
+
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg" alt="Steam Logo"
+                        height="30">
+
+                </a>
+
+
+
+                <div class="mobile-search-in-header d-md-none ms-auto">
+
+                    <form class="input-group" role="search" aria-label="Mobile Store Search">
+
+                        <input class="form-control search-input" type="search" placeholder="Search the store"
+                            aria-label="Search the store" style="width: 240px;">
+
+                        <button class="btn btn-search d-flex align-items-center justify-content-center" type="submit"
+                            aria-label="Search">
+
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                viewBox="0 0 16 16">
+
+                                <path
+                                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+
+                            </svg>
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+
+
+
+
+                <div class="collapse navbar-collapse" id="upperNav">
+
+
+
+                    <ul class="navbar-nav me-auto">
+
+                        <li class="nav-item"><a class="nav-link text-steam" href="#" aria-current="page">STORE</a></li>
+
+                        <li class="nav-item"><a class="nav-link text-steam" href="#">COMMUNITY</a></li>
+
+                        <li class="nav-item"><a class="nav-link text-steam" href="#">ABOUT</a></li>
+
+                        <li class="nav-item"><a class="nav-link text-steam" href="#">SUPPORT</a></li>
+
+                    </ul>
+
+
+
+                    <div class="d-flex align-items-center gap-2 d-md-flex d-none">
+
+                        <button class="btn btn-success btn-sm">Install Steam</button>
+
+                        <button type="button" class="btn-link-steam me-3">Login</button>
+
+                    </div>
+
+
+
+                    <div
+                        class="d-flex flex-column align-items-stretch gap-2 d-md-none border-top border-steam pt-3 mt-3 mx-2">
+
+                        <button class="btn btn-success btn-sm w-100 mb-2">Install Steam</button>
+
+
+
+                        <div class="d-flex justify-content-between align-items-center">
+
+                            <button type="button" class="btn-link-steam">Login</button>
+
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+
+
+    <nav class="lower-navbar bg-lower py-2" aria-label="Store Navigation">
+
+        <div class="container d-flex align-items-center">
+
+
+
+            <ul class="desktop-nav d-flex flex-nowrap gap-4 me-auto mb-0 list-unstyled">
+
+                <li class="nav-item dropdown desktop-dropdown">
+
+                    <a class="nav-link text-steam dropdown-toggle" href="#" data-bs-toggle="dropdown" role="button"
+                        aria-expanded="false">Browse</a>
+
+                    <ul class="dropdown-menu">
+
+                        <li><a class="dropdown-item hover-steam" href="#">Steam</a></li>
+
+                        <li><a class="dropdown-item hover-steam" href="#">Discovery Queue</a></li>
+
+                    </ul>
+
+                </li>
+
+                <li class="nav-item dropdown desktop-dropdown">
+
+                    <a class="nav-link text-steam dropdown-toggle" href="#" data-bs-toggle="dropdown" role="button"
+                        aria-expanded="false">Recommendations</a>
+
+                    <ul class="dropdown-menu">
+
+                        <li><a class="dropdown-item hover-steam" href="#">New Releases</a></li>
+
+                    </ul>
+
+                </li>
+
+                <li class="nav-item dropdown desktop-dropdown">
+
+                    <a class="nav-link text-steam dropdown-toggle" href="#" data-bs-toggle="dropdown" role="button"
+                        aria-expanded="false">Categories</a>
+
+                    <ul class="dropdown-menu">
+
+                        <li><a class="dropdown-item hover-steam" href="#">Action</a></li>
+
+                    </ul>
+
+                </li>
+
+                <li class="nav-item dropdown desktop-dropdown">
+
+                    <a class="nav-link text-steam dropdown-toggle" href="#" data-bs-toggle="dropdown" role="button"
+                        aria-expanded="false">More</a>
+
+                    <ul class="dropdown-menu">
+
+                        <li><a class="dropdown-item hover-steam" href="#">Free to Play</a></li>
+
+                        <li><a class="dropdown-item hover-steam" href="#">Steam Deck</a></li>
+
+                    </ul>
+
+                </li>
+
+            </ul>
+
+
+
+            <form class="d-none d-md-flex desktop-search input-group" role="search" aria-label="Desktop Store Search">
+
+                <input class="form-control search-input" type="search" placeholder="Search the store"
+                    aria-label="Search the store">
+
+                <button class="btn btn-search d-flex align-items-center justify-content-center" type="submit"
+                    aria-label="Search">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        viewBox="0 0 16 16">
+
+                        <path
+                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+
+                    </svg>
+
+                </button>
+
+            </form>
+
+
+
+            <ul
+                class="mobile-navbar-links d-md-none w-100 ps-0 mb-0 list-unstyled d-flex flex-nowrap justify-content-start">
+
+                <li class="nav-item dropdown">
+
+                    <a class="nav-link text-steam dropdown-toggle" href="#" data-bs-toggle="dropdown" role="button"
+                        aria-expanded="false">Browse</a>
+
+                    <ul class="dropdown-menu">
+
+                        <li><a class="dropdown-item hover-steam" href="#">Steam</a></li>
+
+                        <li><a class="dropdown-item hover-steam" href="#">Discovery Queue</a></li>
+
+                    </ul>
+
+                </li>
+
+                <li class="nav-item dropdown">
+
+                    <a class="nav-link text-steam dropdown-toggle" href="#" data-bs-toggle="dropdown" role="button"
+                        aria-expanded="false">Recommendations</a>
+
+                    <ul class="dropdown-menu">
+
+                        <li><a class="dropdown-item hover-steam" href="#">New Releases</a></li>
+
+                    </ul>
+
+                </li>
+
+                <li class="nav-item dropdown">
+
+                    <a class="nav-link text-steam dropdown-toggle" href="#" data-bs-toggle="dropdown" role="button"
+                        aria-expanded="false">Categories</a>
+
+                    <ul class="dropdown-menu">
+
+                        <li><a class="dropdown-item hover-steam" href="#">Action</a></li>
+
+                    </ul>
+
+                </li>
+
+                <li class="nav-item dropdown">
+
+                    <a class="nav-link text-steam dropdown-toggle" href="#" data-bs-toggle="dropdown" role="button"
+                        aria-expanded="false">More</a>
+
+                    <ul class="dropdown-menu">
+
+                        <li><a class="dropdown-item hover-steam" href="#">Free to Play</a></li>
+
+                        <li><a class="dropdown-item hover-steam" href="#">Steam Deck</a></li>
+
+                    </ul>
+
+                </li>
+
+            </ul>
+
+
+
+        </div>
+
+    </nav>
+
+    <div class="container mt-5 position-relative">
+
+        <div id="gameCarousel" class="carousel slide" data-bs-ride="false" data-bs-interval="false">
+
+            <div class="carousel-inner rounded-3 overflow-hidden shadow-lg">
+
+
+
+                <div class="carousel-item active">
+
+                    <div class="row g-0 h-100">
+
+                        <div class="col-8">
+
+                            <img src="../assets/images/s1_header.jpg" data-original="../assets/images/s1_header.jpg"
+                                alt="Counter-Strike 2 Header" class="main-image">
+
+                        </div>
+
+                        <div class="col-4 p-0">
+
+                            <div class="game-info">
+
+                                <div class="game-title-wrapper d-flex align-items-center">
+
+                                    <h3 class="game-panel-title">Counter-Strike 2</h3>
+
+                                </div>
+
+                                <div class="screenshot-grid">
+
+                                    <div class="screenshot"><img src="../assets/images/s1_ss1.jpg" alt="Screenshot 1">
+
+                                    </div>
+
+                                    <div class="screenshot"><img src="../assets/images/s1_ss2.jpg" alt="Screenshot 2">
+
+                                    </div>
+
+                                    <div class="screenshot"><img src="../assets/images/s1_ss3.jpg" alt="Screenshot 3">
+
+                                    </div>
+
+                                    <div class="screenshot"><img src="../assets/images/s1_ss4.jpg" alt="Screenshot 4">
+
+                                    </div>
+
+                                </div>
+
+                                <div class="bottom-info-wrapper">
+
+                                    <div class="status-section">
+
+                                        <p class="status-text">Now Available</p>
+
+                                        <span class="badge-top-seller">Top Seller</span>
+
+                                    </div>
+
+                                    <p class="game-price">Free to Play</p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="carousel-item">
+
+                    <div class="row g-0 h-100">
+
+                        <div class="col-8">
+
+                            <img src="../assets/images/s2_header.jpg" data-original="../assets/images/s2_header.jpg"
+                                alt="Dota 2 Header" class="main-image">
+
+                        </div>
+
+                        <div class="col-4 p-0">
+
+                            <div class="game-info">
+
+                                <div class="game-title-wrapper d-flex align-items-center">
+
+                                    <h3 class="game-panel-title">Dota 2</h3>
+
+                                </div>
+
+                                <div class="screenshot-grid">
+
+                                    <div class="screenshot"><img src="../assets/images/s2_ss1.jpg" alt="Screenshot 1">
+
+                                    </div>
+
+                                    <div class="screenshot"><img src="../assets/images/s2_ss2.jpg" alt="Screenshot 2">
+
+                                    </div>
+
+                                    <div class="screenshot"><img src="../assets/images/s2_ss3.jpg" alt="Screenshot 3">
+
+                                    </div>
+
+                                    <div class="screenshot"><img src="../assets/images/s2_ss4.jpg" alt="Screenshot 4">
+
+                                    </div>
+
+                                </div>
+
+                                <div class="bottom-info-wrapper">
+
+                                    <div class="status-section">
+
+                                        <p class="status-text">Now Available</p>
+
+                                        <span class="badge-top-seller">Most Played</span>
+
+                                    </div>
+
+                                    <p class="game-price">Free to Play</p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="carousel-item">
+
+                    <div class="row g-0 h-100">
+
+                        <div class="col-8">
+
+                            <img src="../assets/images/s3_header.jpg" data-original="../assets/images/s3_header.jpg"
+                                alt="Hollow Knight Header" class="main-image">
+
+                        </div>
+
+                        <div class="col-4 p-0">
+
+                            <div class="game-info">
+
+                                <div class="game-title-wrapper d-flex align-items-center">
+
+                                    <h3 class="game-panel-title">Hollow Knight</h3>
+
+                                </div>
+
+                                <div class="screenshot-grid">
+
+                                    <div class="screenshot"><img src="../assets/images/s3_ss1.jpg" alt="Screenshot 1">
+
+                                    </div>
+
+                                    <div class="screenshot"><img src="../assets/images/s3_ss2.jpg" alt="Screenshot 2">
+
+                                    </div>
+
+                                    <div class="screenshot"><img src="../assets/images/s3_ss3.jpg" alt="Screenshot 3">
+
+                                    </div>
+
+                                    <div class="screenshot"><img src="../assets/images/s3_ss4.jpg" alt="Screenshot 4">
+
+                                    </div>
+
+                                </div>
+
+                                <div class="bottom-info-wrapper">
+
+                                    <div class="status-section">
+
+                                        <p class="status-text">Available Now</p>
+
+                                        <span class="badge-top-seller">New Release</span>
+
+                                    </div>
+
+                                    <p class="game-price">$59.99 USD</p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="carousel-item">
+
+                    <div class="row g-0 h-100">
+
+                        <div class="col-8">
+
+                            <img src="../assets/images/s4_header.jpg" data-original="../assets/images/s4_header.jpg"
+                                alt="PUBG Header" class="main-image">
+
+                        </div>
+
+                        <div class="col-4 p-0">
+
+                            <div class="game-info">
+
+                                <div class="game-title-wrapper d-flex align-items-center">
+
+                                    <h3 class="game-panel-title">PUBG BATTLEGROUNDS</h3>
+
+                                </div>
+
+                                <div class="screenshot-grid">
+
+                                    <div class="screenshot"><img src="../assets/images/s4_ss1.jpg" alt="Screenshot 1">
+
+                                    </div>
+
+                                    <div class="screenshot"><img src="../assets/images/s4_ss2.jpg" alt="Screenshot 2">
+
+                                    </div>
+
+                                    <div class="screenshot"><img src="../assets/images/s4_ss3.jpg" alt="Screenshot 3">
+
+                                    </div>
+
+                                    <div class="screenshot"><img src="../assets/images/s4_ss4.jpg" alt="Screenshot 4">
+
+                                    </div>
+
+                                </div>
+
+                                <div class="bottom-info-wrapper">
+
+                                    <div class="status-section">
+
+                                        <p class="status-text">Available Now</p>
+
+                                        <span class="badge-top-seller"
+                                            style="background-color: #797979;">Discount!</span>
+
+                                    </div>
+
+                                    <p class="game-price">$49.99 USD</p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="carousel-item">
+
+                    <div class="row g-0 h-100">
+
+                        <div class="col-8">
+
+                            <img src="../assets/images/s5_header.jpg" data-original="../assets/images/s5_header.jpg"
+                                alt="Resident Evil Header" class="main-image">
+
+                        </div>
+
+                        <div class="col-4 p-0">
+
+                            <div class="game-info">
+
+                                <div class="game-title-wrapper d-flex align-items-center">
+
+                                    <h3 class="game-panel-title">Resident Evil Requim</h3>
+
+                                </div>
+
+                                <div class="screenshot-grid">
+
+                                    <div class="screenshot"><img src="../assets/images/s5_ss1.jpg" alt="Screenshot 1">
+
+                                    </div>
+
+                                    <div class="screenshot"><img src="../assets/images/s5_ss2.jpg" alt="Screenshot 2">
+
+                                    </div>
+
+                                    <div class="screenshot"><img src="../assets/images/s5_ss3.jpg" alt="Screenshot 3">
+
+                                    </div>
+
+                                    <div class="screenshot"><img src="../assets/images/s5_ss4.jpg" alt="Screenshot 4">
+
+                                    </div>
+
+                                </div>
+
+                                <div class="bottom-info-wrapper">
+
+                                    <div class="status-section">
+
+                                        <p class="status-text">Available Now</p>
+
+                                        <span class="badge-top-seller">Top Seller</span>
+
+                                    </div>
+
+                                    <p class="game-price">$39.99 USD</p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="carousel-item">
+
+                    <div class="row g-0 h-100">
+
+                        <div class="col-8">
+
+                            <img src="../assets/images/s6_header.jpg" data-original="../assets/images/s6_header.jpg"
+                                alt="Battlefield Header" class="main-image">
+
+                        </div>
+
+                        <div class="col-4 p-0">
+
+                            <div class="game-info">
+
+                                <div class="game-title-wrapper d-flex align-items-center">
+
+                                    <h3 class="game-panel-title">BATTLEFIELD 6</h3>
+
+                                </div>
+
+                                <div class="screenshot-grid">
+
+                                    <div class="screenshot"><img src="../assets/images/s6_ss1.jpg" alt="Screenshot 1">
+
+                                    </div>
+
+                                    <div class="screenshot"><img src="../assets/images/s6_ss2.jpg" alt="Screenshot 2">
+
+                                    </div>
+
+                                    <div class="screenshot"><img src="../assets/images/s6_ss3.jpg" alt="Screenshot 3">
+
+                                    </div>
+
+                                    <div class="screenshot"><img src="../assets/images/s6_ss4.jpg" alt="Screenshot 4">
+
+                                    </div>
+
+                                </div>
+
+                                <div class="bottom-info-wrapper">
+
+                                    <div class="status-section">
+
+                                        <p class="status-text">Available Now</p>
+
+                                        <span class="badge-top-seller">Fan Favorite</span>
+
+                                    </div>
+
+                                    <p class="game-price">$59.99 USD</p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="carousel-item">
+
+                    <div class="row g-0 h-100">
+
+                        <div class="col-8">
+
+                            <img src="../assets/images/s7_header.jpg" data-original="../assets/images/s7_header.jpg"
+                                alt="Warships Header" class="main-image">
+
+                        </div>
+
+                        <div class="col-4 p-0">
+
+                            <div class="game-info">
+
+                                <div class="game-title-wrapper d-flex align-items-center">
+
+                                    <h3 class="game-panel-title">World Of Warships</h3>
+
+                                </div>
+
+                                <div class="screenshot-grid">
+
+                                    <div class="screenshot"><img src="../assets/images/s7_ss1.jpg" alt="Screenshot 1">
+
+                                    </div>
+
+                                    <div class="screenshot"><img src="../assets/images/s7_ss2.jpg" alt="Screenshot 2">
+
+                                    </div>
+
+                                    <div class="screenshot"><img src="../assets/images/s7_ss3.jpg" alt="Screenshot 3">
+
+                                    </div>
+
+                                    <div class="screenshot"><img src="../assets/images/s7_ss4.jpg" alt="Screenshot 4">
+
+                                    </div>
+
+                                </div>
+
+                                <div class="bottom-info-wrapper">
+
+                                    <div class="status-section">
+
+                                        <p class="status-text">Available Now</p>
+
+                                        <span class="badge-top-seller">Top Rated</span>
+
+                                    </div>
+
+                                    <p class="game-price">$69.99 USD</p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="carousel-item">
+
+                    <div class="row g-0 h-100">
+
+                        <div class="col-8">
+
+                            <img src="../assets/images/s8_header.jpg" data-original="../assets/images/s8_header.jpg"
+                                alt="Rust Header" class="main-image">
+
+                        </div>
+
+                        <div class="col-4 p-0">
+
+                            <div class="game-info">
+
+                                <div class="game-title-wrapper d-flex align-items-center">
+
+                                    <h3 class="game-panel-title">RUST</h3>
+
+                                </div>
+
+                                <div class="screenshot-grid">
+
+                                    <div class="screenshot"><img src="../assets/images/s8_ss1.jpg" alt="Screenshot 1">
+
+                                    </div>
+
+                                    <div class="screenshot"><img src="../assets/images/s8_ss2.jpg" alt="Screenshot 2">
+
+                                    </div>
+
+                                    <div class="screenshot"><img src="../assets/images/s8_ss3.jpg" alt="Screenshot 3">
+
+                                    </div>
+
+                                    <div class="screenshot"><img src="../assets/images/s8_ss4.jpg" alt="Screenshot 4">
+
+                                    </div>
+
+                                </div>
+
+                                <div class="bottom-info-wrapper">
+
+                                    <div class="status-section">
+
+                                        <p class="status-text">Coming Soon</p>
+
+                                        <span class="badge-top-seller"
+                                            style="background-color: #3b5a7e;">Pre-Order</span>
+
+                                    </div>
+
+                                    <p class="game-price">$29.99 USD</p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+
+
+            <div class="carousel-indicators">
+
+                <button type="button" data-bs-target="#gameCarousel" data-bs-slide-to="0" class="active"
+                    aria-current="true" aria-label="Slide 1"></button>
+
+                <button type="button" data-bs-target="#gameCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+
+                <button type="button" data-bs-target="#gameCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+
+                <button type="button" data-bs-target="#gameCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+
+                <button type="button" data-bs-target="#gameCarousel" data-bs-slide-to="4" aria-label="Slide 5"></button>
+
+                <button type="button" data-bs-target="#gameCarousel" data-bs-slide-to="5" aria-label="Slide 6"></button>
+
+                <button type="button" data-bs-target="#gameCarousel" data-bs-slide-to="6" aria-label="Slide 7"></button>
+
+                <button type="button" data-bs-target="#gameCarousel" data-bs-slide-to="7" aria-label="Slide 8"></button>
+
+            </div>
+
+
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#gameCarousel" data-bs-slide="prev"
+                style="left: -45px; top: 50%; transform: translateY(-50%);">
+
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+
+                <span class="visually-hidden">Previous</span>
+
+            </button>
+
+
+
+            <button class="carousel-control-next" type="button" data-bs-target="#gameCarousel" data-bs-slide="next"
+                style="right: -45px; top: 50%; transform: translateY(-50%);">
+
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+
+                <span class="visually-hidden">Next</span>
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="container mt-5 steam-container-width special-offers-carousel-container">
+
+
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+
+            <h2 class="section-title">DISCOUNTS & EVENTS</h2>
+
+            <a href="#" class="btn-browse-more">BROWSE MORE</a>
+
+        </div>
+
+
+
+        <div id="specialOffersCarousel" class="carousel slide" data-bs-ride="false">
+
+
+
+            <div class="carousel-indicators">
+
+                <button type="button" data-bs-target="#specialOffersCarousel" data-bs-slide-to="0" class="active"
+                    aria-current="true" aria-label="Slide 1"></button>
+
+                <button type="button" data-bs-target="#specialOffersCarousel" data-bs-slide-to="1"
+                    aria-label="Slide 2"></button>
+
+                <button type="button" data-bs-target="#specialOffersCarousel" data-bs-slide-to="2"
+                    aria-label="Slide 3"></button>
+
+            </div>
+
+
+
+            <div class="carousel-inner">
+
+
+
+                <div class="carousel-item active">
+
+                    <div class="row g-2 align-items-stretch">
+
+
+
+                        <div class="col-lg-4">
+
+                            <div class="capsule capsule-vertical">
+
+                                <img src="../assets/images/s3_ss1.jpg" alt="Special Offer">
+
+                                <div class="capsule-info">
+
+                                    <div class="capsule-text">
+
+                                        <h5 class="capsule-title">Special Offer</h5>
+
+                                    </div>
+
+                                    <div class="capsule-price">
+
+                                        <div class="d-flex align-items-center">
+
+                                            <span class="discount-badge-lg">-50%</span>
+
+                                            <div class="price-wrapper-lg">
+
+                                                <div class="original-price">$19.99</div>
+
+                                                <div class="final-price">$9.99</div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="col-lg-4">
+
+                            <div class="capsule capsule-vertical">
+
+                                <img src="../assets/images/s5_ss1.jpg" alt="Weekend Deal">
+
+                                <div class="capsule-info">
+
+                                    <div class="capsule-text">
+
+                                        <h5 class="capsule-title">Weekend Deal</h5>
+
+                                    </div>
+
+                                    <div class="capsule-price">
+
+                                        <div class="d-flex align-items-center">
+
+                                            <span class="discount-badge-lg">-75%</span>
+
+                                            <div class="price-wrapper-lg">
+
+                                                <div class="original-price">$39.99</div>
+
+                                                <div class="final-price">$9.99</div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="col-lg-4">
+
+                            <div class="capsule capsule-vertical">
+
+                                <img src="../assets/images/s6_ss1.jpg" alt="Today's Deal">
+
+                                <div class="capsule-info">
+
+                                    <div class="capsule-text">
+
+                                        <h5 class="capsule-title">Today's Deal</h5>
+
+                                    </div>
+
+                                    <div class="capsule-price">
+
+                                        <div class="d-flex align-items-center">
+
+                                            <span class="discount-badge-lg">-80%</span>
+
+                                            <div class="price-wrapper-lg">
+
+                                                <div class="original-price">$24.99</div>
+
+                                                <div class="final-price">$4.99</div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="carousel-item">
+
+                    <div class="row g-2 align-items-stretch">
+
+
+
+                        <div class="col-lg-4">
+
+                            <div class="capsule capsule-vertical">
+
+                                <img src="../assets/images/s1_ss1.jpg" alt="Midweek Deal">
+
+                                <div class="capsule-info">
+
+                                    <div class="capsule-text">
+
+                                        <h5 class="capsule-title">Midweek Deal</h5>
+
+                                    </div>
+
+                                    <div class="capsule-price">
+
+                                        <div class="d-flex align-items-center">
+
+                                            <span class="discount-badge-lg">-33%</span>
+
+                                            <div class="price-wrapper-lg">
+
+                                                <div class="original-price">$14.99</div>
+
+                                                <div class="final-price">$9.99</div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="col-lg-4">
+
+                            <div class="capsule capsule-vertical">
+
+                                <img src="../assets/images/s2_ss1.jpg" alt="Weekend Deal">
+
+                                <div class="capsule-info">
+
+                                    <div class="capsule-text">
+
+                                        <h5 class="capsule-title">Weekend Deal</h5>
+
+                                    </div>
+
+                                    <div class="capsule-price">
+
+                                        <div class="d-flex align-items-center">
+
+                                            <span class="discount-badge-lg">-50%</span>
+
+                                            <div class="price-wrapper-lg">
+
+                                                <div class="original-price">$39.99</div>
+
+                                                <div class="final-price">$19.99</div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="col-lg-4">
+
+                            <div class="capsule capsule-vertical">
+
+                                <img src="../assets/images/s4_ss1.jpg" alt="Today's Deal">
+
+                                <div class="capsule-info">
+
+                                    <div class="capsule-text">
+
+                                        <h5 class="capsule-title">Today's Deal</h5>
+
+                                    </div>
+
+                                    <div class="capsule-price">
+
+                                        <div class="d-flex align-items-center">
+
+                                            <span class="discount-badge-lg">-80%</span>
+
+                                            <div class="price-wrapper-lg">
+
+                                                <div class="original-price">$49.99</div>
+
+                                                <div class="final-price">$9.99</div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="carousel-item">
+
+                    <div class="row g-2 align-items-stretch">
+
+
+
+                        <div class="col-lg-4">
+
+                            <div class="capsule capsule-vertical">
+
+                                <img src="../assets/images/s7_ss1.jpg" alt="Free Weekend">
+
+                                <div class="capsule-info">
+
+                                    <div class="capsule-text">
+
+                                        <h5 class="capsule-title">Free Weekend</h5>
+
+                                    </div>
+
+                                    <div class="capsule-price">
+
+                                        <span class="discount-badge-special">Free to Play</span>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="col-lg-4">
+
+                            <div class="capsule capsule-vertical">
+
+                                <img src="../assets/images/s8_ss1.jpg" alt="Midweek Deal">
+
+                                <div class="capsule-info">
+
+                                    <div class="capsule-text">
+
+                                        <h5 class="capsule-title">Midweek Deal</h5>
+
+                                    </div>
+
+                                    <div class="capsule-price">
+
+                                        <div class="d-flex align-items-center">
+
+                                            <span class="discount-badge-lg">-33%</span>
+
+                                            <div class="price-wrapper-lg">
+
+                                                <div class="original-price">$39.99</div>
+
+                                                <div class="final-price">$26.79</div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="col-lg-4">
+
+                            <div class="capsule capsule-vertical">
+
+                                <img src="../assets/images/s5_ss3.jpg" alt="Today's Deal">
+
+                                <div class="capsule-info">
+
+                                    <div class="capsule-text">
+
+                                        <h5 class="capsule-title">Today's Deal</h5>
+
+                                    </div>
+
+                                    <div class="capsule-price">
+
+                                        <div class="d-flex align-items-center">
+
+                                            <span class="discount-badge-lg">-70%</span>
+
+                                            <div class="price-wrapper-lg">
+
+                                                <div class="original-price">$29.99</div>
+
+                                                <div class="final-price">$8.99</div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#specialOffersCarousel"
+                data-bs-slide="prev">
+
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+
+                <span class="visually-hidden">Previous</span>
+
+            </button>
+
+            <button class="carousel-control-next" type="button" data-bs-target="#specialOffersCarousel"
+                data-bs-slide="next">
+
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+
+                <span class="visually-hidden">Next</span>
+
+            </button>
+
+
+
+        </div>
+
+    </div>
+
+    <div class="container mt-5 mb-5 steam-container-width">
+
+
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+
+            <h2 class="section-title">BROWSE BY CATEGORY</h2>
+
+        </div>
+
+
+
+        <div id="categoryCarousel" class="carousel slide" data-bs-ride="false">
+
+
+
+            <div class="carousel-indicators">
+
+                <button type="button" data-bs-target="#categoryCarousel" data-bs-slide-to="0" class="active"
+                    aria-current="true" aria-label="Slide 1"></button>
+
+                <button type="button" data-bs-target="#categoryCarousel" data-bs-slide-to="1"
+                    aria-label="Slide 2"></button>
+
+                <button type="button" data-bs-target="#categoryCarousel" data-bs-slide-to="2"
+                    aria-label="Slide 3"></button>
+
+            </div>
+
+
+
+            <div class="carousel-inner">
+
+
+
+                <div class="carousel-item active">
+
+                    <div class="row g-3">
+
+                        <div class="col-lg-3 col-md-6">
+
+                            <a href="#" class="category-card">
+
+                                <img src="../assets/images/anime.webp" alt="Anime Category" class="category-bg">
+
+                                <div class="category-overlay"></div>
+
+                                <h5 class="category-title">ANIME</h5>
+
+                            </a>
+
+                        </div>
+
+                        <div class="col-lg-3 col-md-6">
+
+                            <a href="#" class="category-card">
+
+                                <img src="../assets/images/story_rich.webp" alt="Story-Rich Category"
+                                    class="category-bg">
+
+                                <div class="category-overlay"></div>
+
+                                <h5 class="category-title">STORY-RICH</h5>
+
+                            </a>
+
+                        </div>
+
+                        <div class="col-lg-3 col-md-6">
+
+                            <a href="#" class="category-card">
+
+                                <img src="../assets/images/multiplayer_coop.webp" alt="Co-operative Category"
+                                    class="category-bg">
+
+                                <div class="category-overlay"></div>
+
+                                <h5 class="category-title">CO-OPERATIVE</h5>
+
+                            </a>
+
+                        </div>
+
+                        <div class="col-lg-3 col-md-6">
+
+                            <a href="#" class="category-card">
+
+                                <img src="../assets/images/racing.webp" alt="Racing Category" class="category-bg">
+
+                                <div class="category-overlay"></div>
+
+                                <h5 class="category-title">RACING</h5>
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="carousel-item">
+
+                    <div class="row g-3">
+
+                        <div class="col-lg-3 col-md-6">
+
+                            <a href="#" class="category-card">
+
+                                <img src="../assets/images/freetoplay.webp" alt="Free to Play Category"
+                                    class="category-bg">
+
+                                <div class="category-overlay"></div>
+
+                                <h5 class="category-title">FREE TO PLAY</h5>
+
+                            </a>
+
+                        </div>
+
+                        <div class="col-lg-3 col-md-6">
+
+                            <a href="#" class="category-card">
+
+                                <img src="../assets/images/simulation.webp" alt="Simulation Category"
+                                    class="category-bg">
+
+                                <div class="category-overlay"></div>
+
+                                <h5 class="category-title">SIMULATION</h5>
+
+                            </a>
+
+                        </div>
+
+                        <div class="col-lg-3 col-md-6">
+
+                            <a href="#" class="category-card">
+
+                                <img src="../assets/images/survival.webp" alt="Survival Category" class="category-bg">
+
+                                <div class="category-overlay"></div>
+
+                                <h5 class="category-title">SURVIVAL</h5>
+
+                            </a>
+
+                        </div>
+
+                        <div class="col-lg-3 col-md-6">
+
+                            <a href="#" class="category-card">
+
+                                <img src="../assets/images/visual_novel.webp" alt="Visual Novel Category"
+                                    class="category-bg">
+
+                                <div class="category-overlay"></div>
+
+                                <h5 class="category-title">VISUAL NOVEL</h5>
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="carousel-item">
+
+                    <div class="row g-3">
+
+                        <div class="col-lg-3 col-md-6">
+
+                            <a href="#" class="category-card">
+
+                                <img src="../assets/images/strategy.webp" alt="Strategy Category" class="category-bg">
+
+                                <div class="category-overlay"></div>
+
+                                <h5 class="category-title">STRATEGY</h5>
+
+                            </a>
+
+                        </div>
+
+                        <div class="col-lg-3 col-md-6">
+
+                            <a href="#" class="category-card">
+
+                                <img src="../assets/images/fighting_martial_arts.webp" alt="Fighting Category"
+                                    class="category-bg">
+
+                                <div class="category-overlay"></div>
+
+                                <h5 class="category-title">FIGHTING</h5>
+
+                            </a>
+
+                        </div>
+
+                        <div class="col-lg-3 col-md-6">
+
+                            <a href="#" class="category-card">
+
+                                <img src="../assets/images/action.webp" alt="Action Category" class="category-bg">
+
+                                <div class="category-overlay"></div>
+
+                                <h5 class="category-title">ACTION</h5>
+
+                            </a>
+
+                        </div>
+
+                        <div class="col-lg-3 col-md-6">
+
+                            <a href="#" class="category-card">
+
+                                <img src="../assets/images/science_fiction.webp" alt="Sci-Fi Category"
+                                    class="category-bg">
+
+                                <div class="category-overlay"></div>
+
+                                <h5 class="category-title">SCI-FI & CYBERPUNK</h5>
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#categoryCarousel" data-bs-slide="prev">
+
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+
+                <span class="visually-hidden">Previous</span>
+
+            </button>
+
+            <button class="carousel-control-next" type="button" data-bs-target="#categoryCarousel" data-bs-slide="next">
+
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+
+                <span class="visually-hidden">Next</span>
+
+            </button>
+
+
+
+        </div>
+
+    </div>
+
+    <div class="container mt-5 mb-5 steam-container-width">
+
+        <div class="d-flex justify-content-between align-items-end mb-2 steam-header">
+            <h2 class="section-title">UNDER $10 USD</h2>
+            <div class="buttons">
+                <button class="btn btn-outline-light btn-sm active">UNDER $10 USD</button>
+            </div>
+        </div>
+
+        <div id="steamGameCarousel" class="carousel slide position-relative" data-bs-ride="false">
+
+            <div class="carousel-inner">
+
+                <div class="carousel-item active">
+                    <div class="row g-3">
+                        <div class="col-md-3 col-6">
+                            <div class="steam-card">
+                                <img src="../assets/images/headees.jpg" alt="Hades"
+                                    onerror="this.src='https://placehold.co/300x169/10121d/FFF?text=Hades'">
+                                <div class="card-body-steam">
+                                    <div class="price-container">
+                                        <span class="discount-badge">-20%</span>
+                                        <div class="price-block">
+                                            <span class="original-price">$10.49</span>
+                                            <span class="final-price">$8.39 USD</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="steam-card">
+                                <img src="../assets/images/repo.jpg" alt="REPO"
+                                    onerror="this.src='https://placehold.co/300x169/2a1b08/FFF?text=REPO'">
+                                <div class="card-body-steam">
+                                    <div class="price-container">
+                                        <span class="final-price-only">$5.49 USD</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="steam-card">
+                                <div class="live-tag">● LIVE</div>
+                                <img src="../assets/images/rally.jpg" alt="Rally"
+                                    onerror="this.src='https://placehold.co/300x169/000/FFF?text=Rally'">
+                                <div class="card-body-steam">
+                                    <div class="price-container">
+                                        <span class="discount-badge">-20%</span>
+                                        <div class="price-block">
+                                            <span class="original-price">$10.49</span>
+                                            <span class="final-price">$8.39 USD</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="steam-card">
+                                <img src="../assets/images/vein.jpg" alt="Vein"
+                                    onerror="this.src='https://placehold.co/300x169/1a2b3c/FFF?text=Vein'">
+                                <div class="card-body-steam">
+                                    <div class="price-container">
+                                        <span class="final-price-only">$9.99 USD</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <div class="row g-3">
+                        <div class="col-md-3 col-6">
+                            <div class="steam-card">
+                                <img src="../assets/images/stardew valley.jpg" alt="Stardew"
+                                    onerror="this.src='https://placehold.co/300x169/2ecc71/FFF?text=Stardew'">
+                                <div class="card-body-steam">
+                                    <div class="price-container">
+                                        <span class="final-price-only">$6.99 USD</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="steam-card">
+                                <img src="../assets/images/absolum.jpg" alt="Absolum"
+                                    onerror="this.src='https://placehold.co/300x169/552e3a/FFF?text=Absolum'">
+                                <div class="card-body-steam">
+                                    <div class="price-container">
+                                        <span class="discount-badge">-25%</span>
+                                        <div class="price-block">
+                                            <span class="original-price">$20.00</span>
+                                            <span class="final-price">$15.00 USD</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="steam-card">
+                                <img src="../assets/images/power wash 2.jpg" alt="Power Wash"
+                                    onerror="this.src='https://placehold.co/300x169/f1c40f/000?text=Power+Wash'">
+                                <div class="card-body-steam">
+                                    <div class="price-container">
+                                        <span class="final-price-only">$5.49 USD</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="steam-card">
+                                <img src="../assets/images/strategy.webp" alt="Strategy"
+                                    onerror="this.src='https://placehold.co/300x169/e74c3c/FFF?text=Strategy'">
+                                <div class="card-body-steam">
+                                    <div class="price-container">
+                                        <span class="final-price-only">$8.99 USD</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <button class="carousel-control-prev custom-control" type="button" data-bs-target="#steamGameCarousel"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next custom-control" type="button" data-bs-target="#steamGameCarousel"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+
+            <div class="carousel-indicators custom-indicators">
+                <button type="button" data-bs-target="#steamGameCarousel" data-bs-slide-to="0" class="active"
+                    aria-current="true"></button>
+                <button type="button" data-bs-target="#steamGameCarousel" data-bs-slide-to="1"></button>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const carouselElement = document.getElementById('gameCarousel');
+            const screenshotImages = document.querySelectorAll('.screenshot img');
+
+            // Hover Logic for Screenshots (Desktop Only)
+            screenshotImages.forEach(screenshotImg => {
+                const carouselItem = screenshotImg.closest('.carousel-item');
+                const mainImage = carouselItem ? carouselItem.querySelector('img.main-image') : null;
+
+                if (mainImage) {
+                    const originalSrc = mainImage.getAttribute('data-original');
+
+                    screenshotImg.addEventListener('mouseover', function () {
+                        // Only change image if we're on a screen size where screenshots are visible (desktop)
+                        if (window.innerWidth >= 768) {
+                            mainImage.src = this.src;
+                        }
+                    });
+
+                    screenshotImg.addEventListener('mouseout', function () {
+                        if (window.innerWidth >= 768) {
+                            mainImage.src = originalSrc;
+                        }
+                    });
+                }
+            });
+
+            // Reset Main Image on Slide (Handles slide via Bootstrap API, e.g., indicator click or arrow click)
+            carouselElement.addEventListener('slid.bs.carousel', function (event) {
+                const activeItem = event.relatedTarget;
+                const mainImage = activeItem.querySelector('img.main-image');
+
+                if (mainImage) {
+                    mainImage.src = mainImage.getAttribute('data-original');
+                }
+            });
+
+            // Explicitly pause Bootstrap's carousel logic on mobile views
+            if (window.innerWidth < 768) {
+                const carouselInstance = bootstrap.Carousel.getInstance(carouselElement);
+                if (carouselInstance) {
+                    carouselInstance.pause();
+                }
+            }
+        });
+    </script>
+
+</body>
+
+
+
+</html>

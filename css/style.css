@@ -149,3 +149,448 @@ body {
     .desktop-nav, .desktop-search { display:none !important; }
   .navbar-brand { display: none !important; } /* Hides logo on mobile as per design */
 }
+
+
+
+
+
+
+
+
+
+/* ================================================== */
+/* 9. DISCOUNTS & EVENTS (Naya Complex Carousel Design) */
+/* ================================================== */
+
+/* Container ko set karna taake arrows bahar nikal sakein */
+.special-offers-carousel-container {
+    position: relative;
+    padding: 0 40px; /* Arrows ke liye jagah */
+}
+
+/* Base Card Style (sab capsules ke liye) */
+.capsule {
+    background-color: #0d121c;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+    transition: all 0.2s ease;
+    cursor: pointer;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.capsule:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 15px rgba(102, 192, 244, 0.4);
+}
+
+/* === FIX 1: WAPAS 'cover' PE CHANGE KIA === */
+.capsule img {
+    width: 100%;
+    object-fit: cover; /* 'contain' se wapas 'cover' kar diya */
+}
+/* === YAHAN TAK === */
+
+
+/* --- Card Type 1: Bada Vertical Card --- */
+.capsule-large-vertical img {
+    aspect-ratio: 4 / 5; /* Video jaisa vertical ratio */
+}
+
+/* --- Card Type 2: Standard Vertical Card (4-in-a-row) --- */
+.capsule-vertical img {
+    aspect-ratio: 16 / 9; /* Horizontal aspect ratio (jaise pehle choti images ka tha) */
+    height: 200px; /* Ek fixed height de di hai */
+    object-fit: cover; /* Taake image cut na ho aur poori jagah bhare */
+}
+/* --- Card Type 3: Publisher Card ("Gameloft" style) --- */
+.capsule-publisher img.publisher-main-img {
+    aspect-ratio: 16 / 9; /* Horizontal main image */
+}
+.publisher-sub-images {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px; /* Chota gap */
+}
+.publisher-sub-images img {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+}
+
+/* --- Card Type 4: Chota Stacked Card (Horizontal) --- */
+.capsule-horizontal-stack {
+    height: auto; 
+    margin-bottom: 8px; /* Stack ke darmiyan gap (row ka g-2 bhi 8px hai) */
+    
+    /* === FIX 2: ALIGNMENT KE LIYE ADD KIA === */
+    flex-grow: 1; /* Taake yeh column ki poori height lein */
+}
+.capsule-horizontal-stack:last-child {
+    margin-bottom: 0;
+}
+.capsule-horizontal-stack img {
+    aspect-ratio: 16 / 9; /* Horizontal image */
+}
+
+
+/* --- Text & Price Styling (Common) --- */
+.capsule-info {
+    padding: 12px;
+    /* === FIX 3: BLUISH BACKGROUND === */
+    background-color: #3a5c7c; /* Dark (#1a2430) se blue kar diya */
+    flex-grow: 1; /* Price ko neeche push karega */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.capsule-title {
+    color: #c6d4df;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+.capsule-desc {
+    color: #c6d4df; /* Thora light kar diya */
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+}
+.discount-badge-lg {
+    background-color: #4c6b22;
+    color: #a4d007;
+    padding: 4px 8px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-radius: 3px;
+    margin-right: 8px;
+}
+.price-wrapper-lg {
+    line-height: 1.1;
+}
+.price-wrapper-lg .original-price {
+    color: #7a99a4;
+    text-decoration: line-through;
+    font-size: 0.8rem;
+}
+.price-wrapper-lg .final-price {
+    color: #c6d4df;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+.discount-badge-special {
+    background-color: #3b5a7e;
+    color: #e0e6e9;
+    padding: 10px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    border-radius: 3px;
+}
+
+/* --- Chote Stacked Cards ke liye Info/Price --- */
+.capsule-info-small {
+    padding: 10px;
+    /* === FIX 3: BLUISH BACKGROUND === */
+    background-color: #3a5c7c; /* Dark (#1a2430) se blue kar diya */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 60px;
+}
+.capsule-title-small {
+    color: #c6d4df;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin: 0;
+}
+.capsule-price-small {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.discount-badge-sm {
+    background-color: #4c6b22;
+    color: #a4d007;
+    padding: 3px 6px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    border-radius: 3px;
+}
+.price-wrapper-sm {
+    line-height: 1;
+    text-align: right;
+}
+.price-wrapper-sm .original-price {
+    color: #7a99a4;
+    text-decoration: line-through;
+    font-size: 0.75rem;
+}
+.price-wrapper-sm .final-price {
+    color: #c6d4df;
+    font-size: 1rem;
+    font-weight: 600;
+}
+/* ================================== */
+/* 10. Section Header & Browse Button */
+/* ================================== */
+
+
+.section-title {
+    color: #ffffff; /* Proper White Color */
+    font-weight: 700; /* Bold (pehle 600 tha) */
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.btn-browse-more {
+    color: #ffffff; /* Proper White Color */
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    font-weight: 700; /* Bold (pehle 600 tha) */
+    padding: 6px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.5); /* Border ko bhi thora white kar diya */
+    border-radius: 3px;
+    background-color: rgba(90, 106, 124, 0.2);
+    transition: all 0.2s ease;
+}
+
+.btn-browse-more:hover {
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.9); /* Hover par border aur wazeh */
+    background-color: rgba(90, 106, 124, 0.5); /* Hover par background aur wazeh */
+}
+
+
+/* === CAROUSEL ARROWS & INDICATORS (Wahi hain) === */
+#specialOffersCarousel .carousel-indicators {
+    bottom: -40px;
+    margin: 0;
+}
+#specialOffersCarousel .carousel-indicators button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #3a414b;
+    border: none;
+    opacity: 0.5;
+}
+#specialOffersCarousel .carousel-indicators button.active {
+    background-color: #c6d4df;
+    opacity: 1;
+}
+#specialOffersCarousel .carousel-control-prev,
+#specialOffersCarousel .carousel-control-next {
+    width: 45px;
+    height: 90px;
+    background-color: rgba(0, 0, 0, 0.4);
+    border: none;
+    z-index: 10;
+    opacity: 0.5;
+    transition: all 0.2s ease;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 4px;
+}
+#specialOffersCarousel .carousel-control-prev:hover,
+#specialOffersCarousel .carousel-control-next:hover {
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+#specialOffersCarousel .carousel-control-prev {
+    left: -45px;
+}
+#specialOffersCarousel .carousel-control-next {
+    right: -45px;
+}
+#specialOffersCarousel .carousel-control-prev-icon,
+#specialOffersCarousel .carousel-control-next-icon {
+    width: 2rem;
+    height: 2rem;
+}
+
+/* Mobile responsive */
+@media (max-width: 991.98px) {
+    /* Tablet par, complex layout ko 2x2 grid bana dein */
+    #specialOffersCarousel .carousel-item .col-lg-5,
+    #specialOffersCarousel .carousel-item .col-lg-4,
+    #specialOffersCarousel .carousel-item .col-lg-3 {
+        flex: 0 0 50%;
+        max-width: 50%;
+        margin-bottom: 15px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .special-offers-carousel-container {
+        padding: 0 10px;
+    }
+    
+    /* Mobile par, sab ko 2-in-a-row (50% width) kar dein */
+    #specialOffersCarousel .carousel-item .col-lg-5,
+    #specialOffersCarousel .carousel-item .col-lg-4,
+    #specialOffersCarousel .carousel-item .col-lg-3 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+    
+    #specialOffersCarousel .carousel-control-prev,
+    #specialOffersCarousel .carousel-control-next {
+        width: 30px;
+        height: 60px;
+    }
+    #specialOffersCarousel .carousel-control-prev {
+        left: 5px;
+    }
+    #specialOffersCarousel .carousel-control-next {
+        right: 5px;
+    }
+}
+
+
+
+
+/* ================================== */
+/* 11. Browse by Category Carousel (Updated) */
+/* ================================== */
+
+.category-card {
+    display: block;
+    position: relative;
+    overflow: hidden; /* Zoom effect ke liye zaroori */
+    border-radius: 4px;
+    text-decoration: none;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    height: 180px; /* Aap is height ko kam ya zyada kar sakte hain */
+    transition: all 0.2s ease;
+}
+
+.category-card .category-bg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease; /* Zoom ka transition */
+}
+
+.category-card .category-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    /* Default state: Video jaisa halka sa dark gradient (taake text parha ja sake) */
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 40%);
+    
+    /* Gradient change ka transition */
+    transition: background 0.3s ease;
+}
+
+.category-card .category-title {
+    position: absolute;
+    bottom: 10px;
+    left: 15px;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    z-index: 2; /* Text ko gradient ke upar rakhega */
+}
+
+/* --- HOVER Effects (Video ke mutabiq) --- */
+
+/* 1. Image ko zoom karein */
+.category-card:hover .category-bg {
+    transform: scale(1.05); /* Video jaisa zoom */
+}
+
+/* 2. Gradient ko blue/teal karein */
+.category-card:hover .category-overlay {
+    /* Video jaisa teal/blue gradient */
+    background: linear-gradient(to top, rgba(42, 71, 94, 0.9) 0%, rgba(42, 71, 94, 0.1) 60%);
+}
+
+
+/* --- Category Carousel Controls (Wahi purana style) --- */
+#categoryCarousel .carousel-indicators {
+    bottom: -40px;
+    margin: 0;
+}
+
+#categoryCarousel .carousel-indicators button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #3a414b;
+    border: none;
+    opacity: 0.5;
+}
+
+#categoryCarousel .carousel-indicators button.active {
+    background-color: #c6d4df;
+    opacity: 1;
+}
+
+#categoryCarousel .carousel-control-prev,
+#categoryCarousel .carousel-control-next {
+    width: 45px;
+    height: 90px;
+    background-color: rgba(0, 0, 0, 0.4);
+    border: none;
+    z-index: 10;
+    opacity: 0.5;
+    transition: all 0.2s ease;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 4px;
+}
+
+#categoryCarousel .carousel-control-prev:hover,
+#categoryCarousel .carousel-control-next:hover {
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Arrows ki position (Aapke request ke mutabiq) */
+#categoryCarousel .carousel-control-prev {
+    left: -45px;
+}
+
+#categoryCarousel .carousel-control-next {
+    right: -45px;
+}
+
+#categoryCarousel .carousel-control-prev-icon,
+#categoryCarousel .carousel-control-next-icon {
+    width: 2rem;
+    height: 2rem;
+}
+
+/* --- Category Responsive --- */
+@media (max-width: 991.98px) {
+    /* Tablet par 2x2 grid dikhaye */
+     #categoryCarousel .carousel-item .col-md-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+        margin-bottom: 15px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /* Mobile par arrows ko andar le aayein */
+    #categoryCarousel .carousel-control-prev {
+        left: 5px;
+    }
+    #categoryCarousel .carousel-control-next {
+        right: 5px;
+    }
+}
+
+.steam-container-width {
+    max-width: 1100px;
+    margin: auto;
+}
+
+
+
+
