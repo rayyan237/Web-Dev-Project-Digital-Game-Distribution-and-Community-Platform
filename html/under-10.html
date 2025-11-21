@@ -67,7 +67,7 @@
            ========================================= */
         #steamGameCarousel {
             position: relative;
-            padding: 0 45px; 
+            padding: 0 45px;
         }
 
         /* =========================================
@@ -89,7 +89,7 @@
             transform: scale(1.05);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
             z-index: 100;
-            outline: none; 
+            outline: none;
         }
 
         .steam-card img {
@@ -101,12 +101,14 @@
 
         /* Footer Area */
         .card-body-steam {
-            background: #10151d; /* Dark footer background */
+            background: #10151d;
+            /* Dark footer background */
             padding: 4px 8px;
-            height: 36px; 
+            height: 36px;
             display: flex;
             align-items: center;
-            justify-content: flex-start; /* Left Align */
+            justify-content: flex-start;
+            /* Left Align */
             margin-top: auto;
         }
 
@@ -160,14 +162,15 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            background-color: #000000; /* Dark Badge Background */
+            background-color: #000000;
+            /* Dark Badge Background */
             color: #ffffff;
             font-size: 12px;
             font-weight: 600;
             padding: 0 8px;
             height: 24px;
             border-radius: 1px;
-            margin-left: 0; 
+            margin-left: 0;
         }
 
         /* Live Tag */
@@ -187,17 +190,23 @@
             align-items: center;
             gap: 4px;
         }
+
         .live-dot {
-            height: 6px; width: 6px; background: #fff; border-radius: 50%; display: inline-block;
+            height: 6px;
+            width: 6px;
+            background: #fff;
+            border-radius: 50%;
+            display: inline-block;
         }
 
         /* =========================================
            5. CONTROLS
            ========================================= */
-        .carousel-control-prev, .carousel-control-next {
+        .carousel-control-prev,
+        .carousel-control-next {
             width: 45px;
-            height: 100px; 
-            background: linear-gradient(to right, rgba(0,0,0,0.5), rgba(0,0,0,0.01));
+            height: 100px;
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.01));
             top: 50%;
             transform: translateY(-50%);
             opacity: 1;
@@ -206,22 +215,29 @@
             z-index: 10;
             position: absolute;
         }
-        
+
         .carousel-control-next {
-            background: linear-gradient(to left, rgba(0,0,0,0.5), rgba(0,0,0,0.01));
+            background: linear-gradient(to left, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.01));
         }
 
-        .carousel-control-prev:hover, .carousel-control-next:hover {
+        .carousel-control-prev:hover,
+        .carousel-control-next:hover {
             background-color: rgba(171, 171, 171, 0.2);
         }
 
-        .carousel-control-prev { left: 0; }
-        .carousel-control-next { right: 0; }
+        .carousel-control-prev {
+            left: 0;
+        }
 
-        .carousel-control-prev-icon, .carousel-control-next-icon {
+        .carousel-control-next {
+            right: 0;
+        }
+
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
             width: 2rem;
             height: 2rem;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8));
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8));
         }
 
         .carousel-indicators {
@@ -247,9 +263,19 @@
 
         /* Responsive */
         @media (max-width: 767.98px) {
-            #steamGameCarousel { padding: 0 10px; }
-            .carousel-control-prev, .carousel-control-next { display: none; }
-            .col-6 { flex: 0 0 50%; max-width: 50%; }
+            #steamGameCarousel {
+                padding: 0 10px;
+            }
+
+            .carousel-control-prev,
+            .carousel-control-next {
+                display: none;
+            }
+
+            .col-6 {
+                flex: 0 0 50%;
+                max-width: 50%;
+            }
         }
     </style>
 </head>
@@ -261,8 +287,8 @@
         <div class="d-flex justify-content-between align-items-end mb-2 steam-header">
             <h2 class="section-title">UNDER $10 USD</h2>
             <div class="header-buttons">
-                <a href="under-10_sub_file.html" class="btn-browse-more">UNDER $10 USD</a>
-                <a href="under-5.html" class="btn-browse-more">UNDER $5 USD</a>
+                <a href="browse-cheap.html?price=10" class="btn-browse-more">UNDER $10 USD</a>
+                <a href="browse-cheap.html?price=5" class="btn-browse-more">UNDER $5 USD</a>
             </div>
         </div>
 
@@ -272,7 +298,7 @@
 
                 <div class="carousel-item active">
                     <div class="row g-3">
-                        
+
                         <div class="col-md-3 col-6">
                             <div class="steam-card">
                                 <img src="../assets/images/s1_header.jpg" alt="Vein">
@@ -381,17 +407,20 @@
 
             </div>
 
-            <button class="carousel-control-prev" type="button" data-bs-target="#steamGameCarousel" data-bs-slide="prev">
+            <button class="carousel-control-prev" type="button" data-bs-target="#steamGameCarousel"
+                data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#steamGameCarousel" data-bs-slide="next">
+            <button class="carousel-control-next" type="button" data-bs-target="#steamGameCarousel"
+                data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
             </button>
 
             <div class="carousel-indicators">
-                <button type="button" data-bs-target="#steamGameCarousel" data-bs-slide-to="0" class="active" aria-current="true"></button>
+                <button type="button" data-bs-target="#steamGameCarousel" data-bs-slide-to="0" class="active"
+                    aria-current="true"></button>
                 <button type="button" data-bs-target="#steamGameCarousel" data-bs-slide-to="1"></button>
             </div>
 
