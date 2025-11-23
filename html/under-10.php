@@ -287,8 +287,8 @@
         <div class="d-flex justify-content-between align-items-end mb-2 steam-header">
             <h2 class="section-title">UNDER $10 USD</h2>
             <div class="header-buttons">
-                <a href="browse-cheap.html?price=10" class="btn-browse-more">UNDER $10 USD</a>
-                <a href="browse-cheap.html?price=5" class="btn-browse-more">UNDER $5 USD</a>
+                <a href="browse-cheap.php?price=10" class="btn-browse-more">UNDER $10 USD</a>
+                <a href="browse-cheap.php?price=5" class="btn-browse-more">UNDER $5 USD</a>
             </div>
         </div>
 

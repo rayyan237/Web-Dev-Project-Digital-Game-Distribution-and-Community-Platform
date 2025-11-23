@@ -285,13 +285,37 @@
                         </li>
                     </ul>
 
-                    <div class="d-flex align-items-center gap-2 d-md-flex d-none">
-                        <button type="button" class="login-btn btn btn-sm me-3">Login</button>
+                    <div class="d-flex align-items-center gap-2 d-md-flex d-none" id="desktopAuthButtons">
+                        <!-- Logged Out State -->
+                        <a href="login.php" id="desktopLoginBtn" style="display: none;">
+                            <button type="button" class="login-btn btn btn-sm me-3">Login</button>
+                        </a>
+                        <!-- Logged In State -->
+                        <div id="desktopUserButtons" style="display: none;" class="d-flex align-items-center gap-2">
+                            <a href="profile.php">
+                                <button type="button" class="login-btn btn btn-sm"><i class="fas fa-user"></i> Profile</button>
+                            </a>
+                            <a href="../config/logout.php">
+                                <button type="button" class="btn btn-sm" style="background: rgba(255, 107, 107, 0.1); border: 1px solid rgba(255, 107, 107, 0.4); color: #ff6b6b; padding: 8px 20px; border-radius: 8px; font-weight: 500; transition: all 0.3s ease;"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                            </a>
+                        </div>
                     </div>
 
-                    <div class="d-flex flex-column align-items-stretch gap-2 d-md-none border-top border-secondary pt-3 mt-3 mx-2">
-                        <div>
-                            <button type="button" class="login-btn btn btn-sm w-100">Login</button>
+                    <div class="d-flex flex-column align-items-stretch gap-2 d-md-none border-top border-secondary pt-3 mt-3 mx-2" id="mobileAuthButtons">
+                        <!-- Logged Out State -->
+                        <div id="mobileLoginBtn" style="display: none;">
+                            <a href="login.php">
+                                <button type="button" class="login-btn btn btn-sm w-100">Login</button>
+                            </a>
+                        </div>
+                        <!-- Logged In State -->
+                        <div id="mobileUserButtons" style="display: none;">
+                            <a href="profile.php">
+                                <button type="button" class="login-btn btn btn-sm w-100 mb-2"><i class="fas fa-user"></i> Profile</button>
+                            </a>
+                            <a href="../config/logout.php">
+                                <button type="button" class="btn btn-sm w-100" style="background: rgba(255, 107, 107, 0.1); border: 1px solid rgba(255, 107, 107, 0.4); color: #ff6b6b; padding: 8px 20px; border-radius: 8px; font-weight: 500;"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                            </a>
                         </div>
                     </div>
 
@@ -396,6 +420,48 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Check session status and update navbar buttons
+        async function checkSessionStatus() {
+            try {
+                const response = await fetch('../config/check_session_status.php');
+                const data = await response.json();
+                
+                // Desktop buttons
+                const desktopLoginBtn = document.getElementById('desktopLoginBtn');
+                const desktopUserButtons = document.getElementById('desktopUserButtons');
+                
+                // Mobile buttons
+                const mobileLoginBtn = document.getElementById('mobileLoginBtn');
+                const mobileUserButtons = document.getElementById('mobileUserButtons');
+                
+                if (data.logged_in) {
+                    // User is logged in - show profile and logout buttons
+                    if (desktopLoginBtn) desktopLoginBtn.style.display = 'none';
+                    if (desktopUserButtons) desktopUserButtons.style.display = 'flex';
+                    if (mobileLoginBtn) mobileLoginBtn.style.display = 'none';
+                    if (mobileUserButtons) mobileUserButtons.style.display = 'block';
+                } else {
+                    // User is not logged in - show login button
+                    if (desktopLoginBtn) desktopLoginBtn.style.display = 'block';
+                    if (desktopUserButtons) desktopUserButtons.style.display = 'none';
+                    if (mobileLoginBtn) mobileLoginBtn.style.display = 'block';
+                    if (mobileUserButtons) mobileUserButtons.style.display = 'none';
+                }
+            } catch (error) {
+                console.error('Error checking session:', error);
+                // On error, show login button by default
+                const desktopLoginBtn = document.getElementById('desktopLoginBtn');
+                const mobileLoginBtn = document.getElementById('mobileLoginBtn');
+                if (desktopLoginBtn) desktopLoginBtn.style.display = 'block';
+                if (mobileLoginBtn) mobileLoginBtn.style.display = 'block';
+            }
+        }
+        
+        // Check session when page loads
+        document.addEventListener('DOMContentLoaded', checkSessionStatus);
+    </script>
 </body>
 
 </html>

@@ -422,45 +422,8 @@
 
 <body>
 
-    <!-- NAVBAR (Unchanged) -->
-    <header class="main-navbar">
-        <nav class="navbar navbar-expand-md navbar-upper-border">
-            <div class="container px-3 d-flex justify-content-start align-items-center">
-                <button class="navbar-toggler border-0 me-3" type="button" data-bs-toggle="collapse" data-bs-target="#upperNav">
-                    <span class="navbar-toggler-icon" style="filter:invert(1)"></span>
-                </button>
-                <a class="navbar-brand navbar-brand-desktop d-none d-md-block" href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg" height="30"></a>
-                <div class="collapse navbar-collapse" id="upperNav">
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item"><a class="nav-link nav-link-upper" href="index.html">STORE</a></li>
-                        <li class="nav-item"><a class="nav-link nav-link-upper" href="community.html">COMMUNITY</a></li>
-                        <li class="nav-item"><a class="nav-link nav-link-upper" href="about.html">ABOUT</a></li>
-                        <li class="nav-item"><a class="nav-link nav-link-upper" href="support.html">SUPPORT</a></li>
-                    </ul>
-                    <div class="d-flex align-items-center gap-2 d-md-flex d-none">
-                        <button type="button" class="login-btn btn btn-sm me-3">Login</button>
-                    </div>
-                </div>
-            </div>
-        </nav>
-    </header>
-
-    <nav class="secondary-navbar py-2">
-        <div class="container d-flex align-items-center">
-            <ul class="desktop-subnav-list d-flex flex-nowrap gap-4 me-auto mb-0 list-unstyled">
-                <li class="nav-item dropdown"><a class="nav-link subnav-link dropdown-toggle" href="#">Browse</a></li>
-                <li class="nav-item dropdown"><a class="nav-link subnav-link dropdown-toggle" href="#">Recommendations</a></li>
-                <li class="nav-item dropdown"><a class="nav-link subnav-link dropdown-toggle" href="#">Categories</a></li>
-                <li class="nav-item dropdown"><a class="nav-link subnav-link dropdown-toggle" href="#">More</a></li>
-            </ul>
-             <form class="header-search-group desktop-search-form d-none d-md-flex input-group">
-                <input class="header-search-input form-control" type="search" placeholder="Search">
-                <button class="header-search-btn btn d-flex align-items-center justify-content-center" type="submit">
-                    <i class="fa-solid fa-magnifying-glass" style="font-size: 14px;"></i>
-                </button>
-            </form>
-        </div>
-    </nav>
+    <!-- NAVBAR (Centralized Include) -->
+    <?php include 'navbar_include.php'; ?>
 
     <!-- HERO (Unchanged) -->
     <section class="about-hero">
@@ -609,10 +572,10 @@
                 <div class="d-flex flex-column flex-md-row justify-content-between align-items-center border-top border-secondary-subtle mt-5 pt-5">
 
                     <nav class="nav flex-wrap justify-content-center">
-                        <a class="footer-nav-link nav-link px-2 px-md-3" href="index.html">Store</a>
-                        <a class="footer-nav-link nav-link px-2 px-md-3" href="about.html">About</a>
-                        <a class="footer-nav-link nav-link px-2 px-md-3" href="community.html">Community</a>
-                        <a class="footer-nav-link nav-link px-2 px-md-3" href="support.html">Support</a>
+                        <a class="footer-nav-link nav-link px-2 px-md-3" href="index.php">Store</a>
+                        <a class="footer-nav-link nav-link px-2 px-md-3" href="about.php">About</a>
+                        <a class="footer-nav-link nav-link px-2 px-md-3" href="community.php">Community</a>
+                        <a class="footer-nav-link nav-link px-2 px-md-3" href="support.php">Support</a>
                     </nav>
 
                     <div class="d-flex gap-4 mt-4 mt-md-0">
