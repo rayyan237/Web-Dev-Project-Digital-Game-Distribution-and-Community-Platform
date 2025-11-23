@@ -780,10 +780,10 @@
                 <div class="d-flex flex-column flex-md-row justify-content-between align-items-center border-top border-secondary-subtle mt-5 pt-5">
                     
                     <nav class="nav flex-wrap justify-content-center">
-                        <a class="footer-nav-link nav-link px-2 px-md-3" href="index.html">Store</a>
-                        <a class="footer-nav-link nav-link px-2 px-md-3" href="about.html">About</a>
+                        <a class="footer-nav-link nav-link px-2 px-md-3" href="index.php">Store</a>
+                        <a class="footer-nav-link nav-link px-2 px-md-3" href="about.php">About</a>
                         <a class="footer-nav-link nav-link px-2 px-md-3" href="#">Community</a>
-                        <a class="footer-nav-link nav-link px-2 px-md-3" href="support.html">Support</a>
+                        <a class="footer-nav-link nav-link px-2 px-md-3" href="support.php">Support</a>
                         <a class="footer-nav-link nav-link px-2 px-md-3" href="#">News</a>
                         <a class="footer-nav-link nav-link px-2 px-md-3" href="#">Developers</a>
                     </nav>

@@ -1509,7 +1509,7 @@
         <div class="section-spacer steam-section-wrapper">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h2 class="common-section-title">SPECIAL OFFERS</h2>
-                <a href="browse-more.html" class="btn-browse-more">Browse More</a>
+                <a href="browse-more.php" class="btn-browse-more">Browse More</a>
             </div>
 
             <div id="specialOffersCarousel" class="carousel slide" data-bs-ride="false">
@@ -1633,21 +1633,21 @@
                     <div class="carousel-item active">
                         <div class="row g-3">
                             <div class="col-lg-3 col-md-6">
-                                <a href="category-details.html?cat=rpg" class="category-card">
+                                <a href="category-details.php?cat=rpg" class="category-card">
                                     <img src="../assets/images/anime.webp" alt="Anime" class="category-bg">
                                     <div class="category-overlay"></div>
                                     <div class="category-title">ROLE PLAYING</div>
                                 </a>
                             </div>
                             <div class="col-lg-3 col-md-6">
-                                <a href="category-details.html?cat=adventure" class="category-card">
+                                <a href="category-details.php?cat=adventure" class="category-card">
                                     <img src="../assets/images/story_rich.webp" alt="Story-Rich" class="category-bg">
                                     <div class="category-overlay"></div>
                                     <div class="category-title">ADVENTURE</div>
                                 </a>
                             </div>
                             <div class="col-lg-3 col-md-6">
-                                <a href="category-details.html?cat=racing" class="category-card">
+                                <a href="category-details.php?cat=racing" class="category-card">
                                     <img src="../assets/images/multiplayer_coop.webp" alt="Co-operative"
                                         class="category-bg">
                                     <div class="category-overlay"></div>
@@ -1655,7 +1655,7 @@
                                 </a>
                             </div>
                             <div class="col-lg-3 col-md-6">
-                                <a href="category-details.html?cat=freetoplay" class="category-card">
+                                <a href="category-details.php?cat=freetoplay" class="category-card">
                                     <img src="../assets/images/racing.webp" alt="Racing" class="category-bg">
                                     <div class="category-overlay"></div>
                                     <div class="category-title">FREE TO PLAY</div>
@@ -1667,28 +1667,28 @@
                     <div class="carousel-item">
                         <div class="row g-3">
                             <div class="col-lg-3 col-md-6">
-                                <a href="category-details.html?cat=action" class="category-card">
+                                <a href="category-details.php?cat=action" class="category-card">
                                     <img src="../assets/images/freetoplay.webp" alt="Free to Play" class="category-bg">
                                     <div class="category-overlay"></div>
                                     <div class="category-title">ACTION</div>
                                 </a>
                             </div>
                             <div class="col-lg-3 col-md-6">
-                                <a href="category-details.html?cat=anime" class="category-card">
+                                <a href="category-details.php?cat=anime" class="category-card">
                                     <img src="../assets/images/simulation.webp" alt="Simulation" class="category-bg">
                                     <div class="category-overlay"></div>
                                     <div class="category-title">ANIME</div>
                                 </a>
                             </div>
                             <div class="col-lg-3 col-md-6">
-                                <a href="category-details.html?cat=strategy" class="category-card">
+                                <a href="category-details.php?cat=strategy" class="category-card">
                                     <img src="../assets/images/survival.webp" alt="Survival" class="category-bg">
                                     <div class="category-overlay"></div>
                                     <div class="category-title">STRATEGY</div>
                                 </a>
                             </div>
                             <div class="col-lg-3 col-md-6">
-                                <a href="category-details.html?cat=simulation" class="category-card">
+                                <a href="category-details.php?cat=simulation" class="category-card">
                                     <img src="../assets/images/visual_novel.webp" alt="Visual Novel"
                                         class="category-bg">
                                     <div class="category-overlay"></div>
@@ -1701,14 +1701,14 @@
                     <div class="carousel-item">
                         <div class="row g-3">
                             <div class="col-lg-3 col-md-6">
-                                <a href="category-details.html?cat=puzzle" class="category-card">
+                                <a href="category-details.php?cat=puzzle" class="category-card">
                                     <img src="../assets/images/strategy.webp" alt="Strategy" class="category-bg">
                                     <div class="category-overlay"></div>
                                     <div class="category-title">PUZZLE</div>
                                 </a>
                             </div>
                             <div class="col-lg-3 col-md-6">
-                                <a href="category-details.html?cat=fighting" class="category-card">
+                                <a href="category-details.php?cat=fighting" class="category-card">
                                     <img src="../assets/images/fighting_martial_arts.webp" alt="Fighting"
                                         class="category-bg">
                                     <div class="category-overlay"></div>
@@ -1716,14 +1716,14 @@
                                 </a>
                             </div>
                             <div class="col-lg-3 col-md-6">
-                                <a href="category-details.html?cat=survival" class="category-card">
+                                <a href="category-details.php?cat=survival" class="category-card">
                                     <img src="../assets/images/action.webp" alt="Action" class="category-bg">
                                     <div class="category-overlay"></div>
                                     <div class="category-title">SURVIVAL</div>
                                 </a>
                             </div>
                             <div class="col-lg-3 col-md-6">
-                                <a href="category-details.html?cat=sports" class="category-card">
+                                <a href="category-details.php?cat=sports" class="category-card">
                                     <img src="../assets/images/science_fiction.webp" alt="Sci-Fi" class="category-bg">
                                     <div class="category-overlay"></div>
                                     <div class="category-title">SPORTS</div>
@@ -1839,8 +1839,8 @@
             <div class="d-flex justify-content-between align-items-end mb-2">
                 <h2 class="common-section-title">UNDER $10 USD</h2>
                 <div class="d-flex gap-2">
-                    <a href="browse-cheap.html?price=10" class="btn-browse-more">UNDER $10 USD</a>
-                    <a href="browse-cheap.html?price=5" class="btn-browse-more">UNDER $5 USD</a>
+                    <a href="browse-cheap.php?price=10" class="btn-browse-more">UNDER $10 USD</a>
+                    <a href="browse-cheap.php?price=5" class="btn-browse-more">UNDER $5 USD</a>
                 </div>
             </div>
 

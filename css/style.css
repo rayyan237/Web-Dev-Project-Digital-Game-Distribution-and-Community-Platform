@@ -1,22 +1,44 @@
-<<<<<<< HEAD
+
 /* --- 1. CSS Variables for Spacing and Dimensions (Future-Proofing) --- */
 :root {
-    --nav-link-padding-y: 0.5rem; 
+    --nav-link-padding-y: 0.5rem;
     --nav-link-padding-x: 1rem;
     --underline-height: 2px;
-    --underline-offset: 5px; 
+    --underline-offset: 5px;
 }
 
 /* --- 2. Essential Custom Colors & Overrides (Steam Branding) --- */
-.bg-upper    { background:#171a21 !important; }
-.bg-lower    { background:#1b2838 !important; }
-.text-steam  { color:#c6d4df !important; }
-.text-steam:hover { color:#fff !important; }
-.border-steam { border-bottom:1px solid #2f3642; }
+.bg-upper {
+    background: #171a21 !important;
+}
+
+.bg-lower {
+    background: #1b2838 !important;
+}
+
+.text-steam {
+    color: #c6d4df !important;
+}
+
+.text-steam:hover {
+    color: #fff !important;
+}
+
+.border-steam {
+    border-bottom: 1px solid #2f3642;
+}
 
 /* --- 3. Typography & Hover Effects --- */
-.nav-link { font-weight:500; font-size:0.95rem; }
-.hover-steam:hover, .dropdown-item:hover { background:#2a475e !important; color:#fff !important; } 
+.nav-link {
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.hover-steam:hover,
+.dropdown-item:hover {
+    background: #2a475e !important;
+    color: #fff !important;
+}
 
 /* --- Custom Button Style for Login Button (Styled as a Link) --- */
 .btn-link-steam {
@@ -26,11 +48,13 @@
     padding: 0;
     line-height: 1.5;
     text-decoration: none;
-    font-size: 0.95rem; /* Match nav-link size */
+    font-size: 0.95rem;
+    /* Match nav-link size */
     font-weight: 500;
     cursor: pointer;
     transition: color 0.2s;
 }
+
 .btn-link-steam:hover {
     color: #fff !important;
     text-decoration: none;
@@ -40,7 +64,7 @@
 @media (min-width: 768px) {
     #upperNav .navbar-nav .nav-link {
         position: relative;
-        color: #c6d4df !important; 
+        color: #c6d4df !important;
         /* Calculates final padding based on variables to make room for line */
         padding-bottom: calc(var(--nav-link-padding-y) + var(--underline-height) + var(--underline-offset)) !important;
         padding-top: var(--nav-link-padding-y) !important;
@@ -51,7 +75,7 @@
     #upperNav .navbar-nav .nav-link::after {
         content: '';
         position: absolute;
-        bottom: var(--underline-offset); 
+        bottom: var(--underline-offset);
         left: 0;
         width: 0;
         height: 2px;
@@ -65,15 +89,20 @@
 }
 
 /* --- 5. Dropdowns and Headers --- */
-.dropdown-menu { 
-    background:#1b2838 !important; 
-    border:none; 
-    box-shadow:0 4px 12px rgba(0,0,0,.5); 
+.dropdown-menu {
+    background: #1b2838 !important;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .5);
 }
-.dropdown-item { color:#c6d4df !important; padding:.5rem 1rem; }
-.dropdown-header-steam { 
-    color: #66c0f4; 
-    padding: .5rem 1rem; 
+
+.dropdown-item {
+    color: #c6d4df !important;
+    padding: .5rem 1rem;
+}
+
+.dropdown-header-steam {
+    color: #66c0f4;
+    padding: .5rem 1rem;
     font-size: .875em;
     font-weight: 600;
     text-transform: uppercase;
@@ -82,13 +111,18 @@
 
 /* --- 6. Search Bar Styling (Desktop & Mobile) --- */
 .form-control.search-input {
-    background:#32353c; border:1px solid #3d4450; 
-    color:#c6d4df; height:40px; 
-    border-radius:4px 0 0 4px !important; 
+    background: #32353c;
+    border: 1px solid #3d4450;
+    color: #c6d4df;
+    height: 40px;
+    border-radius: 4px 0 0 4px !important;
 }
+
 .form-control.search-input:focus {
-    background:#32353c; border-color:#66c0f4; 
-    box-shadow:0 0 0 1px #66c0f4; color:#fff;
+    background: #32353c;
+    border-color: #66c0f4;
+    box-shadow: 0 0 0 1px #66c0f4;
+    color: #fff;
 }
 
 /* Search input placeholder styling - white color for lower navbar */
@@ -98,57 +132,98 @@
 }
 
 .btn-search {
-    background:#66c0f4; border:none; border-radius:0 4px 4px 0 !important;
-    width:50px; height:40px; 
+    background: #66c0f4;
+    border: none;
+    border-radius: 0 4px 4px 0 !important;
+    width: 50px;
+    height: 40px;
 }
-.btn-search:hover { background:#4a9ed6; }
-.btn-success:focus, .btn-success:focus-visible {
-    outline: 0; box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.5); 
+
+.btn-search:hover {
+    background: #4a9ed6;
+}
+
+.btn-success:focus,
+.btn-success:focus-visible {
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.5);
 }
 
 /* --- 7. Mobile Specific Components (Sub-Navbar Fit) --- */
 .mobile-navbar-links .nav-link,
 .mobile-navbar-links .dropdown-toggle {
-    font-size: 0.85rem; /* Condensed font size for one-line display */
+    font-size: 0.85rem;
+    /* Condensed font size for one-line display */
     font-weight: 500;
-    color: #c6d4df; 
-    padding: 0.5rem 0.5rem !important; /* Condensed padding */
+    color: #c6d4df;
+    padding: 0.5rem 0.5rem !important;
+    /* Condensed padding */
 }
 
 .mobile-navbar-links .dropdown-toggle::after {
-    content:""; display:inline-block; width:0; height:0;
-    margin-left:.3rem; vertical-align:middle; 
-    border-top:5px solid #c6d4df; border-right:4px solid transparent; 
-    border-left:4px solid transparent; transition:transform .2s;
+    content: "";
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: .3rem;
+    vertical-align: middle;
+    border-top: 5px solid #c6d4df;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+    transition: transform .2s;
 }
-.mobile-navbar-links .dropdown-toggle.show::after { transform:rotate(180deg); }
+
+.mobile-navbar-links .dropdown-toggle.show::after {
+    transform: rotate(180deg);
+}
 
 /* --- 8. Media Queries and Positioning --- */
-.lower-navbar { 
-    z-index: 1020; 
+.lower-navbar {
+    z-index: 1020;
 }
 
 /* Ensure proper scrolling context for sticky positioning */
 body {
-    overflow-x: hidden; /* Prevent horizontal scroll issues */
+    overflow-x: hidden;
+    /* Prevent horizontal scroll issues */
 }
 
 @media (min-width: 768px) {
+
     /* ACTIVATE STICKY ONLY ON DESKTOP */
-    .lower-navbar { 
-        position: sticky; 
-        top: 0; 
+    .lower-navbar {
+        position: sticky;
+        top: 0;
         z-index: 1020;
     }
 
-    .desktop-dropdown .dropdown-toggle { padding:.5rem 0; }
-    .desktop-search { width: 360px; } /* Final adjusted desktop search width */
-    .mobile-search-in-header, .mobile-navbar-links { display: none !important; }
+    .desktop-dropdown .dropdown-toggle {
+        padding: .5rem 0;
+    }
+
+    .desktop-search {
+        width: 360px;
+    }
+
+    /* Final adjusted desktop search width */
+    .mobile-search-in-header,
+    .mobile-navbar-links {
+        display: none !important;
+    }
 }
 
-@media (max-width: 767.98px) { 
-    .desktop-nav, .desktop-search { display:none !important; }
-  .navbar-brand { display: none !important; } /* Hides logo on mobile as per design */
+@media (max-width: 767.98px) {
+
+    .desktop-nav,
+    .desktop-search {
+        display: none !important;
+    }
+
+    .navbar-brand {
+        display: none !important;
+    }
+
+    /* Hides logo on mobile as per design */
 }
 
 
@@ -166,7 +241,8 @@ body {
 /* Container ko set karna taake arrows bahar nikal sakein */
 .special-offers-carousel-container {
     position: relative;
-    padding: 0 40px; /* Arrows ke liye jagah */
+    padding: 0 40px;
+    /* Arrows ke liye jagah */
 }
 
 /* Base Card Style (sab capsules ke liye) */
@@ -174,13 +250,14 @@ body {
     background-color: #0d121c;
     border-radius: 4px;
     overflow: hidden;
-    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
     transition: all 0.2s ease;
     cursor: pointer;
     height: 100%;
     display: flex;
     flex-direction: column;
 }
+
 .capsule:hover {
     transform: scale(1.02);
     box-shadow: 0 0 15px rgba(102, 192, 244, 0.4);
@@ -189,31 +266,42 @@ body {
 /* === FIX 1: WAPAS 'cover' PE CHANGE KIA === */
 .capsule img {
     width: 100%;
-    object-fit: cover; /* 'contain' se wapas 'cover' kar diya */
+    object-fit: cover;
+    /* 'contain' se wapas 'cover' kar diya */
 }
+
 /* === YAHAN TAK === */
 
 
 /* --- Card Type 1: Bada Vertical Card --- */
 .capsule-large-vertical img {
-    aspect-ratio: 4 / 5; /* Video jaisa vertical ratio */
+    aspect-ratio: 4 / 5;
+    /* Video jaisa vertical ratio */
 }
 
 /* --- Card Type 2: Standard Vertical Card (4-in-a-row) --- */
 .capsule-vertical img {
-    aspect-ratio: 16 / 9; /* Horizontal aspect ratio (jaise pehle choti images ka tha) */
-    height: 200px; /* Ek fixed height de di hai */
-    object-fit: cover; /* Taake image cut na ho aur poori jagah bhare */
+    aspect-ratio: 16 / 9;
+    /* Horizontal aspect ratio (jaise pehle choti images ka tha) */
+    height: 200px;
+    /* Ek fixed height de di hai */
+    object-fit: cover;
+    /* Taake image cut na ho aur poori jagah bhare */
 }
+
 /* --- Card Type 3: Publisher Card ("Gameloft" style) --- */
 .capsule-publisher img.publisher-main-img {
-    aspect-ratio: 16 / 9; /* Horizontal main image */
+    aspect-ratio: 16 / 9;
+    /* Horizontal main image */
 }
+
 .publisher-sub-images {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2px; /* Chota gap */
+    gap: 2px;
+    /* Chota gap */
 }
+
 .publisher-sub-images img {
     aspect-ratio: 16 / 9;
     width: 100%;
@@ -221,17 +309,22 @@ body {
 
 /* --- Card Type 4: Chota Stacked Card (Horizontal) --- */
 .capsule-horizontal-stack {
-    height: auto; 
-    margin-bottom: 8px; /* Stack ke darmiyan gap (row ka g-2 bhi 8px hai) */
-    
+    height: auto;
+    margin-bottom: 8px;
+    /* Stack ke darmiyan gap (row ka g-2 bhi 8px hai) */
+
     /* === FIX 2: ALIGNMENT KE LIYE ADD KIA === */
-    flex-grow: 1; /* Taake yeh column ki poori height lein */
+    flex-grow: 1;
+    /* Taake yeh column ki poori height lein */
 }
+
 .capsule-horizontal-stack:last-child {
     margin-bottom: 0;
 }
+
 .capsule-horizontal-stack img {
-    aspect-ratio: 16 / 9; /* Horizontal image */
+    aspect-ratio: 16 / 9;
+    /* Horizontal image */
 }
 
 
@@ -239,23 +332,29 @@ body {
 .capsule-info {
     padding: 12px;
     /* === FIX 3: BLUISH BACKGROUND === */
-    background-color: #3a5c7c; /* Dark (#1a2430) se blue kar diya */
-    flex-grow: 1; /* Price ko neeche push karega */
+    background-color: #3a5c7c;
+    /* Dark (#1a2430) se blue kar diya */
+    flex-grow: 1;
+    /* Price ko neeche push karega */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
+
 .capsule-title {
     color: #c6d4df;
     font-size: 0.9rem;
     font-weight: 600;
     text-transform: uppercase;
 }
+
 .capsule-desc {
-    color: #c6d4df; /* Thora light kar diya */
+    color: #c6d4df;
+    /* Thora light kar diya */
     font-size: 0.8rem;
     margin-bottom: 10px;
 }
+
 .discount-badge-lg {
     background-color: #4c6b22;
     color: #a4d007;
@@ -265,19 +364,23 @@ body {
     border-radius: 3px;
     margin-right: 8px;
 }
+
 .price-wrapper-lg {
     line-height: 1.1;
 }
+
 .price-wrapper-lg .original-price {
     color: #7a99a4;
     text-decoration: line-through;
     font-size: 0.8rem;
 }
+
 .price-wrapper-lg .final-price {
     color: #c6d4df;
     font-size: 1.1rem;
     font-weight: 600;
 }
+
 .discount-badge-special {
     background-color: #3b5a7e;
     color: #e0e6e9;
@@ -291,23 +394,27 @@ body {
 .capsule-info-small {
     padding: 10px;
     /* === FIX 3: BLUISH BACKGROUND === */
-    background-color: #3a5c7c; /* Dark (#1a2430) se blue kar diya */
+    background-color: #3a5c7c;
+    /* Dark (#1a2430) se blue kar diya */
     display: flex;
     justify-content: space-between;
     align-items: center;
     min-height: 60px;
 }
+
 .capsule-title-small {
     color: #c6d4df;
     font-size: 0.8rem;
     font-weight: 600;
     margin: 0;
 }
+
 .capsule-price-small {
     display: flex;
     align-items: center;
     gap: 8px;
 }
+
 .discount-badge-sm {
     background-color: #4c6b22;
     color: #a4d007;
@@ -316,41 +423,50 @@ body {
     font-weight: 700;
     border-radius: 3px;
 }
+
 .price-wrapper-sm {
     line-height: 1;
     text-align: right;
 }
+
 .price-wrapper-sm .original-price {
     color: #7a99a4;
     text-decoration: line-through;
     font-size: 0.75rem;
 }
+
 .price-wrapper-sm .final-price {
     color: #c6d4df;
     font-size: 1rem;
     font-weight: 600;
 }
+
 /* ================================== */
 /* 10. Section Header & Browse Button */
 /* ================================== */
 
 
 .section-title {
-    color: #ffffff; /* Proper White Color */
-    font-weight: 700; /* Bold (pehle 600 tha) */
+    color: #ffffff;
+    /* Proper White Color */
+    font-weight: 700;
+    /* Bold (pehle 600 tha) */
     font-size: 1.2rem;
     text-transform: uppercase;
     margin: 0;
 }
 
 .btn-browse-more {
-    color: #ffffff; /* Proper White Color */
+    color: #ffffff;
+    /* Proper White Color */
     text-decoration: none;
     text-transform: uppercase;
     font-size: 0.8rem;
-    font-weight: 700; /* Bold (pehle 600 tha) */
+    font-weight: 700;
+    /* Bold (pehle 600 tha) */
     padding: 6px 12px;
-    border: 1px solid rgba(255, 255, 255, 0.5); /* Border ko bhi thora white kar diya */
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    /* Border ko bhi thora white kar diya */
     border-radius: 3px;
     background-color: rgba(90, 106, 124, 0.2);
     transition: all 0.2s ease;
@@ -358,8 +474,10 @@ body {
 
 .btn-browse-more:hover {
     color: #ffffff;
-    border-color: rgba(255, 255, 255, 0.9); /* Hover par border aur wazeh */
-    background-color: rgba(90, 106, 124, 0.5); /* Hover par background aur wazeh */
+    border-color: rgba(255, 255, 255, 0.9);
+    /* Hover par border aur wazeh */
+    background-color: rgba(90, 106, 124, 0.5);
+    /* Hover par background aur wazeh */
 }
 
 
@@ -368,6 +486,7 @@ body {
     bottom: -40px;
     margin: 0;
 }
+
 #specialOffersCarousel .carousel-indicators button {
     width: 12px;
     height: 12px;
@@ -376,10 +495,12 @@ body {
     border: none;
     opacity: 0.5;
 }
+
 #specialOffersCarousel .carousel-indicators button.active {
     background-color: #c6d4df;
     opacity: 1;
 }
+
 #specialOffersCarousel .carousel-control-prev,
 #specialOffersCarousel .carousel-control-next {
     width: 45px;
@@ -393,17 +514,21 @@ body {
     transform: translateY(-50%);
     border-radius: 4px;
 }
+
 #specialOffersCarousel .carousel-control-prev:hover,
 #specialOffersCarousel .carousel-control-next:hover {
     opacity: 1;
     background-color: rgba(0, 0, 0, 0.7);
 }
+
 #specialOffersCarousel .carousel-control-prev {
     left: -45px;
 }
+
 #specialOffersCarousel .carousel-control-next {
     right: -45px;
 }
+
 #specialOffersCarousel .carousel-control-prev-icon,
 #specialOffersCarousel .carousel-control-next-icon {
     width: 2rem;
@@ -412,6 +537,7 @@ body {
 
 /* Mobile responsive */
 @media (max-width: 991.98px) {
+
     /* Tablet par, complex layout ko 2x2 grid bana dein */
     #specialOffersCarousel .carousel-item .col-lg-5,
     #specialOffersCarousel .carousel-item .col-lg-4,
@@ -426,7 +552,7 @@ body {
     .special-offers-carousel-container {
         padding: 0 10px;
     }
-    
+
     /* Mobile par, sab ko 2-in-a-row (50% width) kar dein */
     #specialOffersCarousel .carousel-item .col-lg-5,
     #specialOffersCarousel .carousel-item .col-lg-4,
@@ -434,15 +560,17 @@ body {
         flex: 0 0 50%;
         max-width: 50%;
     }
-    
+
     #specialOffersCarousel .carousel-control-prev,
     #specialOffersCarousel .carousel-control-next {
         width: 30px;
         height: 60px;
     }
+
     #specialOffersCarousel .carousel-control-prev {
         left: 5px;
     }
+
     #specialOffersCarousel .carousel-control-next {
         right: 5px;
     }
@@ -458,11 +586,13 @@ body {
 .category-card {
     display: block;
     position: relative;
-    overflow: hidden; /* Zoom effect ke liye zaroori */
+    overflow: hidden;
+    /* Zoom effect ke liye zaroori */
     border-radius: 4px;
     text-decoration: none;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-    height: 180px; /* Aap is height ko kam ya zyada kar sakte hain */
+    height: 180px;
+    /* Aap is height ko kam ya zyada kar sakte hain */
     transition: all 0.2s ease;
 }
 
@@ -470,7 +600,8 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.3s ease; /* Zoom ka transition */
+    transition: transform 0.3s ease;
+    /* Zoom ka transition */
 }
 
 .category-card .category-overlay {
@@ -479,10 +610,10 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    
+
     /* Default state: Video jaisa halka sa dark gradient (taake text parha ja sake) */
     background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 40%);
-    
+
     /* Gradient change ka transition */
     transition: background 0.3s ease;
 }
@@ -495,14 +626,16 @@ body {
     font-weight: 700;
     font-size: 1.1rem;
     text-transform: uppercase;
-    z-index: 2; /* Text ko gradient ke upar rakhega */
+    z-index: 2;
+    /* Text ko gradient ke upar rakhega */
 }
 
 /* --- HOVER Effects (Video ke mutabiq) --- */
 
 /* 1. Image ko zoom karein */
 .category-card:hover .category-bg {
-    transform: scale(1.05); /* Video jaisa zoom */
+    transform: scale(1.05);
+    /* Video jaisa zoom */
 }
 
 /* 2. Gradient ko blue/teal karein */
@@ -569,8 +702,9 @@ body {
 
 /* --- Category Responsive --- */
 @media (max-width: 991.98px) {
+
     /* Tablet par 2x2 grid dikhaye */
-     #categoryCarousel .carousel-item .col-md-6 {
+    #categoryCarousel .carousel-item .col-md-6 {
         flex: 0 0 50%;
         max-width: 50%;
         margin-bottom: 15px;
@@ -578,10 +712,12 @@ body {
 }
 
 @media (max-width: 767.98px) {
+
     /* Mobile par arrows ko andar le aayein */
     #categoryCarousel .carousel-control-prev {
         left: 5px;
     }
+
     #categoryCarousel .carousel-control-next {
         right: 5px;
     }
@@ -591,9 +727,3 @@ body {
     max-width: 1100px;
     margin: auto;
 }
-
-
-
-
-=======
->>>>>>> origin/main

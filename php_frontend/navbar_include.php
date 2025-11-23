@@ -62,7 +62,7 @@
                         <a href="profile.php">
                             <button type="button" class="login-btn btn btn-sm"><i class="fas fa-user"></i> Profile</button>
                         </a>
-                        <a href="../config/logout.php">
+                        <a href="../php_backend/logout.php">
                             <button type="button" class="btn btn-sm" style="background: rgba(255, 107, 107, 0.1); border: 1px solid rgba(255, 107, 107, 0.4); color: #ff6b6b; padding: 8px 20px; border-radius: 8px; font-weight: 500; transition: all 0.3s ease;"><i class="fas fa-sign-out-alt"></i> Logout</button>
                         </a>
                     </div>
@@ -80,7 +80,7 @@
                         <a href="profile.php">
                             <button type="button" class="login-btn btn btn-sm w-100 mb-2"><i class="fas fa-user"></i> Profile</button>
                         </a>
-                        <a href="../config/logout.php">
+                        <a href="../php_backend/logout.php">
                             <button type="button" class="btn btn-sm w-100" style="background: rgba(255, 107, 107, 0.1); border: 1px solid rgba(255, 107, 107, 0.4); color: #ff6b6b; padding: 8px 20px; border-radius: 8px; font-weight: 500;"><i class="fas fa-sign-out-alt"></i> Logout</button>
                         </a>
                     </div>

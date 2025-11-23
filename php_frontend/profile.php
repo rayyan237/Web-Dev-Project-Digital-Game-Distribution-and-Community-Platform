@@ -4,7 +4,7 @@ session_start();
 
 // Check if user is logged in
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header("Location: login.html?error=" . urlencode("Please login to view your profile."));
+    header("Location: login.php?error=" . urlencode("Please login to view your profile."));
     exit;
 }
 
@@ -22,7 +22,7 @@ if ($result->num_rows === 1) {
 } else {
     // User not found - logout
     session_destroy();
-    header("Location: login.html?error=" . urlencode("User account not found."));
+    header("Location: login.php?error=" . urlencode("User account not found."));
     exit;
 }
 
@@ -362,7 +362,7 @@ $conn->close();
             <a href="index.php" class="btn-back">
                 <i class="fas fa-arrow-left"></i> Back to Store
             </a>
-            <a href="../config/logout.php" class="btn-logout">
+            <a href="../php_backend/logout.php" class="btn-logout">
                 <i class="fas fa-sign-out-alt"></i> Logout
             </a>
         </div>

@@ -19,6 +19,6 @@ if (isset($_COOKIE['remember_token'])) {
 session_destroy();
 
 // Redirect to login page with a message
-header("Location: ../html/login.php?success=" . urlencode("You have been logged out successfully."));
+header("Location: ../php_frontend/login.php?success=" . urlencode("You have been logged out successfully."));
 exit;
 ?>

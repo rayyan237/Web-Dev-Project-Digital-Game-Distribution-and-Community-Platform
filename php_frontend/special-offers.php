@@ -303,7 +303,7 @@
 
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h2 class="section-title">DISCOUNTS & EVENTS</h2>
-            <a href="browse more.html" class="btn-browse-more">Browse More</a>
+            <a href="browse-more.php" class="btn-browse-more">Browse More</a>
         </div>
 
         <div id="specialOffersCarousel" class="carousel slide" data-bs-ride="false">

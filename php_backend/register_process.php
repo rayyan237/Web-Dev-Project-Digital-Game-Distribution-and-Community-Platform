@@ -31,77 +31,77 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         empty($country) || $age <= 0) {
         
         $error = "All fields are required. Please fill in all information.";
-        header("Location: ../html/signup.php?error=" . urlencode($error));
+        header("Location: ../php_frontend/signup.php?error=" . urlencode($error));
         exit;
     }
     
     // Validate email format
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = "Invalid email format. Please enter a valid email address.";
-        header("Location: ../html/signup.php?error=" . urlencode($error));
+        header("Location: ../php_frontend/signup.php?error=" . urlencode($error));
         exit;
     }
     
     // Check if emails match
     if ($email !== $confirm_email) {
         $error = "Email addresses do not match. Please check and try again.";
-        header("Location: ../html/signup.php?error=" . urlencode($error));
+        header("Location: ../php_frontend/signup.php?error=" . urlencode($error));
         exit;
     }
     
     // Validate username length (3-50 characters)
     if (strlen($username) < 3 || strlen($username) > 50) {
         $error = "Username must be between 3 and 50 characters.";
-        header("Location: ../html/signup.php?error=" . urlencode($error));
+        header("Location: ../php_frontend/signup.php?error=" . urlencode($error));
         exit;
     }
     
     // Validate username format (alphanumeric and underscores only)
     if (!preg_match('/^[a-zA-Z0-9_]+$/', $username)) {
         $error = "Username can only contain letters, numbers, and underscores.";
-        header("Location: ../html/signup.php?error=" . urlencode($error));
+        header("Location: ../php_frontend/signup.php?error=" . urlencode($error));
         exit;
     }
     
     // Validate display name length
     if (strlen($display_name) < 1 || strlen($display_name) > 100) {
         $error = "Display name must be between 1 and 100 characters.";
-        header("Location: ../html/signup.php?error=" . urlencode($error));
+        header("Location: ../php_frontend/signup.php?error=" . urlencode($error));
         exit;
     }
     
     // Validate password length
     if (strlen($password) < 8) {
         $error = "Password must be at least 8 characters long.";
-        header("Location: ../html/signup.php?error=" . urlencode($error));
+        header("Location: ../php_frontend/signup.php?error=" . urlencode($error));
         exit;
     }
     
     // Check if passwords match
     if ($password !== $confirm_password) {
         $error = "Passwords do not match. Please check and try again.";
-        header("Location: ../html/signup.php?error=" . urlencode($error));
+        header("Location: ../php_frontend/signup.php?error=" . urlencode($error));
         exit;
     }
     
     // Validate password strength (must contain letters and numbers)
     if (!preg_match('/[A-Za-z]/', $password) || !preg_match('/[0-9]/', $password)) {
         $error = "Password must contain both letters and numbers.";
-        header("Location: ../html/signup.php?error=" . urlencode($error));
+        header("Location: ../php_frontend/signup.php?error=" . urlencode($error));
         exit;
     }
     
     // Validate age (minimum 13 years old)
     if ($age < 13 || $age > 120) {
         $error = "You must be at least 13 years old to create an account.";
-        header("Location: ../html/signup.php?error=" . urlencode($error));
+        header("Location: ../php_frontend/signup.php?error=" . urlencode($error));
         exit;
     }
     
     // Validate country (ensure it's not empty and not the default value)
     if (empty($country) || $country === 'Select your country') {
         $error = "Please select your country of residence.";
-        header("Location: ../html/signup.php?error=" . urlencode($error));
+        header("Location: ../php_frontend/signup.php?error=" . urlencode($error));
         exit;
     }
     
@@ -118,7 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($result->num_rows > 0) {
         $error = "Username already exists. Please choose a different username.";
         $stmt->close();
-        header("Location: ../html/signup.php?error=" . urlencode($error));
+        header("Location: ../php_frontend/signup.php?error=" . urlencode($error));
         exit;
     }
     $stmt->close();
@@ -132,7 +132,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($result->num_rows > 0) {
         $error = "Email address already registered. Please use a different email or login.";
         $stmt->close();
-        header("Location: ../html/signup.php?error=" . urlencode($error));
+        header("Location: ../php_frontend/signup.php?error=" . urlencode($error));
         exit;
     }
     $stmt->close();
@@ -149,7 +149,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     if (!$stmt) {
         $error = "Database error. Please try again later.";
-        header("Location: ../html/signup.php?error=" . urlencode($error));
+        header("Location: ../php_frontend/signup.php?error=" . urlencode($error));
         exit;
     }
     
@@ -167,20 +167,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         // Set success message and redirect to login
         $_SESSION['success_message'] = "Account created successfully! Please login.";
-        header("Location: ../html/login.php?success=" . urlencode("Account created successfully! Please login."));
+        header("Location: ../php_frontend/login.php?success=" . urlencode("Account created successfully! Please login."));
         exit;
         
     } else {
         // Registration failed
         $error = "Registration failed. Please try again later.";
         $stmt->close();
-        header("Location: ../html/signup.php?error=" . urlencode($error));
+        header("Location: ../php_frontend/signup.php?error=" . urlencode($error));
         exit;
     }
     
 } else {
     // Not a POST request - redirect to signup page
-    header("Location: ../html/signup.php");
+    header("Location: ../php_frontend/signup.php");
     exit;
 }
 

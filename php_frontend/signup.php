@@ -327,7 +327,7 @@
             <div id="successAlert" class="alert alert-success" role="alert" style="display: none;"></div>
 
             <!-- Signup Form -->
-            <form action="../config/register_process.php" method="POST" id="signupForm">
+            <form action="../php_backend/register_process.php" method="POST" id="signupForm">
 
                 <!-- Email Address -->
                 <div class="mb-3">

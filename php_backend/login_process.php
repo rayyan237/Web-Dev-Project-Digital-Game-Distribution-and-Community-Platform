@@ -23,14 +23,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if fields are empty
     if (empty($input_username) || empty($input_password)) {
         $error = "Please fill in both username and password.";
-        header("Location: ../html/login.php?error=" . urlencode($error));
+        header("Location: ../php_frontend/login.php?error=" . urlencode($error));
         exit;
     }
     
     // Validate username format (basic check)
     if (strlen($input_username) < 3 || strlen($input_username) > 50) {
         $error = "Invalid username or password.";
-        header("Location: ../html/login.php?error=" . urlencode($error));
+        header("Location: ../php_frontend/login.php?error=" . urlencode($error));
         exit;
     }
     
@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     if (!$stmt) {
         $error = "Database error. Please try again later.";
-        header("Location: ../html/login.php?error=" . urlencode($error));
+        header("Location: ../php_frontend/login.php?error=" . urlencode($error));
         exit;
     }
     
@@ -127,27 +127,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $conn->close();
             
             // Redirect to main page (index.php or dashboard)
-            header("Location: ../html/index.php");
+            header("Location: ../php_frontend/index.php");
             exit;
             
         } else {
             // Password did not match
             $error = "Invalid username or password.";
             $stmt->close();
-            header("Location: ../html/login.php?error=" . urlencode($error));
+            header("Location: ../php_frontend/login.php?error=" . urlencode($error));
             exit;
         }
     } else {
         // No user found with that username
         $error = "Invalid username or password.";
         $stmt->close();
-        header("Location: ../html/login.php?error=" . urlencode($error));
+        header("Location: ../php_frontend/login.php?error=" . urlencode($error));
         exit;
     }
     
 } else {
     // Not a POST request - redirect to login page
-    header("Location: ../html/login.php");
+    header("Location: ../php_frontend/login.php");
     exit;
 }
 

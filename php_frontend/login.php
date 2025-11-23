@@ -327,7 +327,7 @@
             <div id="successAlert" class="alert alert-success" role="alert" style="display: none;"></div>
 
             <!-- Login Form -->
-            <form action="../config/login_process.php" method="POST">
+            <form action="../php_backend/login_process.php" method="POST">
                 <div class="mb-3">
                     <label for="username" class="form-label">Sign In With Account Name</label>
                     <input type="text" class="form-control" id="username" name="username"

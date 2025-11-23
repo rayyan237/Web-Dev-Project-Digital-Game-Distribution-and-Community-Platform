@@ -476,7 +476,7 @@
         <div class="access-content">
             <h2 class="access-title">Access Games Instantly</h2>
             <p class="access-subtitle">With nearly 30,000 games from AAA to indie and everything in-between. Enjoy exclusive deals, automatic game updates, and other great perks.</p>
-            <a href="index.html" class="access-link">Browse the Store &rightarrow;</a>
+            <a href="index.php" class="access-link">Browse the Store &rightarrow;</a>
         </div>
     </section>
 

@@ -22,7 +22,7 @@ function requireLogin() {
         $_SESSION['redirect_after_login'] = $_SERVER['REQUEST_URI'];
         
         // Redirect to login page
-        header("Location: ../html/login.php?error=" . urlencode("Please login to access this page."));
+        header("Location: ../php_frontend/login.php?error=" . urlencode("Please login to access this page."));
         exit;
     }
 }
@@ -37,7 +37,7 @@ function requireAdmin() {
     requireLogin();
     
     if (!isAdmin()) {
-        header("Location: ../html/index.php?error=" . urlencode("You do not have permission to access this page."));
+        header("Location: ../php_frontend/index.php?error=" . urlencode("You do not have permission to access this page."));
         exit;
     }
 }
@@ -81,7 +81,7 @@ function checkSessionTimeout($timeout = 3600) { // Default 1 hour
             // Session has expired
             session_unset();
             session_destroy();
-            header("Location: ../html/login.php?error=" . urlencode("Your session has expired. Please login again."));
+            header("Location: ../php_frontend/login.php?error=" . urlencode("Your session has expired. Please login again."));
             exit;
         }
     }
