@@ -3,7 +3,7 @@
 session_start();
 
 // Load database connection
-include 'db_connect.php';
+include '../config/db_connect.php';
 
 // Check if form was submitted using POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

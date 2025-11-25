@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 23, 2025 at 10:49 PM
+-- Generation Time: Nov 25, 2025 at 08:28 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -75,21 +75,6 @@ CREATE TABLE `community_replies` (
   `user_id` int(11) NOT NULL,
   `content` text NOT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `contact_messages`
---
-
-CREATE TABLE `contact_messages` (
-  `message_id` int(11) NOT NULL,
-  `sender_name` varchar(100) NOT NULL,
-  `sender_email` varchar(100) NOT NULL,
-  `subject` varchar(255) NOT NULL,
-  `message_text` text NOT NULL,
-  `sent_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -447,33 +432,6 @@ INSERT INTO `genres` (`genre_id`, `genre_name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `newsletter_subscriptions`
---
-
-CREATE TABLE `newsletter_subscriptions` (
-  `sub_id` int(11) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `is_active` tinyint(1) NOT NULL DEFAULT 1,
-  `subscribed_at` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `orders`
---
-
-CREATE TABLE `orders` (
-  `order_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `total_amount` decimal(10,2) NOT NULL,
-  `status` enum('PENDING','PAID','SHIPPED','CANCELLED','REFUNDED') NOT NULL DEFAULT 'PENDING',
-  `order_date` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `password_resets`
 --
 
@@ -483,6 +441,28 @@ CREATE TABLE `password_resets` (
   `token` varchar(255) NOT NULL,
   `expires_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `password_reset_tokens`
+--
+
+CREATE TABLE `password_reset_tokens` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `token_hash` varchar(64) NOT NULL,
+  `expires_at` datetime NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `used` tinyint(1) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `password_reset_tokens`
+--
+
+INSERT INTO `password_reset_tokens` (`id`, `user_id`, `token_hash`, `expires_at`, `created_at`, `used`) VALUES
+(1, 3, '4eca9ce46f5f7783f744ee8c123e2638e1f3416c36d39f7bf0040e46bcaf75fb', '2025-11-25 08:42:51', '2025-11-25 06:42:51', 0);
 
 -- --------------------------------------------------------
 
@@ -499,19 +479,33 @@ CREATE TABLE `reviews` (
   `created_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `shopping_cart`
+-- Dumping data for table `reviews`
 --
 
-CREATE TABLE `shopping_cart` (
-  `cart_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `game_id` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL DEFAULT 1,
-  `added_at` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+INSERT INTO `reviews` (`review_id`, `user_id`, `game_id`, `rating`, `comment`, `created_at`) VALUES
+(132, 3, 1, 5, 'Fantastic 4X game! The blend of fantasy and tactical combat is highly addictive.', '2025-11-25 11:36:51'),
+(133, 3, 2, 4, 'Great fun with friends, perfect for short, chaotic sessions. Sus is my new favorite word.', '2025-11-25 11:36:51'),
+(134, 3, 3, 5, 'Unbelievable driving physics. The sound design is top-tier for a simulation racer.', '2025-11-25 11:36:51'),
+(135, 3, 4, 4, 'Excellent graphics and sound design. The large-scale warfare feels immersive.', '2025-11-25 11:36:51'),
+(136, 3, 5, 5, 'Pure 90s carnage. The atmosphere is tense and the level design is complex and rewarding.', '2025-11-25 11:36:51'),
+(137, 3, 6, 5, 'The looting and shooting never gets old. Handsome Jack is one of the best antagonists in gaming.', '2025-11-25 11:36:51'),
+(138, 3, 7, 5, 'An emotional masterpiece. The platforming difficulty is challenging but always fair.', '2025-11-25 11:36:51'),
+(139, 3, 8, 5, 'The competitive FPS standard. Graphics update is clean and the hit registration feels crisp.', '2025-11-25 11:36:51'),
+(140, 3, 9, 5, 'The visual detail in Night City is stunning. Took me 80 hours to finish the main story!', '2025-11-25 11:36:51'),
+(141, 3, 10, 4, 'Tense multiplayer horror experience. Playing as the killer is genuinely stressful.', '2025-11-25 11:36:51'),
+(142, 3, 11, 5, 'Jensen is a great protagonist. The future-noir aesthetic and political intrigue are brilliant.', '2025-11-25 11:36:51'),
+(143, 3, 12, 5, 'Brutal but beautiful survival game. The art style is unique and charming.', '2025-11-25 11:36:51'),
+(144, 3, 13, 4, 'The pinnacle of competitive MOBAs. Massive hero pool and complex strategy.', '2025-11-25 11:36:51'),
+(145, 3, 14, 5, 'A generational masterpiece. The sense of discovery in the open world is unmatched.', '2025-11-25 11:36:51'),
+(146, 3, 15, 5, 'Surprisingly addictive. Excellent simulation detail, especially when driving at night.', '2025-11-25 11:36:51'),
+(147, 3, 16, 5, 'Still the best modern Fallout game. The writing and branching quests are excellent.', '2025-11-25 11:36:51'),
+(148, 3, 17, 5, 'Incredible visuals and soundtrack. A truly epic continuation of the story.', '2025-11-25 11:36:51'),
+(149, 3, 18, 5, 'Beautiful, haunting, and meticulously crafted. A perfect Metroidvania.', '2025-11-25 11:36:51'),
+(150, 3, 19, 5, 'Timeless co-op zombie shooter. Still holds up better than most new titles.', '2025-11-25 11:36:51'),
+(151, 3, 20, 5, 'A genuinely scary ghost-hunting simulator. Requires actual teamwork and deduction.', '2025-11-25 11:36:51'),
+(152, 3, 21, 5, 'One of the best puzzle games ever made. GLaDOS is an iconic character.', '2025-11-25 11:36:51'),
+(153, 3, 22, 4, 'The original battle royale formula. Great map variety and large player counts.', '2025-11-25 11:36:51');
 
 -- --------------------------------------------------------
 
@@ -578,30 +572,15 @@ CREATE TABLE `users` (
   `display_name` varchar(100) NOT NULL COMMENT 'The friendly name users see (e.g., a real name or an alias).',
   `country` varchar(50) NOT NULL COMMENT 'User''s geographic location.',
   `age` int(7) NOT NULL COMMENT 'minimum ages are required by some games. like 18',
-  `avatar_url` varchar(255) DEFAULT 'assets/images/avatars/default.jpg',
-  `level` int(11) DEFAULT 1,
-  `xp` int(11) DEFAULT 0
+  `avatar_url` varchar(255) DEFAULT 'assets/images/avatars/default.jpg'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`user_id`, `is_admin`, `time_stamp`, `username`, `email`, `password_hash`, `display_name`, `country`, `age`, `avatar_url`, `level`, `xp`) VALUES
-(2, 0, '2025-11-23', 'testuser', 'test@example.com', '$2y$12$L/cQxwbtS/gsvyzL9iE.aO3YV4JckG6mdM18AyjcSLCrGGUOjs.0O', 'TEST', 'Pakistan', 18, 'assets/images/avatars/default.jpg', 1, 0);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `user_library`
---
-
-CREATE TABLE `user_library` (
-  `library_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `game_id` int(11) NOT NULL,
-  `purchase_date` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+INSERT INTO `users` (`user_id`, `is_admin`, `time_stamp`, `username`, `email`, `password_hash`, `display_name`, `country`, `age`, `avatar_url`) VALUES
+(3, 1, '2025-11-25', 'Zain', 'zainbinkhalid510@gmail.com', '$2y$12$oVTNqierbfDMj5UXWNS7mur1IuRQ9lAOxf7NGgS9gf1DJdJZdbTQu', 'Zain', 'Pakistan', 18, 'assets/images/avatars/default.jpg');
 
 -- --------------------------------------------------------
 
@@ -615,6 +594,34 @@ CREATE TABLE `wishlist` (
   `game_id` int(11) NOT NULL,
   `added_date` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `wishlist`
+--
+
+INSERT INTO `wishlist` (`wishlist_id`, `user_id`, `game_id`, `added_date`) VALUES
+(1, 3, 1, '2025-11-25 11:14:00'),
+(2, 3, 2, '2025-11-25 11:14:00'),
+(3, 3, 3, '2025-11-25 11:14:00'),
+(4, 3, 4, '2025-11-25 11:14:00'),
+(5, 3, 5, '2025-11-25 11:14:00'),
+(6, 3, 6, '2025-11-25 11:14:00'),
+(7, 3, 7, '2025-11-25 11:14:00'),
+(8, 3, 8, '2025-11-25 11:14:00'),
+(9, 3, 9, '2025-11-25 11:14:00'),
+(10, 3, 10, '2025-11-25 11:14:00'),
+(11, 3, 11, '2025-11-25 11:14:00'),
+(12, 3, 12, '2025-11-25 11:14:00'),
+(13, 3, 13, '2025-11-25 11:14:00'),
+(14, 3, 14, '2025-11-25 11:14:00'),
+(15, 3, 15, '2025-11-25 11:14:00'),
+(16, 3, 16, '2025-11-25 11:14:00'),
+(17, 3, 17, '2025-11-25 11:14:00'),
+(18, 3, 18, '2025-11-25 11:14:00'),
+(19, 3, 19, '2025-11-25 11:14:00'),
+(20, 3, 20, '2025-11-25 11:14:00'),
+(21, 3, 21, '2025-11-25 11:14:00'),
+(22, 3, 22, '2025-11-25 11:14:00');
 
 --
 -- Indexes for dumped tables
@@ -650,12 +657,6 @@ ALTER TABLE `community_replies`
   ADD PRIMARY KEY (`reply_id`),
   ADD KEY `fk_reply_post` (`post_id`),
   ADD KEY `fk_reply_user` (`user_id`);
-
---
--- Indexes for table `contact_messages`
---
-ALTER TABLE `contact_messages`
-  ADD PRIMARY KEY (`message_id`);
 
 --
 -- Indexes for table `games`
@@ -695,26 +696,21 @@ ALTER TABLE `genres`
   ADD UNIQUE KEY `unique_genre` (`genre_name`);
 
 --
--- Indexes for table `newsletter_subscriptions`
---
-ALTER TABLE `newsletter_subscriptions`
-  ADD PRIMARY KEY (`sub_id`),
-  ADD UNIQUE KEY `email` (`email`);
-
---
--- Indexes for table `orders`
---
-ALTER TABLE `orders`
-  ADD PRIMARY KEY (`order_id`),
-  ADD KEY `fk_order_user` (`user_id`);
-
---
 -- Indexes for table `password_resets`
 --
 ALTER TABLE `password_resets`
   ADD PRIMARY KEY (`reset_id`),
   ADD UNIQUE KEY `token` (`token`),
   ADD KEY `fk_reset_user` (`user_id`);
+
+--
+-- Indexes for table `password_reset_tokens`
+--
+ALTER TABLE `password_reset_tokens`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_token_hash` (`token_hash`),
+  ADD KEY `idx_user_id` (`user_id`),
+  ADD KEY `idx_expires_at` (`expires_at`);
 
 --
 -- Indexes for table `reviews`
@@ -724,14 +720,6 @@ ALTER TABLE `reviews`
   ADD UNIQUE KEY `user_review_unique` (`user_id`,`game_id`),
   ADD KEY `fk_review_user` (`user_id`),
   ADD KEY `fk_review_game` (`game_id`);
-
---
--- Indexes for table `shopping_cart`
---
-ALTER TABLE `shopping_cart`
-  ADD PRIMARY KEY (`cart_id`),
-  ADD KEY `fk_cart_user` (`user_id`),
-  ADD KEY `fk_cart_game` (`game_id`);
 
 --
 -- Indexes for table `tags`
@@ -747,15 +735,6 @@ ALTER TABLE `users`
   ADD PRIMARY KEY (`user_id`),
   ADD UNIQUE KEY `unique_username` (`username`),
   ADD UNIQUE KEY `unique_email` (`email`);
-
---
--- Indexes for table `user_library`
---
-ALTER TABLE `user_library`
-  ADD PRIMARY KEY (`library_id`),
-  ADD UNIQUE KEY `user_game_unique` (`user_id`,`game_id`),
-  ADD KEY `fk_lib_user` (`user_id`),
-  ADD KEY `fk_lib_game` (`game_id`);
 
 --
 -- Indexes for table `wishlist`
@@ -795,12 +774,6 @@ ALTER TABLE `community_replies`
   MODIFY `reply_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `contact_messages`
---
-ALTER TABLE `contact_messages`
-  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `games`
 --
 ALTER TABLE `games`
@@ -831,34 +804,22 @@ ALTER TABLE `genres`
   MODIFY `genre_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
--- AUTO_INCREMENT for table `newsletter_subscriptions`
---
-ALTER TABLE `newsletter_subscriptions`
-  MODIFY `sub_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `orders`
---
-ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `password_resets`
 --
 ALTER TABLE `password_resets`
   MODIFY `reset_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `password_reset_tokens`
+--
+ALTER TABLE `password_reset_tokens`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `shopping_cart`
---
-ALTER TABLE `shopping_cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=154;
 
 --
 -- AUTO_INCREMENT for table `tags`
@@ -870,19 +831,13 @@ ALTER TABLE `tags`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key. Always use a specific name like user_id.', AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `user_library`
---
-ALTER TABLE `user_library`
-  MODIFY `library_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key. Always use a specific name like user_id.', AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `wishlist`
 --
 ALTER TABLE `wishlist`
-  MODIFY `wishlist_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `wishlist_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- Constraints for dumped tables
@@ -935,16 +890,16 @@ ALTER TABLE `game_tag`
   ADD CONSTRAINT `tags_fk_game_games_id` FOREIGN KEY (`game_id`) REFERENCES `games` (`game_id`);
 
 --
--- Constraints for table `orders`
---
-ALTER TABLE `orders`
-  ADD CONSTRAINT `fk_order_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
-
---
 -- Constraints for table `password_resets`
 --
 ALTER TABLE `password_resets`
   ADD CONSTRAINT `fk_reset_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `password_reset_tokens`
+--
+ALTER TABLE `password_reset_tokens`
+  ADD CONSTRAINT `password_reset_tokens_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `reviews`
@@ -952,20 +907,6 @@ ALTER TABLE `password_resets`
 ALTER TABLE `reviews`
   ADD CONSTRAINT `fk_review_game` FOREIGN KEY (`game_id`) REFERENCES `games` (`game_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `fk_review_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
-
---
--- Constraints for table `shopping_cart`
---
-ALTER TABLE `shopping_cart`
-  ADD CONSTRAINT `fk_cart_game` FOREIGN KEY (`game_id`) REFERENCES `games` (`game_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `fk_cart_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
-
---
--- Constraints for table `user_library`
---
-ALTER TABLE `user_library`
-  ADD CONSTRAINT `fk_lib_game` FOREIGN KEY (`game_id`) REFERENCES `games` (`game_id`),
-  ADD CONSTRAINT `fk_lib_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `wishlist`
