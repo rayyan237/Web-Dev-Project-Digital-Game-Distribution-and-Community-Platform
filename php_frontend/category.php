@@ -188,6 +188,8 @@
 
 <body>
 
+    <?php include 'navbar_include.php'; ?>
+
     <div class="container mt-5 steam-container-width special-offers-carousel-container">
 
         <div class="d-flex justify-content-between align-items-center mb-3">

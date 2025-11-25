@@ -169,11 +169,7 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg bg-steam-secondary py-3 mb-4 shadow">
-        <div class="container">
-            <a class="navbar-brand text-uppercase fw-bold text-accent" href="#"><i class="fa-brands fa-steam me-2"></i>SteamConnect</a>
-        </div>
-    </nav>
+    <?php include 'navbar_include.php'; ?>
 
     <div class="container pb-5">
 
@@ -191,20 +187,7 @@
                         <button class="btn-hide-chat" onclick="toggleChat()"><i class="fa-solid fa-eye-slash me-1"></i> Hide Chatbox</button>
                     </div>
                     <div class="chat-window rounded-steam mb-3" id="chat-box">
-                        <div class="chat-message">
-                            <img src="https://i.pravatar.cc/40?img=1" class="chat-avatar" alt="user">
-                            <div class="chat-content-wrapper">
-                                <div class="chat-meta">System</div>
-                                <div class="chat-bubble">Welcome to global chat!</div>
-                            </div>
-                        </div>
-                        <div class="chat-message">
-                            <img src="https://i.pravatar.cc/40?img=12" class="chat-avatar" alt="user">
-                            <div class="chat-content-wrapper">
-                                <div class="chat-meta text-accent">GamerOne</div>
-                                <div class="chat-bubble">Anyone up for a match?</div>
-                            </div>
-                        </div>
+                        <!-- Messages will be loaded from database -->
                     </div>
                     <div class="input-group">
                         <input type="text" id="chat-input" class="form-control form-control-steam py-3 px-4 rounded-start-pill" placeholder="Send a message... (Text only)">
@@ -769,18 +752,82 @@
         const chatInput = document.getElementById('chat-input');
         const sendBtn = document.getElementById('send-btn');
         const chatBox = document.getElementById('chat-box');
+        
+        // Load chat messages from database
+        function loadChatMessages() {
+            fetch('../php_backend/get_chat_messages.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.messages.length > 0) {
+                        chatBox.innerHTML = ''; // Clear existing messages
+                        data.messages.forEach(msg => {
+                            const div = document.createElement('div');
+                            div.className = 'chat-message';
+                            div.innerHTML = `<img src="${msg.avatar_url}" class="chat-avatar" alt="user"><div class="chat-content-wrapper"><div class="chat-meta text-accent">${msg.display_name}</div><div class="chat-bubble">${msg.message}</div></div>`;
+                            chatBox.appendChild(div);
+                        });
+                        chatBox.scrollTop = chatBox.scrollHeight; // Scroll to bottom
+                    } else if (data.messages && data.messages.length === 0) {
+                        // No messages yet - show welcome message
+                        chatBox.innerHTML = '<div class="chat-message"><img src="assets/images/avatars/default.jpg" class="chat-avatar" alt="system"><div class="chat-content-wrapper"><div class="chat-meta">System</div><div class="chat-bubble">Welcome to global chat! Be the first to send a message.</div></div></div>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading messages:', error);
+                    chatBox.innerHTML = '<div class="chat-message"><img src="assets/images/avatars/default.jpg" class="chat-avatar" alt="system"><div class="chat-content-wrapper"><div class="chat-meta">System</div><div class="chat-bubble">Unable to load messages. Please refresh the page.</div></div></div>';
+                });
+        }
+        
         function sendMessage() {
             const text = chatInput.value.trim();
             if(!text) return;
-            const div = document.createElement('div');
-            div.className = 'chat-message';
-            div.innerHTML = `<img src="https://i.pravatar.cc/40?img=70" class="chat-avatar"><div class="chat-content-wrapper"><div class="chat-meta text-accent">You</div><div class="chat-bubble">${text}</div></div>`;
-            chatBox.appendChild(div);
-            chatInput.value = '';
-            chatBox.scrollTop = chatBox.scrollHeight;
+            
+            // Disable send button to prevent double-sending
+            sendBtn.disabled = true;
+            chatInput.disabled = true;
+            
+            // Send message to backend via AJAX
+            fetch('../php_backend/send_chat_message.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    message: text
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Display the message in the chat box
+                    const div = document.createElement('div');
+                    div.className = 'chat-message';
+                    div.innerHTML = `<img src="${data.data.avatar_url}" class="chat-avatar" alt="user"><div class="chat-content-wrapper"><div class="chat-meta text-accent">${data.data.display_name}</div><div class="chat-bubble">${data.data.message}</div></div>`;
+                    chatBox.appendChild(div);
+                    chatInput.value = '';
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                } else {
+                    // Show error message
+                    alert(data.error || 'Failed to send message. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error sending message:', error);
+                alert('Failed to send message. Please check your connection and try again.');
+            })
+            .finally(() => {
+                // Re-enable send button
+                sendBtn.disabled = false;
+                chatInput.disabled = false;
+                chatInput.focus();
+            });
         }
+        
         sendBtn.addEventListener('click', sendMessage);
         chatInput.addEventListener('keypress', (e) => { if(e.key==='Enter') sendMessage(); });
+
+        // Load chat messages on page load
+        loadChatMessages();
 
         renderPosts();
     </script>
