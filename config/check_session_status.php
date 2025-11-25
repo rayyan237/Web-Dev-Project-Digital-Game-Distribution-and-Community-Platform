@@ -18,8 +18,6 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true && isset($_
         'username' => $_SESSION['username'] ?? '',
         'display_name' => $_SESSION['display_name'] ?? '',
         'email' => $_SESSION['email'] ?? '',
-        'level' => $_SESSION['level'] ?? 1,
-        'xp' => $_SESSION['xp'] ?? 0,
         'avatar_url' => $_SESSION['avatar_url'] ?? 'assets/images/avatars/default.jpg',
         'is_admin' => $_SESSION['is_admin'] ?? 0
     );

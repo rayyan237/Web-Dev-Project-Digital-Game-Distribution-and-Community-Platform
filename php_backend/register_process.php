@@ -145,7 +145,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password_hash = password_hash($password, PASSWORD_BCRYPT, ['cost' => 12]);
     
     // Prepare INSERT statement
-    $stmt = $conn->prepare("INSERT INTO users (username, email, password_hash, display_name, country, age, is_admin, avatar_url, level, xp) VALUES (?, ?, ?, ?, ?, ?, 0, 'assets/images/avatars/default.jpg', 1, 0)");
+    $stmt = $conn->prepare("INSERT INTO users (username, email, password_hash, display_name, country, age, is_admin, avatar_url) VALUES (?, ?, ?, ?, ?, ?, 0, 'assets/images/avatars/default.jpg')");
     
     if (!$stmt) {
         $error = "Database error. Please try again later.";

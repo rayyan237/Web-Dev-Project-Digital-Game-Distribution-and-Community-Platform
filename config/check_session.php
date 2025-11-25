@@ -57,16 +57,6 @@ function getDisplayName() {
     return isset($_SESSION['display_name']) ? $_SESSION['display_name'] : null;
 }
 
-// Get user level
-function getUserLevel() {
-    return isset($_SESSION['level']) ? $_SESSION['level'] : 1;
-}
-
-// Get user XP
-function getUserXP() {
-    return isset($_SESSION['xp']) ? $_SESSION['xp'] : 0;
-}
-
 // Get avatar URL
 function getAvatarUrl() {
     return isset($_SESSION['avatar_url']) ? $_SESSION['avatar_url'] : 'assets/images/avatars/default.jpg';

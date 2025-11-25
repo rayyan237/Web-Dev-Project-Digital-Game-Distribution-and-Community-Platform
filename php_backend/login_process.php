@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     // Use prepared statement to prevent SQL injection
     // Select user_id, password_hash, display_name, and is_admin for the session
-    $stmt = $conn->prepare("SELECT user_id, password_hash, display_name, email, is_admin, level, xp, avatar_url FROM users WHERE username = ?");
+    $stmt = $conn->prepare("SELECT user_id, password_hash, display_name, email, is_admin, avatar_url FROM users WHERE username = ?");
     
     if (!$stmt) {
         $error = "Database error. Please try again later.";
@@ -82,8 +82,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['display_name'] = $user['display_name'];
             $_SESSION['email'] = $user['email'];
             $_SESSION['is_admin'] = $user['is_admin'];
-            $_SESSION['level'] = $user['level'];
-            $_SESSION['xp'] = $user['xp'];
             $_SESSION['avatar_url'] = $user['avatar_url'];
             $_SESSION['logged_in'] = true;
             $_SESSION['login_time'] = time();
