@@ -365,52 +365,44 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // --- DATA STORE ---
-        const now = Date.now();
+        let postsData = [];
         
-        let postsData = [
-            {
-                id: 102,
-                realTimestamp: now - (45 * 60 * 1000),
-                title: "Best settings for low-end PCs?",
-                content: "I'm trying to run recent AAA titles on a GTX 1050ti. Any tweaks?",
-                category: "help",
-                author: "LaggyGamer_23",
-                likes: 56, dislikes: 2, userAction: null,
-                replies: [ { user: "TechHelper", text: "Try FSR mods.", likes: 5, userLiked: false, timestamp: now - (40 * 60 * 1000) } ]
-            },
-            {
-                id: 103,
-                realTimestamp: now - (60 * 60 * 1000),
-                title: "Hidden gems in the Summer Sale",
-                content: "Forget the big titles, what are some indie gems?",
-                category: "general",
-                author: "IndieHunter",
-                likes: 89, dislikes: 1, userAction: null,
-                replies: []
-            },
-            {
-                id: 101,
-                realTimestamp: now - (120 * 60 * 1000),
-                title: "Community Guidelines Update",
-                content: "Hello everyone. We have updated our community guidelines...",
-                category: "feedback",
-                author: "Valve_Admin",
-                likes: 424, dislikes: 12, userAction: 'like',
-                // IMPORTANT: Pre-loaded action timestamp so it doesn't break sort
-                actionTimestamp: now - (115 * 60 * 1000),
-                replies: []
-            },
-            {
-                id: 104,
-                realTimestamp: now - (24 * 60 * 60 * 1000),
-                title: "My Awesome Guide to CS2 Smokes",
-                content: "Here is a compilation of the best smokes for Mirage A site...",
-                category: "guide",
-                author: "You",
-                likes: 12, dislikes: 0, userAction: null,
-                replies: []
-            }
-        ];
+        // Load posts from database
+        function loadPosts() {
+            fetch('../php_backend/get_community_posts.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.posts) {
+                        // Transform database posts to match frontend format
+                        postsData = data.posts.map(post => ({
+                            id: post.post_id,
+                            realTimestamp: new Date(post.created_at).getTime(),
+                            title: post.title,
+                            content: post.content,
+                            category: post.category,
+                            author: post.is_own_post ? 'You' : post.display_name,
+                            authorId: post.user_id,
+                            likes: post.likes,
+                            dislikes: post.dislikes,
+                            userAction: post.user_reaction, // 'like', 'dislike', or null
+                            replies: [], // Will be loaded separately if needed
+                            replyCount: post.reply_count,
+                            avatarUrl: post.avatar_url
+                        }));
+                        renderPosts();
+                        updateSidebarCounts();
+                    } else {
+                        console.error('Failed to load posts:', data.error);
+                        postsData = [];
+                        renderPosts();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading posts:', error);
+                    postsData = [];
+                    renderPosts();
+                });
+        }
 
         // --- Z NAVIGATION LOGIC ---
         function switchTab(tabName) {
@@ -569,6 +561,7 @@
 
                 const colClass = (index === 0) ? 'col-12' : 'col-md-6 col-12';
                 const displayTime = timeAgo(post.realTimestamp);
+                const replyCount = post.replyCount !== undefined ? post.replyCount : post.replies.length;
 
                 const cardHTML = `
                     <div class="${colClass}">
@@ -576,7 +569,7 @@
                             <div class="d-flex align-items-center mb-2">
                                 <span class="badge ${badgeClass} me-2">#${post.category}</span>
                                 <small class="text-secondary">${displayTime}</small>
-                                <small class="text-secondary ms-2"><i class="fa-solid fa-comment me-1"></i>${post.replies.length}</small>
+                                <small class="text-secondary ms-2"><i class="fa-solid fa-comment me-1"></i>${replyCount}</small>
                                 ${post.author === 'You' ? '<span class="badge bg-secondary ms-auto">Me</span>' : ''}
                             </div>
                             <h5 class="text-white mb-2">${post.title}</h5>
@@ -614,20 +607,75 @@
         const createModalObj = new bootstrap.Modal(document.getElementById('createPostModal'));
         
         function submitNewPost() {
-            const title = document.getElementById('new-post-title').value;
+            const title = document.getElementById('new-post-title').value.trim();
             const cat = document.getElementById('new-post-category').value;
-            const content = document.getElementById('new-post-content').value;
-            if(!title || !content) return alert("Please fill in all fields");
-            const newPost = {
-                id: Date.now(), realTimestamp: Date.now(),
-                title: title, content: content, category: cat,
-                author: "You", likes: 0, dislikes: 0, userAction: null, replies: []
-            };
-            postsData.unshift(newPost);
-            document.getElementById('new-post-title').value = '';
-            document.getElementById('new-post-content').value = '';
-            createModalObj.hide();
-            filterPosts('all');
+            const content = document.getElementById('new-post-content').value.trim();
+            
+            if(!title || !content) {
+                alert("Please fill in all fields");
+                return;
+            }
+            
+            // Disable the submit button to prevent double submission
+            const submitBtn = event.target;
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Posting...';
+            
+            // Send post to backend via AJAX
+            fetch('../php_backend/create_post.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    title: title,
+                    content: content,
+                    category: cat
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Add new post to local data array
+                    const newPost = {
+                        id: data.data.post_id,
+                        realTimestamp: Date.now(),
+                        title: data.data.title,
+                        content: data.data.content,
+                        category: data.data.category,
+                        author: 'You',
+                        authorId: data.data.user_id,
+                        likes: 0,
+                        dislikes: 0,
+                        userAction: null,
+                        replies: [],
+                        replyCount: 0,
+                        avatarUrl: data.data.avatar_url
+                    };
+                    postsData.unshift(newPost);
+                    
+                    // Clear form fields
+                    document.getElementById('new-post-title').value = '';
+                    document.getElementById('new-post-content').value = '';
+                    
+                    // Close modal
+                    createModalObj.hide();
+                    
+                    // Refresh posts display
+                    filterPosts('all');
+                } else {
+                    alert(data.error || 'Failed to create post. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error creating post:', error);
+                alert('Failed to create post. Please check your connection and try again.');
+            })
+            .finally(() => {
+                // Re-enable submit button
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Post Now';
+            });
         }
 
         const fullPostModal = new bootstrap.Modal(document.getElementById('fullPostModal'));
@@ -826,10 +874,9 @@
         sendBtn.addEventListener('click', sendMessage);
         chatInput.addEventListener('keypress', (e) => { if(e.key==='Enter') sendMessage(); });
 
-        // Load chat messages on page load
+        // Load chat messages and posts on page load
         loadChatMessages();
-
-        renderPosts();
+        loadPosts();
     </script>
 </body>
 </html>
