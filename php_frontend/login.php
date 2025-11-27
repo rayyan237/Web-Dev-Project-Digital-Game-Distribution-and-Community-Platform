@@ -347,7 +347,7 @@
                             Remember me
                         </label>
                     </div>
-                    <a href="#" class="forgot-password">Help, I can't sign in</a>
+                    <a href="forgot_password.php" class="forgot-password">Forgot Password?</a>
                 </div>
 
                 <button type="submit" class="btn btn-login">Sign In</button>
@@ -399,7 +399,11 @@
 
         if (success) {
             const successAlert = document.getElementById('successAlert');
-            successAlert.textContent = decodeURIComponent(success);
+            if (success === 'password_reset') {
+                successAlert.textContent = 'Password reset successfully! You can now sign in with your new password.';
+            } else {
+                successAlert.textContent = decodeURIComponent(success);
+            }
             successAlert.style.display = 'block';
         }
     </script>

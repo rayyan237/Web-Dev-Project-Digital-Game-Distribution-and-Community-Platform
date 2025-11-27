@@ -1,0 +1,1 @@
+ALTER TABLE `users` ADD `about` TEXT NULL DEFAULT NULL AFTER `avatar_url`;

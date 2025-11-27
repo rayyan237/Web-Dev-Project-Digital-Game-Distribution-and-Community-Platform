@@ -255,33 +255,35 @@
                 <div class="col-lg-4 col-md-5 mb-4">
                     <div class="profile-header-card p-4 rounded-steam text-center shadow-lg">
                         <div class="position-relative d-inline-block mb-3">
-                            <img src="https://i.pravatar.cc/150?img=70" class="profile-avatar-lg shadow">
+                            <img id="profile-avatar" src="../assets/images/avatars/default.jpg" class="profile-avatar-lg shadow">
                             <div class="position-absolute bottom-0 end-0 bg-success border border-dark rounded-circle p-2" style="width: 20px; height: 20px;"></div>
                         </div>
-                        <h2 class="text-white fw-bold mb-1">You</h2>
-                        <p class="text-accent mb-3">@CodeMaster_99</p>
+                        <h2 class="text-white fw-bold mb-1" id="profile-display-name">Loading...</h2>
+                        <p class="text-accent mb-3" id="profile-username">@username</p>
                         
                         <div class="d-flex justify-content-center gap-3 mb-4">
                             <div class="text-center">
-                                <h5 class="text-white fw-bold mb-0">12</h5>
-                                <small class="text-secondary">Level</small>
+                                <h5 class="text-white fw-bold mb-0" id="profile-posts-count">0</h5>
+                                <small class="text-secondary">Posts</small>
                             </div>
                             <div class="text-center">
-                                <h5 class="text-white fw-bold mb-0">4</h5>
-                                <small class="text-secondary">Badges</small>
+                                <h5 class="text-white fw-bold mb-0" id="profile-likes-count">0</h5>
+                                <small class="text-secondary">Likes</small>
                             </div>
                             <div class="text-center">
-                                <h5 class="text-white fw-bold mb-0">142</h5>
+                                <h5 class="text-white fw-bold mb-0" id="profile-games-count">0</h5>
                                 <small class="text-secondary">Games</small>
                             </div>
                         </div>
 
                         <div class="text-start bg-steam-secondary p-3 rounded mb-3">
                             <h6 class="text-uppercase text-secondary small fw-bold mb-2">About Me</h6>
-                            <p class="small text-light mb-0">Full stack developer and FPS enthusiast. Always looking for new teammates for CS2 and Apex Legends. Building cool web things.</p>
+                            <p class="small text-light mb-0" id="profile-about-text">No about information yet.</p>
+                            <textarea class="form-control form-control-steam small d-none" id="profile-about-input" maxlength="1000" rows="4" placeholder="Tell us about yourself..."></textarea>
                         </div>
                         
-                        <button class="btn btn-steam-outline w-100 py-2">Edit Profile</button>
+                        <button class="btn btn-steam-outline w-100 py-2 mb-2" id="edit-about-btn">Edit About</button>
+                        <button class="btn w-100 py-2" id="delete-account-btn" style="background: rgba(255, 107, 107, 0.1); border: 1px solid rgba(255, 107, 107, 0.4); color: #ff6b6b; font-weight: 500; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(255, 107, 107, 0.2)'" onmouseout="this.style.background='rgba(255, 107, 107, 0.1)'"><i class="fas fa-trash-alt"></i> Delete Account</button>
                     </div>
                 </div>
 
@@ -307,8 +309,11 @@
                 </div>
                 <div class="modal-body pt-4">
                      <div class="d-flex align-items-center mb-3">
-                        <img src="https://i.pravatar.cc/40?img=3" class="rounded-circle me-3" border="2px solid var(--steam-accent)">
-                        <h5 class="modal-title text-white mb-0" id="modal-title">Post Title</h5>
+                        <img id="modal-author-avatar" src="../assets/images/avatars/default.jpg" class="rounded-circle me-3" style="width: 40px; height: 40px; object-fit: cover; border: 2px solid var(--steam-accent);">
+                        <div>
+                            <h5 class="modal-title text-white mb-0" id="modal-title">Post Title</h5>
+                            <small class="text-secondary" id="modal-author-name">Author</small>
+                        </div>
                     </div>
                     <p class="text-light lead fs-6" id="modal-body-text">Text</p>
                     
@@ -387,7 +392,7 @@
                             userAction: post.user_reaction, // 'like', 'dislike', or null
                             replies: [], // Will be loaded separately if needed
                             replyCount: post.reply_count,
-                            avatarUrl: post.avatar_url
+                            avatarUrl: post.avatar_url.startsWith('assets/') ? '../' + post.avatar_url : post.avatar_url
                         }));
                         renderPosts();
                         updateSidebarCounts();
@@ -650,7 +655,7 @@
                         userAction: null,
                         replies: [],
                         replyCount: 0,
-                        avatarUrl: data.data.avatar_url
+                        avatarUrl: data.data.avatar_url.startsWith('assets/') ? '../' + data.data.avatar_url : data.data.avatar_url
                     };
                     postsData.unshift(newPost);
                     
@@ -689,9 +694,48 @@
             document.getElementById('modal-body-text').innerText = post.content;
             document.getElementById('modal-category').innerText = "#" + post.category;
             document.getElementById('modal-timestamp').innerText = timeAgo(post.realTimestamp);
+            document.getElementById('modal-author-avatar').src = post.avatarUrl || '../assets/images/avatars/default.jpg';
+            document.getElementById('modal-author-name').innerText = post.author;
             updatePostActionsUI(post);
-            renderReplies(post.replies);
+            
+            // Load replies from database
+            loadRepliesForPost(id);
+            
             fullPostModal.show();
+        }
+        
+        // Load replies from database
+        function loadRepliesForPost(postId) {
+            const container = document.getElementById('modal-replies-container');
+            container.innerHTML = '<p class="text-secondary small">Loading replies...</p>';
+            
+            fetch(`../php_backend/get_post_replies.php?post_id=${postId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const post = postsData.find(p => p.id === postId);
+                        if (post) {
+                            // Transform database replies to match frontend format
+                            post.replies = data.replies.map(reply => ({
+                                reply_id: reply.reply_id,
+                                user: reply.is_own_reply ? 'You' : reply.display_name,
+                                text: reply.content,
+                                likes: reply.likes,
+                                userLiked: reply.userLiked,
+                                timestamp: new Date(reply.created_at).getTime(),
+                                avatarUrl: reply.avatar_url.startsWith('assets/') ? '../' + reply.avatar_url : reply.avatar_url,
+                                userId: reply.user_id
+                            }));
+                            renderReplies(post.replies);
+                        }
+                    } else {
+                        container.innerHTML = '<p class="text-secondary small">Failed to load replies.</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading replies:', error);
+                    container.innerHTML = '<p class="text-secondary small">Error loading replies.</p>';
+                });
         }
 
         function updatePostActionsUI(post) {
@@ -711,32 +755,42 @@
         function handlePostReaction(id, action) {
             const post = postsData.find(p => p.id === id);
             if (!post) return;
-            if (action === 'like') {
-                if (post.userAction === 'like') { 
-                    post.likes--; 
-                    post.userAction = null; 
-                    post.actionTimestamp = null; // Clear timestamp on undo
-                } 
-                else { 
-                    if (post.userAction === 'dislike') { post.dislikes--; } 
-                    post.likes++; 
-                    post.userAction = 'like'; 
-                    post.actionTimestamp = Date.now(); // NEW: Capture time of click
-                }
-            } else { 
-                if (post.userAction === 'dislike') { 
-                    post.dislikes--; 
-                    post.userAction = null; 
-                    post.actionTimestamp = null; // Clear timestamp on undo
-                } 
-                else { 
-                    if (post.userAction === 'like') { post.likes--; } 
-                    post.dislikes++; 
-                    post.userAction = 'dislike'; 
-                    post.actionTimestamp = Date.now(); // NEW: Capture time of click
-                }
+            
+            // Determine what reaction to send to backend
+            let reactionType = action;
+            if (post.userAction === action) {
+                // User clicked same reaction - remove it
+                reactionType = 'remove';
             }
-            updatePostActionsUI(post);
+            
+            // Send reaction to backend
+            fetch('../php_backend/react_to_post.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    post_id: id,
+                    reaction_type: reactionType
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Update local post data with response from server
+                    post.likes = data.likes;
+                    post.dislikes = data.dislikes;
+                    post.userAction = data.current_reaction; // 'like', 'dislike', or null
+                    post.actionTimestamp = data.current_reaction ? Date.now() : null;
+                    updatePostActionsUI(post);
+                } else {
+                    alert(data.error || 'Failed to update reaction.');
+                }
+            })
+            .catch(error => {
+                console.error('Error updating reaction:', error);
+                alert('Failed to update reaction. Please try again.');
+            });
         }
 
         function renderReplies(replies) {
@@ -750,11 +804,12 @@
                 const formattedText = formatReplyText(rep.text);
                 const likeActive = rep.userLiked ? 'active' : '';
                 const likeCount = rep.likes || 0;
+                const timeDisplay = rep.timestamp ? timeAgo(rep.timestamp) : 'Just now';
                 container.innerHTML += `
                     <div class="reply-box mt-3">
                         <div class="d-flex justify-content-between">
                             <strong><span class="text-accent">${rep.user}</span></strong>
-                            <small class="text-secondary">Just now</small>
+                            <small class="text-secondary">${timeDisplay}</small>
                         </div>
                         <p class="small mt-2 mb-0">${formattedText}</p>
                         <div class="d-flex gap-3 mb-2 mt-2 align-items-center">
@@ -783,11 +838,46 @@
         replyBtn.addEventListener('click', () => {
             const text = replyInput.value.trim();
             if(!text || !currentPostId) return;
-            const post = postsData.find(p => p.id === currentPostId);
-            post.replies.push({ user: "You", text: text, likes: 0, userLiked: false, timestamp: Date.now() });
-            renderReplies(post.replies);
-            replyInput.value = '';
-            renderPosts(); 
+            
+            // Disable button during submission
+            replyBtn.disabled = true;
+            replyBtn.textContent = 'Posting...';
+            
+            // Send reply to backend
+            fetch('../php_backend/post_reply.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    post_id: currentPostId,
+                    content: text
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const post = postsData.find(p => p.id === currentPostId);
+                    if (post) {
+                        // Increment reply count locally
+                        post.replyCount = (post.replyCount || 0) + 1;
+                        // Reload replies from database to get the new one
+                        loadRepliesForPost(currentPostId);
+                        replyInput.value = '';
+                        renderPosts(); // Update reply count in post cards
+                    }
+                } else {
+                    alert(data.error || 'Failed to post reply.');
+                }
+            })
+            .catch(error => {
+                console.error('Error posting reply:', error);
+                alert('Failed to post reply. Please try again.');
+            })
+            .finally(() => {
+                replyBtn.disabled = false;
+                replyBtn.textContent = 'Post Reply';
+            });
         });
 
         function toggleChat() {
@@ -811,18 +901,19 @@
                         data.messages.forEach(msg => {
                             const div = document.createElement('div');
                             div.className = 'chat-message';
-                            div.innerHTML = `<img src="${msg.avatar_url}" class="chat-avatar" alt="user"><div class="chat-content-wrapper"><div class="chat-meta text-accent">${msg.display_name}</div><div class="chat-bubble">${msg.message}</div></div>`;
+                            const avatarUrl = msg.avatar_url.startsWith('assets/') ? '../' + msg.avatar_url : msg.avatar_url;
+                            div.innerHTML = `<img src="${avatarUrl}" class="chat-avatar" alt="user"><div class="chat-content-wrapper"><div class="chat-meta text-accent">${msg.display_name}</div><div class="chat-bubble">${msg.message}</div></div>`;
                             chatBox.appendChild(div);
                         });
                         chatBox.scrollTop = chatBox.scrollHeight; // Scroll to bottom
                     } else if (data.messages && data.messages.length === 0) {
                         // No messages yet - show welcome message
-                        chatBox.innerHTML = '<div class="chat-message"><img src="assets/images/avatars/default.jpg" class="chat-avatar" alt="system"><div class="chat-content-wrapper"><div class="chat-meta">System</div><div class="chat-bubble">Welcome to global chat! Be the first to send a message.</div></div></div>';
+                        chatBox.innerHTML = '<div class="chat-message"><img src="../assets/images/avatars/default.jpg" class="chat-avatar" alt="system"><div class="chat-content-wrapper"><div class="chat-meta">System</div><div class="chat-bubble">Welcome to global chat! Be the first to send a message.</div></div></div>';
                     }
                 })
                 .catch(error => {
                     console.error('Error loading messages:', error);
-                    chatBox.innerHTML = '<div class="chat-message"><img src="assets/images/avatars/default.jpg" class="chat-avatar" alt="system"><div class="chat-content-wrapper"><div class="chat-meta">System</div><div class="chat-bubble">Unable to load messages. Please refresh the page.</div></div></div>';
+                    chatBox.innerHTML = '<div class="chat-message"><img src="../assets/images/avatars/default.jpg" class="chat-avatar" alt="system"><div class="chat-content-wrapper"><div class="chat-meta">System</div><div class="chat-bubble">Unable to load messages. Please refresh the page.</div></div></div>';
                 });
         }
         
@@ -850,7 +941,8 @@
                     // Display the message in the chat box
                     const div = document.createElement('div');
                     div.className = 'chat-message';
-                    div.innerHTML = `<img src="${data.data.avatar_url}" class="chat-avatar" alt="user"><div class="chat-content-wrapper"><div class="chat-meta text-accent">${data.data.display_name}</div><div class="chat-bubble">${data.data.message}</div></div>`;
+                    const avatarUrl = data.data.avatar_url.startsWith('assets/') ? '../' + data.data.avatar_url : data.data.avatar_url;
+                    div.innerHTML = `<img src="${avatarUrl}" class="chat-avatar" alt="user"><div class="chat-content-wrapper"><div class="chat-meta text-accent">${data.data.display_name}</div><div class="chat-bubble">${data.data.message}</div></div>`;
                     chatBox.appendChild(div);
                     chatInput.value = '';
                     chatBox.scrollTop = chatBox.scrollHeight;
@@ -874,9 +966,182 @@
         sendBtn.addEventListener('click', sendMessage);
         chatInput.addEventListener('keypress', (e) => { if(e.key==='Enter') sendMessage(); });
 
+        // Load profile data
+        function loadProfileData() {
+            fetch('../php_backend/get_profile_data.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const profile = data.data;
+                        
+                        // Update avatar
+                        const avatarUrl = (profile.avatar_url && profile.avatar_url.startsWith('assets/')) 
+                            ? '../' + profile.avatar_url 
+                            : (profile.avatar_url || '../assets/images/avatars/default.jpg');
+                        document.getElementById('profile-avatar').src = avatarUrl;
+                        
+                        // Update display name and username
+                        document.getElementById('profile-display-name').textContent = profile.display_name || 'User';
+                        document.getElementById('profile-username').textContent = '@' + (profile.username || 'username');
+                        
+                        // Update stats
+                        document.getElementById('profile-posts-count').textContent = profile.posts_count || 0;
+                        document.getElementById('profile-likes-count').textContent = profile.total_likes || 0;
+                        document.getElementById('profile-games-count').textContent = profile.games_count || 0;
+                        
+                        // Update about
+                        const aboutText = profile.about || 'No about information yet.';
+                        document.getElementById('profile-about-text').textContent = aboutText;
+                        document.getElementById('profile-about-input').value = profile.about || '';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading profile:', error);
+                });
+        }
+
+        // Edit About functionality
+        const editAboutBtn = document.getElementById('edit-about-btn');
+        const aboutText = document.getElementById('profile-about-text');
+        const aboutInput = document.getElementById('profile-about-input');
+        let isEditingAbout = false;
+
+        editAboutBtn.addEventListener('click', () => {
+            if (!isEditingAbout) {
+                // Switch to edit mode
+                aboutText.classList.add('d-none');
+                aboutInput.classList.remove('d-none');
+                aboutInput.focus();
+                editAboutBtn.textContent = 'Save About';
+                editAboutBtn.classList.remove('btn-steam-outline');
+                editAboutBtn.classList.add('btn-white');
+                isEditingAbout = true;
+            } else {
+                // Save changes
+                const newAbout = aboutInput.value.trim();
+                editAboutBtn.disabled = true;
+                editAboutBtn.textContent = 'Saving...';
+                
+                fetch('../php_backend/update_about.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ about: newAbout })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        aboutText.textContent = newAbout || 'No about information yet.';
+                        aboutText.classList.remove('d-none');
+                        aboutInput.classList.add('d-none');
+                        editAboutBtn.textContent = 'Edit About';
+                        editAboutBtn.classList.add('btn-steam-outline');
+                        editAboutBtn.classList.remove('btn-white');
+                        isEditingAbout = false;
+                    } else {
+                        alert(data.message || 'Failed to update about');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error updating about:', error);
+                    alert('Failed to update about. Please try again.');
+                })
+                .finally(() => {
+                    editAboutBtn.disabled = false;
+                });
+            }
+        });
+
+
         // Load chat messages and posts on page load
         loadChatMessages();
         loadPosts();
+        loadProfileData();
+    </script>
+
+    <!-- Delete Account Confirmation Modal -->
+    <div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-steam" style="background: linear-gradient(135deg, rgba(23, 26, 33, 0.98), rgba(27, 40, 56, 0.98)); border: 1px solid rgba(255, 107, 107, 0.3);">
+                <div class="modal-header border-bottom" style="border-color: rgba(255, 107, 107, 0.2) !important;">
+                    <h5 class="modal-title text-white"><i class="fas fa-exclamation-triangle text-danger"></i> Delete Account</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert" style="background-color: rgba(255, 107, 107, 0.1); border: 1px solid rgba(255, 107, 107, 0.3); color: #ff6b6b;">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <strong>Warning:</strong> This action cannot be undone!
+                    </div>
+                    <p class="text-light mb-3">Are you sure you want to delete your account? This will permanently remove:</p>
+                    <ul class="text-secondary" style="font-size: 0.9rem;">
+                        <li>Your profile and account information</li>
+                        <li>All your posts and comments</li>
+                        <li>All your reactions and replies</li>
+                        <li>Your chat messages</li>
+                        <li>All associated data</li>
+                    </ul>
+                    <p class="text-danger fw-bold mt-3">Type "DELETE" to confirm:</p>
+                    <input type="text" id="delete-confirmation-input" class="form-control form-control-steam" placeholder="Type DELETE" autocomplete="off">
+                </div>
+                <div class="modal-footer border-top" style="border-color: rgba(255, 107, 107, 0.2) !important;">
+                    <button type="button" class="btn btn-steam-outline" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn" id="confirm-delete-btn" disabled style="background: rgba(255, 107, 107, 0.2); border: 1px solid rgba(255, 107, 107, 0.4); color: #ff6b6b; font-weight: 500;">Delete My Account</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Delete Account Modal functionality
+        const deleteAccountBtn = document.getElementById('delete-account-btn');
+        const deleteModal = new bootstrap.Modal(document.getElementById('deleteAccountModal'));
+        const deleteConfirmationInput = document.getElementById('delete-confirmation-input');
+        const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
+
+        deleteAccountBtn.addEventListener('click', () => {
+            deleteModal.show();
+            deleteConfirmationInput.value = '';
+            confirmDeleteBtn.disabled = true;
+        });
+
+        deleteConfirmationInput.addEventListener('input', (e) => {
+            if (e.target.value === 'DELETE') {
+                confirmDeleteBtn.disabled = false;
+            } else {
+                confirmDeleteBtn.disabled = true;
+            }
+        });
+
+        confirmDeleteBtn.addEventListener('click', async () => {
+            confirmDeleteBtn.disabled = true;
+            confirmDeleteBtn.textContent = 'Deleting...';
+
+            try {
+                const response = await fetch('../php_backend/delete_account.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    alert('Your account has been successfully deleted.');
+                    window.location.href = 'index.php';
+                } else {
+                    alert(data.message || 'Failed to delete account. Please try again.');
+                    confirmDeleteBtn.disabled = false;
+                    confirmDeleteBtn.textContent = 'Delete My Account';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while deleting your account. Please try again.');
+                confirmDeleteBtn.disabled = false;
+                confirmDeleteBtn.textContent = 'Delete My Account';
+            }
+        });
     </script>
 </body>
 </html>
