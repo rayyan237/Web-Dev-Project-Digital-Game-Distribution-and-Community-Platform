@@ -1392,113 +1392,27 @@
             </button>
 
             <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner shadow-lg">
-
-                    <!-- Slide 1 -->
+                <div class="carousel-inner shadow-lg" id="heroCarouselInner">
+                    <!-- Dynamic slides will be loaded here -->
                     <div class="carousel-item active hero-carousel-item">
-                        <a href="#" class="hero-card row g-0 rounded-top-1 text-decoration-none">
-                            <div class="col-lg-8 col-video">
-                                <div class="media-header text-white">
-                                    <span class="text-info fw-bold">Trailer Preview</span> &nbsp;|&nbsp; Counter-Strike
-                                    2
+                        <div class="hero-card row g-0 rounded-top-1 text-decoration-none">
+                            <div class="col-lg-8 col-video d-flex align-items-center justify-content-center" style="background: #0e141b;">
+                                <div class="spinner-border text-info" role="status">
+                                    <span class="visually-hidden">Loading...</span>
                                 </div>
-                                <video class="hero-video" autoplay muted loop playsinline
-                                    poster="\assets\images\s1_header.jpg">
-                                    <source src="\assets\videos\microtrailer-cs.mp4" type="video/mp4">
-                                </video>
                             </div>
                             <div class="col-lg-4 col-info">
-                                <div class="info-content d-flex flex-column">
-                                    <div class="capsule-overlap">
-                                        <img src="\assets\images\s1_header.jpg" class="img-fluid rounded-1"
-                                            alt="Apex Header">
-                                    </div>
-                                    <h2 class="text-white fw-light mb-2" style="font-size: 28px;">Counter-Strike 2</h2>
-                                    <div class="d-flex flex-wrap gap-1 mb-3">
-                                        <span class="badge steam-badge">Action</span>
-                                        <span class="badge steam-badge">Free to Play</span>
-                                        <span class="badge steam-badge">FPS</span>
-                                    </div>
-                                    <p class="description-truncate">
-                                        For over two decades, Counter-Strike has offered an elite competitive
-                                        experience, one shaped by millions of players from across the globe. This is
-                                        Counter-Strike 2.
-                                    </p>
-                                    <div class="mt-auto ms-auto pb-2">
-                                        <span class="price-btn">Free To Play</span>
-                                    </div>
+                                <div class="info-content d-flex flex-column align-items-center justify-content-center">
+                                    <p class="text-white">Loading games...</p>
                                 </div>
                             </div>
-                        </a>
+                        </div>
                     </div>
-
-                    <!-- Slide 2 -->
-                    <div class="carousel-item hero-carousel-item">
-                        <a href="#" class="hero-card row g-0 rounded-top-1 text-decoration-none">
-                            <div class="col-lg-8 col-video">
-                                <div class="media-header text-white"><span class="text-info fw-bold">Trailer
-                                        Preview</span></div>
-                                <video class="hero-video" autoplay muted loop playsinline
-                                    poster="\assets\images\s2_header.jpg">
-                                    <source src="\assets\videos\microtrailer-dota2.mp4" type="video/mp4">
-                                </video>
-                            </div>
-                            <div class="col-lg-4 col-info">
-                                <div class="info-content d-flex flex-column">
-                                    <div class="capsule-overlap"><img src="\assets\images\s2_header.jpg"
-                                            class="img-fluid rounded-1" alt="Dota Header"></div>
-                                    <h2 class="text-white fw-light mb-2" style="font-size: 28px;">Dota 2</h2>
-                                    <div class="d-flex flex-wrap gap-1 mb-3">
-                                        <span class="badge steam-badge">MOBA</span>
-                                        <span class="badge steam-badge">Strategy</span>
-                                    </div>
-                                    <p class="description-truncate">Every day, millions of players worldwide enter
-                                        battle as one of over a hundred Dota heroes.</p>
-                                    <div class="mt-auto ms-auto pb-2"><span class="price-btn">Free To Play</span></div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-                    <!-- Slide 3 -->
-                    <div class="carousel-item hero-carousel-item">
-                        <a href="#" class="hero-card row g-0 rounded-top-1 text-decoration-none">
-                            <div class="col-lg-8 col-video">
-                                <div class="media-header text-white"><span class="text-info fw-bold">Trailer
-                                        Preview</span></div>
-                                <video class="hero-video" autoplay muted loop playsinline
-                                    poster="\assets\images\s4_header.jpg">
-                                    <source src="\assets\videos\microtrailer-pubg.mp4" type="video/mp4">
-                                </video>
-                            </div>
-                            <div class="col-lg-4 col-info">
-                                <div class="info-content d-flex flex-column">
-                                    <div class="capsule-overlap"><img src="\assets\images\s4_header.jpg"
-                                            class="img-fluid rounded-1" alt="PUBG Header"></div>
-                                    <h2 class="text-white fw-light mb-2" style="font-size: 28px;">PUBG: BATTLEGROUNDS
-                                    </h2>
-                                    <div class="d-flex flex-wrap gap-1 mb-3">
-                                        <span class="badge steam-badge">Survival</span>
-                                        <span class="badge steam-badge">Shooter</span>
-                                    </div>
-                                    <p class="description-truncate">Land, loot, survive. The ultimate Battle Royale
-                                        experience.</p>
-                                    <div class="mt-auto ms-auto pb-2"><span class="price-btn">Free To Play</span></div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
                 </div>
 
                 <div class="indicators-container">
-                    <div class="carousel-indicators custom-indicators-style">
-                        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"
-                            aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"
-                            aria-label="Slide 2"></button>
-                        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"
-                            aria-label="Slide 3"></button>
+                    <div class="carousel-indicators custom-indicators-style" id="heroIndicators">
+                        <!-- Dynamic indicators will be loaded here -->
                     </div>
                 </div>
             </div>
@@ -1508,98 +1422,22 @@
         <!-- 2. SPECIAL OFFERS SECTION -->
         <div class="section-spacer steam-section-wrapper">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <h2 class="common-section-title">SPECIAL OFFERS</h2>
+                <h2 class="common-section-title">SPECIAL OFFERS 50% OFF!</h2>
                 <a href="browse-more.php" class="btn-browse-more">Browse More</a>
             </div>
 
             <div id="specialOffersCarousel" class="carousel slide" data-bs-ride="false">
-                <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#specialOffersCarousel" data-bs-slide-to="0"
-                        class="active"></button>
-                    <button type="button" data-bs-target="#specialOffersCarousel" data-bs-slide-to="1"></button>
+                <div class="carousel-indicators" id="specialOffersIndicators">
+                    <!-- Indicators will be generated dynamically -->
                 </div>
 
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <div class="row gx-3 gy-0 carousel-height">
-                            <!-- Large Card 1 -->
-                            <div class="col-lg-4 h-100">
-                                <div class="capsule capsule-lg">
-                                    <div class="capsule-img-container"><img src="\assets\images\s4_header.jpg"
-                                            alt="Offer 1"></div>
-                                    <div class="info-block">
-                                        <div>
-                                            <div class="deal-header">Midweek Deal</div>
-                                            <div class="deal-timer">Ends 24 Nov</div>
-                                        </div>
-                                        <div>
-                                            <div class="discount-upto">Up to -85%</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Large Card 2 -->
-                            <div class="col-lg-4 h-100">
-                                <div class="capsule capsule-lg">
-                                    <div class="capsule-img-container"><img src="\assets\images\s2_header.jpg"
-                                            alt="Offer 2"></div>
-                                    <div class="info-block">
-                                        <div>
-                                            <div class="deal-header">Weekend Deal</div>
-                                            <div class="deal-timer">Ends 1 Dec</div>
-                                        </div>
-                                        <div class="discount-block-unified">
-                                            <div class="discount-percent-unified">-67%</div>
-                                            <div class="price-box-unified">
-                                                <div class="original-price">$23.99</div>
-                                                <div class="final-price">$7.91</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Stacked Small Cards -->
-                            <div class="col-lg-4 h-100">
-                                <div class="mobile-stack-container">
-                                    <div class="capsule capsule-sm">
-                                        <div class="capsule-img-container"><img src="\assets\images\s3_header.jpg"
-                                                alt="Small Offer 1"></div>
-                                        <div class="info-block">
-                                            <div class="todays-deal-text">Today's Deal!</div>
-                                            <div class="discount-block-unified">
-                                                <div class="discount-percent-unified">-20%</div>
-                                                <div class="price-box-unified">
-                                                    <div class="original-price">$32.99</div>
-                                                    <div class="final-price">$26.39</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="capsule capsule-sm">
-                                        <div class="capsule-img-container"><img src="\assets\images\s1_header.jpg"
-                                                alt="Small Offer 2"></div>
-                                        <div class="info-block">
-                                            <div class="todays-deal-text">Today's Deal!</div>
-                                            <div class="discount-block-unified">
-                                                <div class="discount-percent-unified">-20%</div>
-                                                <div class="price-box-unified">
-                                                    <div class="original-price">$11.99</div>
-                                                    <div class="final-price">$9.59</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="carousel-inner" id="specialOffersCarouselInner">
+                    <!-- Carousel items will be generated dynamically -->
+                    <div class="loading-spinner text-center py-5">
+                        <div class="spinner-border text-light" role="status">
+                            <span class="visually-hidden">Loading...</span>
                         </div>
-                    </div>
-                    <!-- Slide 2 Content Omitted for brevity, keeping structure valid -->
-                    <div class="carousel-item">
-                        <div class="row gx-3 gy-0 carousel-height">
-                            <div class="col-12 text-center py-5 d-flex align-items-center justify-content-center">
-                                <h3 style="color: #4c6b22;">More deals coming soon...</h3>
-                            </div>
-                        </div>
+                        <p class="text-light mt-3">Loading special offers...</p>
                     </div>
                 </div>
 
@@ -1622,116 +1460,18 @@
             </div>
 
             <div id="categoryCarousel" class="carousel slide" data-bs-ride="false" data-bs-touch="true">
-                <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#categoryCarousel" data-bs-slide-to="0"
-                        class="active"></button>
-                    <button type="button" data-bs-target="#categoryCarousel" data-bs-slide-to="1"></button>
+                <div class="carousel-indicators" id="categoryIndicators">
+                    <!-- Indicators will be generated dynamically -->
                 </div>
 
-                <div class="carousel-inner">
-
-                    <div class="carousel-item active">
-                        <div class="row g-3">
-                            <div class="col-lg-3 col-md-6">
-                                <a href="category-details.php?cat=rpg" class="category-card">
-                                    <img src="../assets/images/anime.webp" alt="Anime" class="category-bg">
-                                    <div class="category-overlay"></div>
-                                    <div class="category-title">ROLE PLAYING</div>
-                                </a>
-                            </div>
-                            <div class="col-lg-3 col-md-6">
-                                <a href="category-details.php?cat=adventure" class="category-card">
-                                    <img src="../assets/images/story_rich.webp" alt="Story-Rich" class="category-bg">
-                                    <div class="category-overlay"></div>
-                                    <div class="category-title">ADVENTURE</div>
-                                </a>
-                            </div>
-                            <div class="col-lg-3 col-md-6">
-                                <a href="category-details.php?cat=racing" class="category-card">
-                                    <img src="../assets/images/multiplayer_coop.webp" alt="Co-operative"
-                                        class="category-bg">
-                                    <div class="category-overlay"></div>
-                                    <div class="category-title">RACING</div>
-                                </a>
-                            </div>
-                            <div class="col-lg-3 col-md-6">
-                                <a href="category-details.php?cat=freetoplay" class="category-card">
-                                    <img src="../assets/images/racing.webp" alt="Racing" class="category-bg">
-                                    <div class="category-overlay"></div>
-                                    <div class="category-title">FREE TO PLAY</div>
-                                </a>
-                            </div>
+                <div class="carousel-inner" id="categoryCarouselInner">
+                    <!-- Carousel items will be generated dynamically -->
+                    <div class="loading-spinner text-center py-5">
+                        <div class="spinner-border text-light" role="status">
+                            <span class="visually-hidden">Loading...</span>
                         </div>
+                        <p class="text-light mt-3">Loading categories...</p>
                     </div>
-
-                    <div class="carousel-item">
-                        <div class="row g-3">
-                            <div class="col-lg-3 col-md-6">
-                                <a href="category-details.php?cat=action" class="category-card">
-                                    <img src="../assets/images/freetoplay.webp" alt="Free to Play" class="category-bg">
-                                    <div class="category-overlay"></div>
-                                    <div class="category-title">ACTION</div>
-                                </a>
-                            </div>
-                            <div class="col-lg-3 col-md-6">
-                                <a href="category-details.php?cat=anime" class="category-card">
-                                    <img src="../assets/images/simulation.webp" alt="Simulation" class="category-bg">
-                                    <div class="category-overlay"></div>
-                                    <div class="category-title">ANIME</div>
-                                </a>
-                            </div>
-                            <div class="col-lg-3 col-md-6">
-                                <a href="category-details.php?cat=strategy" class="category-card">
-                                    <img src="../assets/images/survival.webp" alt="Survival" class="category-bg">
-                                    <div class="category-overlay"></div>
-                                    <div class="category-title">STRATEGY</div>
-                                </a>
-                            </div>
-                            <div class="col-lg-3 col-md-6">
-                                <a href="category-details.php?cat=simulation" class="category-card">
-                                    <img src="../assets/images/visual_novel.webp" alt="Visual Novel"
-                                        class="category-bg">
-                                    <div class="category-overlay"></div>
-                                    <div class="category-title">SIMULATION</div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="carousel-item">
-                        <div class="row g-3">
-                            <div class="col-lg-3 col-md-6">
-                                <a href="category-details.php?cat=puzzle" class="category-card">
-                                    <img src="../assets/images/strategy.webp" alt="Strategy" class="category-bg">
-                                    <div class="category-overlay"></div>
-                                    <div class="category-title">PUZZLE</div>
-                                </a>
-                            </div>
-                            <div class="col-lg-3 col-md-6">
-                                <a href="category-details.php?cat=fighting" class="category-card">
-                                    <img src="../assets/images/fighting_martial_arts.webp" alt="Fighting"
-                                        class="category-bg">
-                                    <div class="category-overlay"></div>
-                                    <div class="category-title">FIGHTING</div>
-                                </a>
-                            </div>
-                            <div class="col-lg-3 col-md-6">
-                                <a href="category-details.php?cat=survival" class="category-card">
-                                    <img src="../assets/images/action.webp" alt="Action" class="category-bg">
-                                    <div class="category-overlay"></div>
-                                    <div class="category-title">SURVIVAL</div>
-                                </a>
-                            </div>
-                            <div class="col-lg-3 col-md-6">
-                                <a href="category-details.php?cat=sports" class="category-card">
-                                    <img src="../assets/images/science_fiction.webp" alt="Sci-Fi" class="category-bg">
-                                    <div class="category-overlay"></div>
-                                    <div class="category-title">SPORTS</div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
 
                 <button class="custom-nav-arrow arrow-prev carousel-control-prev" type="button"
@@ -1753,73 +1493,18 @@
             </div>
 
             <div id="gameCarousel" class="carousel slide" data-bs-ride="false" data-bs-interval="false">
-                <div class="store-carousel-box carousel-inner rounded-3 overflow-hidden shadow-lg">
-
-                    <!-- Game 1 -->
-                    <div class="slide-item carousel-item active">
-                        <div class="row g-0 h-100">
-                            <div class="featured-image-container col-md-8 px-0">
-                                <img src="\assets\images\s1_header.jpg" data-original="\assets\images\s1_header.jpg"
-                                    alt="CS2" class="featured-game-image">
-                            </div>
-                            <div class="col-md-4 p-0">
-                                <div class="game-details-panel">
-                                    <div class="game-title-box d-flex align-items-center">
-                                        <h3 class="game-title-text">Counter-Strike 2</h3>
-                                    </div>
-                                    <div class="thumbnails-grid">
-                                        <div><img class="thumbnail-image" src="\assets\images\s1_ss1.jpg" alt="1"></div>
-                                        <div><img class="thumbnail-image" src="\assets\images\s1_ss2.jpg" alt="2"></div>
-                                        <div><img class="thumbnail-image" src="\assets\images\s1_ss3.jpg" alt="3"></div>
-                                        <div><img class="thumbnail-image" src="\assets\images\s1_ss4.jpg" alt="4"></div>
-                                    </div>
-                                    <div class="bottom-info-row">
-                                        <div class="status-row">
-                                            <p class="status-text">Now Available</p><span class="status-badge-blue">Top
-                                                Seller</span>
-                                        </div>
-                                        <p class="price-text">Free to Play</p>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="store-carousel-box carousel-inner rounded-3 overflow-hidden shadow-lg" id="recommendedCarouselInner">
+                    <!-- Carousel items will be generated dynamically -->
+                    <div class="loading-spinner text-center py-5">
+                        <div class="spinner-border text-light" role="status">
+                            <span class="visually-hidden">Loading...</span>
                         </div>
-                    </div>
-
-                    <!-- Game 2 -->
-                    <div class="slide-item carousel-item">
-                        <div class="row g-0 h-100">
-                            <div class="featured-image-container col-md-8 px-0">
-                                <img src="\assets\images\s6_header.jpg" data-original="\assets\images\s6_header.jpg"
-                                    alt="Elden Ring" class="featured-game-image">
-                            </div>
-                            <div class="col-md-4 p-0">
-                                <div class="game-details-panel">
-                                    <div class="game-title-box d-flex align-items-center">
-                                        <h3 class="game-title-text">Elden Ring</h3>
-                                    </div>
-                                    <div class="thumbnails-grid">
-                                        <div><img class="thumbnail-image" src="\assets\images\s6_ss1.jpg" alt="1"></div>
-                                        <div><img class="thumbnail-image" src="\assets\images\s6_ss2.jpg" alt="2"></div>
-                                        <div><img class="thumbnail-image" src="\assets\images\s6_ss3.jpg" alt="3"></div>
-                                        <div><img class="thumbnail-image" src="\assets\images\s6_ss4.jpg" alt="4"></div>
-                                    </div>
-                                    <div class="bottom-info-row">
-                                        <div class="status-row">
-                                            <p class="status-text">Now Available</p><span class="status-badge-blue">Top
-                                                Rated</span>
-                                        </div>
-                                        <p class="price-text">$59.99 USD</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <p class="text-light mt-3">Loading featured games...</p>
                     </div>
                 </div>
 
-                <div class="carousel-indicators-custom carousel-indicators">
-                    <button type="button" data-bs-target="#gameCarousel" data-bs-slide-to="0" class="active"
-                        aria-current="true"></button>
-                    <button type="button" data-bs-target="#gameCarousel" data-bs-slide-to="1"></button>
+                <div class="carousel-indicators-custom carousel-indicators" id="recommendedIndicators">
+                    <!-- Indicators will be generated dynamically -->
                 </div>
 
                 <button class="custom-nav-arrow arrow-prev carousel-control-prev" type="button"
@@ -1845,103 +1530,13 @@
             </div>
 
             <div id="steamGameCarousel" class="carousel slide" data-bs-ride="false">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <div class="row g-3">
-                            <div class="col-md-3 col-6">
-                                <div class="steam-card">
-                                    <img src="../assets/images/s1_header.jpg" alt="Game">
-                                    <div class="card-body-steam">
-                                        <span class="regular-price-badge">$8.19 USD</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-6">
-                                <div class="steam-card">
-                                    <img src="../assets/images/s2_header.jpg" alt="Game">
-                                    <div class="card-body-steam">
-                                        <div class="discount-wrapper">
-                                            <div class="discount-badge">-67%</div>
-                                            <div class="price-box">
-                                                <span class="original-price">$23.99</span>
-                                                <span class="final-price">$7.91 USD</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-6">
-                                <div class="steam-card">
-                                    <img src="../assets/images/s3_header.jpg" alt="Game">
-                                    <div class="card-body-steam">
-                                        <div class="discount-wrapper">
-                                            <div class="discount-badge">-20%</div>
-                                            <div class="price-box">
-                                                <span class="original-price">$8.19</span>
-                                                <span class="final-price">$6.55 USD</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-6">
-                                <div class="steam-card">
-                                    <img src="../assets/images/s4_header.jpg" alt="Game">
-                                    <div class="card-body-steam">
-                                        <div class="discount-wrapper">
-                                            <div class="discount-badge">-50%</div>
-                                            <div class="price-box">
-                                                <span class="original-price">$10.49</span>
-                                                <span class="final-price">$5.24 USD</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="carousel-inner" id="under10CarouselInner">
+                    <!-- Carousel items will be generated dynamically -->
+                    <div class="loading-spinner text-center py-5">
+                        <div class="spinner-border text-light" role="status">
+                            <span class="visually-hidden">Loading...</span>
                         </div>
-                    </div>
-                    <!-- Second slide -->
-                    <div class="carousel-item">
-                        <div class="row g-3">
-                            <div class="col-md-3 col-6">
-                                <div class="steam-card">
-                                    <img src="../assets/images/s7_header.jpg" alt="Game">
-                                    <div class="card-body-steam">
-                                        <span class="regular-price-badge">$5.49 USD</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-6">
-                                <div class="steam-card">
-                                    <img src="../assets/images/s6_header.jpg" alt="Game">
-                                    <div class="card-body-steam">
-                                        <div class="discount-wrapper">
-                                            <div class="discount-badge">-20%</div>
-                                            <div class="price-box">
-                                                <span class="original-price">$10.49</span>
-                                                <span class="final-price">$8.39 USD</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-6">
-                                <div class="steam-card">
-                                    <img src="../assets/images/s5_header.jpg" alt="Game">
-                                    <div class="card-body-steam">
-                                        <span class="regular-price-badge">$9.99 USD</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-6">
-                                <div class="steam-card">
-                                    <img src="../assets/images/s8_header.jpg" alt="Game">
-                                    <div class="card-body-steam">
-                                        <span class="regular-price-badge">$9.99 USD</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <p class="text-light mt-3">Loading games...</p>
                     </div>
                 </div>
 
@@ -1953,8 +1548,8 @@
                     data-bs-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 </button>
-                <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#steamGameCarousel" data-bs-slide-to="0"
+                <div class="carousel-indicators" id="under10Indicators">
+                    <!-- Indicators will be generated dynamically -->
                         class="active"></button>
                     <button type="button" data-bs-target="#steamGameCarousel" data-bs-slide-to="1"></button>
                 </div>
@@ -2070,6 +1665,495 @@
                 }
             }
         });
+
+        // Load hero carousel games from database
+        async function loadHeroCarousel() {
+            try {
+                const response = await fetch('../php_backend/get_hero_games.php');
+                const data = await response.json();
+
+                if (data.success && data.games.length > 0) {
+                    const carouselInner = document.getElementById('heroCarouselInner');
+                    const indicatorsContainer = document.getElementById('heroIndicators');
+                    
+                    // Clear existing content
+                    carouselInner.innerHTML = '';
+                    indicatorsContainer.innerHTML = '';
+
+                    // Create slides
+                    data.games.forEach((game, index) => {
+                        const isActive = index === 0 ? 'active' : '';
+                        const priceDisplay = game.price == 0 ? 'Free To Play' : `$${parseFloat(game.price).toFixed(2)}`;
+                        
+                        // Truncate description to ~150 characters
+                        const shortDescription = game.description.length > 150 
+                            ? game.description.substring(0, 150) + '...' 
+                            : game.description;
+
+                        // Check if game has video, otherwise use header image
+                        const hasVideo = game.video_url && game.video_url !== null;
+
+                        const slide = `
+                            <div class="carousel-item ${isActive} hero-carousel-item">
+                                <a href="#" class="hero-card row g-0 rounded-top-1 text-decoration-none">
+                                    <div class="col-lg-8 col-video">
+                                        <div class="media-header text-white">
+                                            <span class="text-info fw-bold">${hasVideo ? 'Trailer Preview' : 'Featured Game'}</span> &nbsp;|&nbsp; ${game.title}
+                                        </div>
+                                        ${hasVideo ? `
+                                            <video class="hero-video" autoplay muted loop playsinline poster="../${game.header_image}">
+                                                <source src="../${game.video_url}" type="video/mp4">
+                                            </video>
+                                        ` : `
+                                            <img src="../${game.header_image}" class="hero-video" alt="${game.title}" style="object-fit: cover;">
+                                        `}
+                                    </div>
+                                    <div class="col-lg-4 col-info">
+                                        <div class="info-content d-flex flex-column">
+                                            <div class="capsule-overlap">
+                                                <img src="../${game.thumbnail_image}" class="img-fluid rounded-1" alt="${game.title}">
+                                            </div>
+                                            <h2 class="text-white fw-light mb-2" style="font-size: 28px;">${game.title}</h2>
+                                            <div class="d-flex flex-wrap gap-1 mb-3">
+                                                <span class="badge steam-badge">${game.developer_name}</span>
+                                            </div>
+                                            <p class="description-truncate">${shortDescription}</p>
+                                            <div class="mt-auto ms-auto pb-2">
+                                                <span class="price-btn">${priceDisplay}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        `;
+                        
+                        carouselInner.innerHTML += slide;
+
+                        // Create indicator
+                        const indicator = `
+                            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="${index}" 
+                                ${isActive ? 'class="active"' : ''} aria-label="Slide ${index + 1}"></button>
+                        `;
+                        indicatorsContainer.innerHTML += indicator;
+                    });
+
+                    // Reinitialize carousel
+                    const heroCarousel = document.getElementById('heroCarousel');
+                    if (heroCarousel) {
+                        const carousel = new bootstrap.Carousel(heroCarousel, {
+                            interval: 5000,
+                            ride: 'carousel'
+                        });
+                    }
+                } else {
+                    console.error('No games found for hero carousel');
+                }
+            } catch (error) {
+                console.error('Error loading hero carousel:', error);
+            }
+        }
+
+        // Load hero carousel on page load
+        document.addEventListener('DOMContentLoaded', loadHeroCarousel);
+
+        // Load special offers carousel from database
+        async function loadSpecialOffers() {
+            try {
+                const response = await fetch('../php_backend/get_special_offers.php');
+                const data = await response.json();
+
+                if (data.success && data.games.length > 0) {
+                    const carouselInner = document.getElementById('specialOffersCarouselInner');
+                    const indicatorsContainer = document.getElementById('specialOffersIndicators');
+                    
+                    // Clear loading spinner
+                    carouselInner.innerHTML = '';
+                    indicatorsContainer.innerHTML = '';
+
+                    // Group games into slides (4 games per slide)
+                    const gamesPerSlide = 4;
+                    const slides = [];
+                    for (let i = 0; i < data.games.length; i += gamesPerSlide) {
+                        slides.push(data.games.slice(i, i + gamesPerSlide));
+                    }
+
+                    // Create slides
+                    slides.forEach((slideGames, slideIndex) => {
+                        const isActive = slideIndex === 0 ? 'active' : '';
+                        
+                        let slideHTML = `
+                            <div class="carousel-item ${isActive}">
+                                <div class="row gx-3 gy-0 carousel-height">
+                        `;
+
+                        slideGames.forEach((game, gameIndex) => {
+                            const isFirstTwo = gameIndex < 2;
+                            const colClass = isFirstTwo ? 'col-lg-4 h-100' : '';
+                            const capsuleClass = isFirstTwo ? 'capsule-lg' : 'capsule-sm';
+
+                            if (gameIndex === 2) {
+                                // Start stacked container for remaining games
+                                slideHTML += `<div class="col-lg-4 h-100"><div class="mobile-stack-container">`;
+                            }
+
+                            slideHTML += `
+                                ${isFirstTwo ? `<div class="${colClass}">` : ''}
+                                <div class="capsule ${capsuleClass}">
+                                    <div class="capsule-img-container">
+                                        <img src="../${game.thumbnail_image}" alt="${game.title}">
+                                    </div>
+                                    <div class="info-block">
+                                        <div>
+                                            <div class="deal-header">${game.title}</div>
+                                        </div>
+                                        <div class="discount-block-unified">
+                                            <div class="discount-percent-unified">-50%</div>
+                                            <div class="price-box-unified">
+                                                <div class="original-price">$${game.fake_price}</div>
+                                                <div class="final-price">$${game.actual_price}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                ${isFirstTwo ? `</div>` : ''}
+                            `;
+                        });
+
+                        // Close stacked container if there were small cards
+                        if (slideGames.length > 2) {
+                            slideHTML += `</div></div>`;
+                        }
+
+                        slideHTML += `
+                                </div>
+                            </div>
+                        `;
+                        
+                        carouselInner.innerHTML += slideHTML;
+
+                        // Create indicator
+                        const indicator = `
+                            <button type="button" data-bs-target="#specialOffersCarousel" data-bs-slide-to="${slideIndex}" 
+                                ${isActive ? 'class="active"' : ''} aria-label="Slide ${slideIndex + 1}"></button>
+                        `;
+                        indicatorsContainer.innerHTML += indicator;
+                    });
+
+                    // Reinitialize carousel
+                    const specialOffersCarousel = document.getElementById('specialOffersCarousel');
+                    if (specialOffersCarousel) {
+                        new bootstrap.Carousel(specialOffersCarousel, {
+                            interval: false,
+                            ride: false
+                        });
+                    }
+                } else {
+                    const carouselInner = document.getElementById('specialOffersCarouselInner');
+                    carouselInner.innerHTML = `
+                        <div class="carousel-item active">
+                            <div class="row gx-3 gy-0 carousel-height">
+                                <div class="col-12 text-center py-5 d-flex align-items-center justify-content-center">
+                                    <h3 style="color: #4c6b22;">No special offers available. Check back soon!</h3>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error loading special offers:', error);
+            }
+        }
+
+        // Load special offers on page load
+        document.addEventListener('DOMContentLoaded', loadSpecialOffers);
+
+        // Category image mapping (using existing images)
+        const categoryImages = {
+            'Action': '../assets/images/action.webp',
+            'Adventure': '../assets/images/story_rich.webp',
+            'Role-Playing (RPG)': '../assets/images/anime.webp',
+            'Strategy': '../assets/images/strategy.webp',
+            'Simulation': '../assets/images/simulation.webp',
+            'Sports': '../assets/images/racing.webp',
+            'Puzzle': '../assets/images/strategy.webp',
+            'Fighting': '../assets/images/fighting_martial_arts.webp',
+            'Horror': '../assets/images/survival.webp',
+            'MOBA': '../assets/images/multiplayer_coop.webp',
+            'Survival': '../assets/images/survival.webp',
+            'Sandbox': '../assets/images/freetoplay.webp',
+            'Platformer': '../assets/images/anime.webp',
+            'Stealth': '../assets/images/science_fiction.webp'
+        };
+
+        // Load categories (genres) carousel from database
+        async function loadCategories() {
+            try {
+                const response = await fetch('../php_backend/get_categories.php');
+                const data = await response.json();
+
+                if (data.success && data.categories.length > 0) {
+                    const carouselInner = document.getElementById('categoryCarouselInner');
+                    const indicatorsContainer = document.getElementById('categoryIndicators');
+                    
+                    // Clear loading spinner
+                    carouselInner.innerHTML = '';
+                    indicatorsContainer.innerHTML = '';
+
+                    // Group categories into slides (4 per slide)
+                    const categoriesPerSlide = 4;
+                    const slides = [];
+                    for (let i = 0; i < data.categories.length; i += categoriesPerSlide) {
+                        slides.push(data.categories.slice(i, i + categoriesPerSlide));
+                    }
+
+                    // Create slides
+                    slides.forEach((slideCategories, slideIndex) => {
+                        const isActive = slideIndex === 0 ? 'active' : '';
+                        
+                        let slideHTML = `
+                            <div class="carousel-item ${isActive}">
+                                <div class="row g-3">
+                        `;
+
+                        slideCategories.forEach(category => {
+                            const categoryImage = categoryImages[category.genre_name] || '../assets/images/anime.webp';
+                            const categorySlug = category.genre_name.toLowerCase().replace(/\s+/g, '-').replace(/[()]/g, '');
+                            
+                            slideHTML += `
+                                <div class="col-lg-3 col-md-6">
+                                    <a href="category-details.php?cat=${categorySlug}&genre_id=${category.genre_id}" class="category-card">
+                                        <img src="${categoryImage}" alt="${category.genre_name}" class="category-bg">
+                                        <div class="category-overlay"></div>
+                                        <div class="category-title">${category.genre_name.toUpperCase()}</div>
+                                    </a>
+                                </div>
+                            `;
+                        });
+
+                        slideHTML += `
+                                </div>
+                            </div>
+                        `;
+                        
+                        carouselInner.innerHTML += slideHTML;
+
+                        // Create indicator
+                        const indicator = `
+                            <button type="button" data-bs-target="#categoryCarousel" data-bs-slide-to="${slideIndex}" 
+                                ${isActive ? 'class="active"' : ''} aria-label="Slide ${slideIndex + 1}"></button>
+                        `;
+                        indicatorsContainer.innerHTML += indicator;
+                    });
+
+                    // Reinitialize carousel
+                    const categoryCarousel = document.getElementById('categoryCarousel');
+                    if (categoryCarousel) {
+                        new bootstrap.Carousel(categoryCarousel, {
+                            interval: false,
+                            ride: false,
+                            touch: true
+                        });
+                    }
+                } else {
+                    const carouselInner = document.getElementById('categoryCarouselInner');
+                    carouselInner.innerHTML = `
+                        <div class="carousel-item active">
+                            <div class="row g-3">
+                                <div class="col-12 text-center py-5">
+                                    <h3 style="color: #8f98a0;">No categories available</h3>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error loading categories:', error);
+            }
+        }
+
+        // Load categories on page load
+        document.addEventListener('DOMContentLoaded', loadCategories);
+
+        // Load recommended games for Featured & Recommended section
+        async function loadRecommendedGames() {
+            try {
+                const response = await fetch('../php_backend/get_recommended_games.php');
+                const data = await response.json();
+
+                if (data.success && data.games.length > 0) {
+                    const carouselInner = document.getElementById('recommendedCarouselInner');
+                    const indicatorsContainer = document.getElementById('recommendedIndicators');
+                    
+                    // Clear loading spinner
+                    carouselInner.innerHTML = '';
+                    indicatorsContainer.innerHTML = '';
+
+                    // Create slides
+                    data.games.forEach((game, index) => {
+                        const isActive = index === 0 ? 'active' : '';
+                        const priceDisplay = game.price == 0 ? 'Free to Play' : `$${parseFloat(game.price).toFixed(2)} USD`;
+                        
+                        // Create tags HTML (limit to first 5 tags to avoid overflow)
+                        const tagsHTML = game.tags && game.tags.length > 0 
+                            ? game.tags.slice(0, 5).map(tag => `<span class="status-badge-blue">${tag}</span>`).join(' ')
+                            : '<span class="status-badge-blue">No tags available</span>';
+
+                        const slide = `
+                            <div class="slide-item carousel-item ${isActive}">
+                                <div class="row g-0 h-100">
+                                    <div class="featured-image-container col-md-8 px-0">
+                                        <img src="../${game.header_image}" data-original="../${game.header_image}"
+                                            alt="${game.title}" class="featured-game-image">
+                                    </div>
+                                    <div class="col-md-4 p-0">
+                                        <div class="game-details-panel">
+                                            <div class="game-title-box d-flex align-items-center">
+                                                <h3 class="game-title-text">${game.title}</h3>
+                                            </div>
+                                            <div class="thumbnails-grid">
+                                                ${game.screenshots.map((screenshot, idx) => `
+                                                    <div><img class="thumbnail-image" src="../${screenshot}" alt="${idx + 1}"></div>
+                                                `).join('')}
+                                            </div>
+                                            <div class="bottom-info-row">
+                                                <div class="status-row">
+                                                    ${tagsHTML}
+                                                </div>
+                                                <p class="price-text">${priceDisplay}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        
+                        carouselInner.innerHTML += slide;
+
+                        // Create indicator
+                        const indicator = `
+                            <button type="button" data-bs-target="#gameCarousel" data-bs-slide-to="${index}" 
+                                ${isActive ? 'class="active" aria-current="true"' : ''}></button>
+                        `;
+                        indicatorsContainer.innerHTML += indicator;
+                    });
+
+                    // Reinitialize carousel
+                    const gameCarousel = document.getElementById('gameCarousel');
+                    if (gameCarousel) {
+                        new bootstrap.Carousel(gameCarousel, {
+                            interval: false,
+                            ride: false
+                        });
+                    }
+                } else {
+                    const carouselInner = document.getElementById('recommendedCarouselInner');
+                    carouselInner.innerHTML = `
+                        <div class="slide-item carousel-item active">
+                            <div class="row g-0 h-100">
+                                <div class="col-12 text-center py-5 d-flex align-items-center justify-content-center">
+                                    <h3 style="color: #8f98a0;">No featured games available. Check back soon!</h3>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    document.getElementById('recommendedIndicators').innerHTML = '';
+                }
+            } catch (error) {
+                console.error('Error loading recommended games:', error);
+            }
+        }
+
+        // Load recommended games on page load
+        document.addEventListener('DOMContentLoaded', loadRecommendedGames);
+
+        // Load games under $10
+        async function loadUnder10Games() {
+            try {
+                const response = await fetch('../php_backend/get_under_10_games.php');
+                const data = await response.json();
+
+                if (data.success && data.games.length > 0) {
+                    const carouselInner = document.getElementById('under10CarouselInner');
+                    const indicatorsContainer = document.getElementById('under10Indicators');
+                    
+                    // Clear loading spinner
+                    carouselInner.innerHTML = '';
+                    indicatorsContainer.innerHTML = '';
+
+                    // Group games into slides (4 games per slide)
+                    const gamesPerSlide = 4;
+                    const slides = [];
+                    for (let i = 0; i < data.games.length; i += gamesPerSlide) {
+                        slides.push(data.games.slice(i, i + gamesPerSlide));
+                    }
+
+                    // Create slides
+                    slides.forEach((slideGames, slideIndex) => {
+                        const isActive = slideIndex === 0 ? 'active' : '';
+                        
+                        let slideHTML = `
+                            <div class="carousel-item ${isActive}">
+                                <div class="row g-3">
+                        `;
+
+                        slideGames.forEach(game => {
+                            const priceDisplay = `$${parseFloat(game.price).toFixed(2)} USD`;
+                            
+                            slideHTML += `
+                                <div class="col-md-3 col-6">
+                                    <div class="steam-card">
+                                        <img src="../${game.header_image}" alt="${game.title}">
+                                        <div class="card-body-steam">
+                                            <span class="regular-price-badge">${priceDisplay}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        });
+
+                        slideHTML += `
+                                </div>
+                            </div>
+                        `;
+                        
+                        carouselInner.innerHTML += slideHTML;
+
+                        // Create indicator
+                        const indicator = `
+                            <button type="button" data-bs-target="#steamGameCarousel" data-bs-slide-to="${slideIndex}" 
+                                ${isActive ? 'class="active" aria-current="true"' : ''}></button>
+                        `;
+                        indicatorsContainer.innerHTML += indicator;
+                    });
+
+                    // Reinitialize carousel
+                    const steamCarousel = document.getElementById('steamGameCarousel');
+                    if (steamCarousel) {
+                        new bootstrap.Carousel(steamCarousel, {
+                            interval: false,
+                            ride: false
+                        });
+                    }
+                } else {
+                    const carouselInner = document.getElementById('under10CarouselInner');
+                    carouselInner.innerHTML = `
+                        <div class="carousel-item active">
+                            <div class="row g-3">
+                                <div class="col-12 text-center py-5">
+                                    <h3 style="color: #8f98a0;">No games under $10 available at the moment</h3>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    document.getElementById('under10Indicators').innerHTML = '';
+                }
+            } catch (error) {
+                console.error('Error loading under $10 games:', error);
+            }
+        }
+
+        // Load under $10 games on page load
+        document.addEventListener('DOMContentLoaded', loadUnder10Games);
     </script>
 </body>
 
