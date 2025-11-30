@@ -1,180 +1,26 @@
+<?php
+// Check if genre_id is provided
+if (!isset($_GET['genre_id']) || !is_numeric($_GET['genre_id'])) {
+    header('Location: index.php');
+    exit;
+}
+
+$genre_id = intval($_GET['genre_id']);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Steam Category Details</title>
+    <title>Category Details | Professional Distro</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="../css/style.css" rel="stylesheet">
     <style>
         /* =========================================
-           NAVBAR STYLES
+           1. GLOBAL & LAYOUT
            ========================================= */
-        .main-navbar {
-            background: #171a21 !important;
-        }
-
-        .navbar-upper-border {
-            border-bottom: 1px solid #2f3642;
-        }
-
-        .nav-link-upper {
-            color: #c6d4df !important;
-            transition: color 0.2s;
-        }
-
-        .nav-link-upper:hover {
-            color: #fff !important;
-        }
-
-        @media (min-width: 768px) {
-            .nav-link-upper {
-                position: relative;
-                padding-bottom: 15px !important;
-                padding-top: 0.5rem !important;
-                padding-left: 1rem !important;
-                padding-right: 1rem !important;
-            }
-
-            .nav-link-upper::after {
-                content: '';
-                position: absolute;
-                bottom: 5px;
-                left: 0;
-                width: 0;
-                height: 2px;
-                background-color: #fff;
-                transition: width 0.2s ease-in-out;
-            }
-
-            .nav-link-upper:hover::after {
-                width: 100%;
-            }
-        }
-
-        .login-btn {
-            background: rgba(0, 200, 255, 0.1);
-            border: 1px solid rgba(0, 200, 255, 0.4);
-            backdrop-filter: blur(6px);
-            color: #00b4d8;
-            padding: 8px 20px;
-            border-radius: 8px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.95rem;
-            box-shadow: none;
-        }
-
-        .login-btn:hover {
-            background: rgba(0, 200, 255, 0.1);
-            border-color: rgba(0, 200, 255, 0.4);
-            color: #00b4d8;
-            backdrop-filter: blur(6px);
-            box-shadow: 0 0 15px rgba(0, 180, 216, 0.6);
-        }
-
-        .secondary-navbar {
-            background: #1b2838 !important;
-            z-index: 1020;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        @media (min-width: 768px) {
-            .secondary-navbar {
-                position: sticky;
-                top: 0;
-            }
-        }
-
-        .subnav-link {
-            font-weight: 500;
-            font-size: 0.95rem;
-            color: #c6d4df !important;
-            padding-top: 0.5rem;
-            padding-bottom: 0.5rem;
-        }
-
-        .subnav-link:hover {
-            color: #fff !important;
-        }
-
-        .custom-dropdown-menu {
-            background: #1b2838 !important;
-            border: none;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, .5);
-        }
-
-        .custom-dropdown-item {
-            color: #c6d4df !important;
-            padding: .5rem 1rem;
-            font-weight: 500;
-            font-size: 0.95rem;
-        }
-
-        .custom-dropdown-item:hover {
-            background: #2a475e !important;
-            color: #fff !important;
-        }
-
-        .header-search-group {
-            border: 1px solid #1a2035;
-            border-radius: 0.375rem;
-            transition: border-color 0.3s, box-shadow 0.3s;
-            height: 40px;
-        }
-
-        .header-search-group:focus-within {
-            border-color: #00f0ff;
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.6);
-        }
-
-        @media (min-width: 768px) {
-            .desktop-search-form {
-                width: 360px;
-            }
-        }
-
-        .header-search-input {
-            background: rgba(255, 255, 255, 0.05);
-            border: none;
-            color: #fff;
-            height: 100%;
-            border-radius: 0.375rem 0 0 0.375rem !important;
-        }
-
-        .header-search-input:focus {
-            background: rgba(255, 255, 255, 0.1);
-            box-shadow: none;
-            color: #fff;
-        }
-
-        .header-search-input::placeholder {
-            color: #8a94a6 !important;
-            opacity: 1;
-        }
-
-        .header-search-btn {
-            background: #00f0ff;
-            color: #0a0f1a;
-            border: none;
-            width: 50px;
-            height: 100%;
-            font-weight: 700;
-            transition: background 0.3s, box-shadow 0.3s, color 0.3s;
-            border-radius: 0 0.375rem 0.375rem 0 !important;
-        }
-
-        .header-search-btn:hover {
-            background: #fff;
-            color: #0a0f1a;
-            box-shadow: 0 0 20px #00f0ff;
-        }
-
-        /* =========================================
-       1. GLOBAL & LAYOUT
-       ========================================= */
         body {
             background-color: #1b2838;
             font-family: "Arial", sans-serif;
@@ -207,7 +53,6 @@
         .steam-nav-btn {
             position: absolute;
             top: 50%;
-            /* FIXED: Align exactly to middle Y-axis */
             transform: translateY(-50%);
             background: none;
             border: none;
@@ -271,7 +116,7 @@
             height: 100%;
         }
 
-        video {
+        video, .col-video img {
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -380,7 +225,7 @@
         }
 
         /* =========================================
-       3. POPULAR TITLES (Strip + Badges)
+       3. POPULAR TITLES
        ========================================= */
         .grid-card {
             display: block;
@@ -445,43 +290,13 @@
             height: 24px;
         }
 
-        .badge-discount {
-            background-color: #4c6b22;
-            color: #a4d007;
-            font-weight: bold;
+        .badge-price {
+            color: #fff;
             font-size: 13px;
-            padding: 0 5px;
-            height: 100%;
+            padding: 0 6px;
             display: flex;
             align-items: center;
-            margin-right: 4px;
-        }
-
-        .badge-price {
-            color: #b0aeac;
-            font-size: 11px;
-            padding: 0 4px;
-            display: flex;
-            flex-direction: column;
             justify-content: center;
-            align-items: flex-end;
-            line-height: 1;
-        }
-
-        .price-original {
-            color: #706d6b;
-            text-decoration: line-through;
-            font-size: 9px;
-        }
-
-        .price-final {
-            color: #fff;
-        }
-
-        .badge-free {
-            color: #fff;
-            font-size: 11px;
-            padding: 0 6px;
         }
 
         /* =========================================
@@ -531,7 +346,6 @@
             min-width: 100px;
         }
 
-        /* Load More Button */
         .load-more-btn {
             display: block;
             width: 100%;
@@ -551,6 +365,11 @@
         .load-more-btn:hover {
             background-color: #67c1f5;
             color: #fff;
+        }
+
+        .load-more-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
 
         /* =========================================
@@ -594,253 +413,34 @@
             }
         }
 
-        /* =========================================
-           FOOTER STYLES
-           ========================================= */
-        .main-footer-section {
-            background-image: radial-gradient(ellipse at 70% 120%, #1a2035 0%, #0a0f1a 60%);
-            padding-top: 3rem;
-            padding-bottom: 3rem;
-            margin-top: 50px;
+        .loading-spinner {
+            text-align: center;
+            padding: 100px 20px;
+            color: #66c0f4;
         }
 
-        .footer-brand-heading {
-            font-size: 2.25rem;
-            font-weight: 700;
-            color: #fff;
-            margin: 0;
-            text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
-        }
-
-        .footer-tagline {
-            color: #8a94a6;
-        }
-
-        .newsletter-label {
-            font-weight: 600;
-            color: #00f0ff;
-        }
-
-        .newsletter-input-group {
-            border: 1px solid #1a2035;
-            border-radius: 0.375rem;
-            transition: border-color 0.3s, box-shadow 0.3s;
-        }
-
-        .newsletter-input-group:focus-within {
-            border-color: #00f0ff;
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.6);
-        }
-
-        .newsletter-input {
-            background: rgba(255, 255, 255, 0.05) !important;
-            color: #fff !important;
-            border: 0 !important;
-        }
-
-        .newsletter-input:focus {
-            box-shadow: none !important;
-        }
-
-        .newsletter-submit-btn {
-            background: #00f0ff;
-            color: #0a0f1a;
-            font-size: 1.25rem;
-            font-weight: 700;
-            transition: background 0.3s, box-shadow 0.3s, color 0.3s;
-            border: none;
-        }
-
-        .newsletter-submit-btn:hover {
-            background: #fff;
-            color: #0a0f1a;
-            box-shadow: 0 0 20px #00f0ff;
-        }
-
-        .footer-nav-link {
-            color: #8a94a6;
-            position: relative;
-            padding-bottom: 5px !important;
-            font-weight: 600;
-            transition: color 0.3s;
-        }
-
-        .footer-nav-link:hover {
-            color: #fff;
-        }
-
-        .footer-nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0.5rem;
-            width: 0;
-            height: 2px;
-            background: #a040ff;
-            transition: width 0.3s ease-out;
-        }
-
-        .footer-nav-link:hover::after {
-            width: calc(100% - 1rem);
-        }
-
-        @media (min-width: 768px) {
-            .footer-nav-link.px-md-3:hover::after {
-                width: calc(100% - 2rem);
-            }
-
-            .footer-nav-link.px-md-3::after {
-                left: 1rem;
-            }
-        }
-
-        .footer-social-icon {
-            color: #8a94a6;
-            font-size: 1.5rem;
-            transition: color 0.3s, transform 0.3s, text-shadow 0.3s;
-            text-decoration: none;
-        }
-
-        .footer-social-icon:hover {
-            transform: scale(1.1) translateY(-2px);
-        }
-
-        .icon-discord:hover {
-            color: #5865F2;
-            text-shadow: 0 0 10px #5865F2;
-        }
-
-        .icon-reddit:hover {
-            color: #FF4500;
-            text-shadow: 0 0 10px #FF4500;
-        }
-
-        .icon-youtube:hover {
-            color: #FF0000;
-            text-shadow: 0 0 10px #FF0000;
-        }
-
-        .icon-twitter:hover {
-            color: #1DA1F2;
-            text-shadow: 0 0 10px #1DA1F2;
-        }
-
-        .icon-tiktok:hover {
-            color: #fff;
-            text-shadow: 0 0 10px #00f0ff, 0 0 15px #fe2c55;
-        }
-
-        .footer-bottom-bar {
-            position: relative;
-            background-color: #000;
-        }
-
-        .footer-glow-border {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #00f0ff, #a040ff, transparent);
-            background-size: 300% 100%;
-            animation: glow-animation 8s linear infinite;
-        }
-
-        @keyframes glow-animation {
-            0% {
-                background-position: 150% 0;
-            }
-
-            100% {
-                background-position: -150% 0;
-            }
-        }
-
-        .footer-copyright {
-            color: #8a94a6;
-        }
-
-        .footer-legal-link {
-            color: #8a94a6;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-legal-link:hover {
-            color: #fff;
-            text-decoration: underline;
+        .error-message {
+            text-align: center;
+            padding: 100px 20px;
+            color: #ff6b6b;
         }
     </style>
 </head>
 
 <body>
+
     <?php include 'navbar_include.php'; ?>
 
-    <div class="steam-wrapper">
-        <h2 class="section-title" id="category-header" style="border:none; margin-top:0;">Category</h2>
-
-        <button class="steam-nav-btn prev-btn" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
-            <svg viewBox="0 0 50 100" style="transform: rotate(180deg);">
-                <polygon points="0,0.093 0,25.702 24.323,50.026 0,74.349 0,99.955 49.929,50.026 "></polygon>
-            </svg>
-        </button>
-
-        <button class="steam-nav-btn next-btn" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
-            <svg viewBox="0 0 50 100">
-                <polygon points="0,0.093 0,25.702 24.323,50.026 0,74.349 0,99.955 49.929,50.026 "></polygon>
-            </svg>
-        </button>
-
-        <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
-
-            <div class="carousel-inner shadow-lg" id="hero-carousel-inner">
+    <div id="mainContent">
+        <div class="loading-spinner">
+            <div class="spinner-border text-light" role="status">
+                <span class="visually-hidden">Loading...</span>
             </div>
-
-            <div class="indicators-container">
-                <div class="carousel-indicators custom-indicators-style" id="hero-indicators">
-                </div>
-            </div>
-
+            <p class="mt-3">Loading category details...</p>
         </div>
     </div>
 
-    <div class="steam-wrapper">
-        <h2 class="section-title">Popular Titles</h2>
-
-        <div id="popularCarousel" class="carousel slide" data-bs-ride="false">
-            <div class="carousel-inner" id="popular-carousel-inner">
-            </div>
-
-            <button class="steam-nav-btn prev-btn" type="button" data-bs-target="#popularCarousel" data-bs-slide="prev"
-                style="top:50%">
-                <svg viewBox="0 0 50 100" style="transform: rotate(180deg);">
-                    <polygon points="0,0.093 0,25.702 24.323,50.026 0,74.349 0,99.955 49.929,50.026 "></polygon>
-                </svg>
-            </button>
-            <button class="steam-nav-btn next-btn" type="button" data-bs-target="#popularCarousel" data-bs-slide="next"
-                style="top:50%">
-                <svg viewBox="0 0 50 100">
-                    <polygon points="0,0.093 0,25.702 24.323,50.026 0,74.349 0,99.955 49.929,50.026 "></polygon>
-                </svg>
-            </button>
-        </div>
-    </div>
-
-    <div class="steam-wrapper">
-        <div class="d-flex justify-content-between align-items-end mb-3">
-            <h2 class="section-title mb-0" style="margin-top:0;">Browse All</h2>
-        </div>
-
-        <div id="game-list-container">
-        </div>
-
-        <button id="loadMoreBtn" class="load-more-btn">Load More</button>
-    </div>
-    </div>
-
-    <!-- =========================
-         FOOTER
-         ========================= -->
+    <!-- Footer -->
     <footer data-bs-theme="dark">
         <div class="main-footer-section">
             <div class="container">
@@ -862,8 +462,7 @@
                         </div>
                     </div>
                 </div>
-                <div
-                    class="d-flex flex-column flex-md-row justify-content-between align-items-center border-top border-secondary-subtle mt-5 pt-5">
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-center border-top border-secondary-subtle mt-5 pt-5">
                     <nav class="nav flex-wrap justify-content-center">
                         <a class="footer-nav-link nav-link px-2 px-md-3" href="index.php">Store</a>
                         <a class="footer-nav-link nav-link px-2 px-md-3" href="about.php">About</a>
@@ -882,7 +481,6 @@
         </div>
         <div class="footer-bottom-bar">
             <div class="footer-glow-border"></div>
-
             <div class="container">
                 <div class="row align-items-center py-3 gy-2">
                     <div class="col-md-6 text-center text-md-start">
@@ -901,406 +499,239 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
     <script>
-        /* --- STEAM DATABASE (All 12 Categories) --- */
-        const db = {
-            // 1. ROLE PLAYING (RPG)
-            "rpg": {
-                title: "Role-Playing Games",
-                hero: [
-                    { title: "Baldur's Gate 3", vid: "https://videos.pexels.com/video-files/854121/854121-hd_1920_1080_24fps.mp4", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1086940/header.jpg", desc: "Gather your party and return to the Forgotten Realms.", price: "$59.99" },
-                    { title: "Starfield", vid: "https://videos.pexels.com/video-files/3943962/3943962-hd_1920_1080_25fps.mp4", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1716740/header.jpg", desc: "Explore the stars in this next-generation RPG.", price: "$69.99" },
-                    { title: "The Witcher 3", vid: "https://videos.pexels.com/video-files/3129957/3129957-hd_1920_1080_25fps.mp4", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/292030/header.jpg", desc: "You are Geralt of Rivia, mercenary monster slayer.", price: "$39.99" }
-                ],
-                popular: [
-                    { title: "Elden Ring", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1245620/header.jpg", price: "$59.99" },
-                    { title: "Cyberpunk 2077", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1091500/header.jpg", price: "$29.99", discount: "-50%", oldPrice: "$59.99" },
-                    { title: "Final Fantasy VII", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1462040/header.jpg", price: "$39.99" },
-                    { title: "Persona 5 Royal", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1687950/header.jpg", price: "$59.99" },
-                    { title: "Skyrim Special Edition", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/489830/header.jpg", price: "$9.99", discount: "-75%", oldPrice: "$39.99" }
-                ],
-                list: [
-                    { title: "Fallout 4", tags: "Open World, Post-apocalyptic", date: "Nov 10, 2015", price: "$19.99", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/377160/capsule_sm_120.jpg" },
-                    { title: "Mass Effect Legendary", tags: "Sci-fi, Story Rich", date: "May 14, 2021", price: "$59.99", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1328670/capsule_sm_120.jpg" },
-                    { title: "Disco Elysium", tags: "Detective, Story", date: "Oct 15, 2019", price: "$39.99", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/632470/capsule_sm_120.jpg" }
-                ]
-            },
+        const genreId = <?php echo $genre_id; ?>;
+        let allGames = [];
+        let displayedGames = 0;
+        const gamesPerLoad = 10;
 
-            // 2. ADVENTURE
-            "adventure": {
-                title: "Adventure Games",
-                hero: [
-                    { title: "Uncharted™: Legacy", vid: "https://videos.pexels.com/video-files/3943962/3943962-hd_1920_1080_25fps.mp4", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1659420/header.jpg", desc: "Seek your fortune and leave your mark on the map.", price: "$49.99" },
-                    { title: "Tomb Raider I-III", vid: "https://videos.pexels.com/video-files/854121/854121-hd_1920_1080_24fps.mp4", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/2465280/header.jpg", desc: "Play the original three Tomb Raider adventures.", price: "$29.99" },
-                    { title: "Horizon Zero Dawn", vid: "https://videos.pexels.com/video-files/3129957/3129957-hd_1920_1080_25fps.mp4", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1151640/header.jpg", desc: "Experience Aloy's entire legendary quest.", price: "$49.99" }
-                ],
-                popular: [
-                    { title: "God of War", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1593500/header.jpg", price: "$49.99" },
-                    { title: "Red Dead Redemption 2", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1174180/header.jpg", price: "$19.79", discount: "-67%", oldPrice: "$59.99" },
-                    { title: "The Last of Us™ Part I", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1888930/header.jpg", price: "$59.99" },
-                    { title: "Stray", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1332010/header.jpg", price: "$29.99" },
-                    { title: "Star Wars Jedi: Survivor", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1774580/header.jpg", price: "$69.99" }
-                ],
-                list: [
-                    { title: "Sea of Thieves", tags: "Pirates, Co-op", date: "Jun 3, 2020", price: "$39.99", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1172620/capsule_sm_120.jpg" },
-                    { title: "No Man's Sky", tags: "Space, Open World", date: "Aug 12, 2016", price: "$59.99", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/275850/capsule_sm_120.jpg" },
-                    { title: "Hollow Knight", tags: "Metroidvania, Difficult", date: "Feb 24, 2017", price: "$14.99", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/367520/capsule_sm_120.jpg" }
-                ]
-            },
+        async function loadCategoryData() {
+            try {
+                const response = await fetch(`../php_backend/get_category_details.php?genre_id=${genreId}`);
+                const data = await response.json();
 
-            // 3. RACING
-            "racing": {
-                title: "Racing & Driving",
-                hero: [
-                    { title: "Forza Horizon 5", vid: "https://videos.pexels.com/video-files/3129957/3129957-hd_1920_1080_25fps.mp4", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1551360/header.jpg", desc: "Your Ultimate Horizon Adventure awaits!", price: "$59.99" },
-                    { title: "F1® 23", vid: "https://videos.pexels.com/video-files/854121/854121-hd_1920_1080_24fps.mp4", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/2108330/header.jpg", desc: "Be the last to brake in EA SPORTS™ F1® 23.", price: "$69.99" },
-                    { title: "Assetto Corsa", vid: "https://videos.pexels.com/video-files/3943962/3943962-hd_1920_1080_25fps.mp4", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/805550/header.jpg", desc: "The official GT World Challenge videogame.", price: "$39.99" }
-                ],
-                popular: [
-                    { title: "Need for Speed™ Unbound", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1846380/header.jpg", price: "$9.79", discount: "-86%", oldPrice: "$69.99" },
-                    { title: "BeamNG.drive", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/284160/header.jpg", price: "$24.99" },
-                    { title: "DiRT Rally 2.0", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/690790/header.jpg", price: "$4.99", discount: "-75%", oldPrice: "$19.99" },
-                    { title: "The Crew 2", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/646910/header.jpg", price: "$4.99", discount: "-90%", oldPrice: "$49.99" },
-                    { title: "CarX Drift Racing", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/635260/header.jpg", price: "$14.99" }
-                ],
-                list: [
-                    { title: "Euro Truck Simulator 2", tags: "Simulation, Driving", date: "Oct 12, 2012", price: "$19.99", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/227300/capsule_sm_120.jpg" },
-                    { title: "TrackMania", tags: "Racing, Multiplayer", date: "Jul 1, 2020", price: "Free", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/2225070/capsule_sm_120.jpg" },
-                    { title: "Hot Wheels Unleashed", tags: "Arcade, Racing", date: "Sep 30, 2021", price: "$49.99", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1271700/capsule_sm_120.jpg" }
-                ]
-            },
-
-            // 4. FREE TO PLAY
-            "freetoplay": {
-                title: "Free to Play Games",
-                hero: [
-                    { title: "Counter-Strike 2", vid: "https://videos.pexels.com/video-files/854121/854121-hd_1920_1080_24fps.mp4", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/730/header.jpg", desc: "The next era of Counter-Strike is here.", price: "Free to Play" },
-                    { title: "Dota 2", vid: "https://videos.pexels.com/video-files/3943962/3943962-hd_1920_1080_25fps.mp4", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/570/header.jpg", desc: "Every day, millions of players enter battle.", price: "Free to Play" },
-                    { title: "Apex Legends", vid: "https://videos.pexels.com/video-files/3129957/3129957-hd_1920_1080_25fps.mp4", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1172470/header.jpg", desc: "Experience the next evolution of Battle Royale.", price: "Free to Play" }
-                ],
-                popular: [
-                    { title: "PUBG: BATTLEGROUNDS", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/578080/header.jpg", price: "Free" },
-                    { title: "Warframe", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/230410/header.jpg", price: "Free" },
-                    { title: "Destiny 2", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1085660/header.jpg", price: "Free" },
-                    { title: "The Sims™ 4", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1222670/header.jpg", price: "Free" },
-                    { title: "Team Fortress 2", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/440/header.jpg", price: "Free" }
-                ],
-                list: [
-                    { title: "War Thunder", tags: "Vehicular Combat, WWII", date: "Aug 15, 2013", price: "Free", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/236390/capsule_sm_120.jpg" },
-                    { title: "Path of Exile", tags: "Action RPG, Hack & Slash", date: "Oct 23, 2013", price: "Free", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/238960/capsule_sm_120.jpg" },
-                    { title: "Brawlhalla", tags: "Fighting, Multiplayer", date: "Oct 17, 2017", price: "Free", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/291550/capsule_sm_120.jpg" }
-                ]
-            },
-
-            // 5. ACTION
-            "action": {
-                title: "Action Games",
-                hero: [
-                    { title: "Call of Duty®", vid: "https://videos.pexels.com/video-files/3943962/3943962-hd_1920_1080_25fps.mp4", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1938090/header.jpg", desc: "Welcome to the new era of Call of Duty.", price: "$69.99" },
-                    { title: "Cyberpunk 2077", vid: "https://videos.pexels.com/video-files/3129957/3129957-hd_1920_1080_25fps.mp4", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1091500/header.jpg", desc: "An open-world, action-adventure RPG set in Night City.", price: "$29.99" },
-                    { title: "Apex Legends", vid: "https://videos.pexels.com/video-files/854121/854121-hd_1920_1080_24fps.mp4", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1172470/header.jpg", desc: "Experience the next evolution of Battle Royale.", price: "Free to Play" }
-                ],
-                popular: [
-                    { title: "Red Dead Redemption 2", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1174180/header.jpg", price: "$19.79", discount: "-67%", oldPrice: "$59.99" },
-                    { title: "Grand Theft Auto V", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/271590/header.jpg", price: "$14.99", discount: "-50%", oldPrice: "$29.99" },
-                    { title: "Hades", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1145360/header.jpg", price: "$12.49", discount: "-50%", oldPrice: "$24.99" },
-                    { title: "Elden Ring", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1245620/header.jpg", price: "$59.99" },
-                    { title: "Monster Hunter: World", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/582010/header.jpg", price: "$14.99", discount: "-50%", oldPrice: "$29.99" }
-                ],
-                list: [
-                    { title: "Devil May Cry 5", tags: "Action, Hack and Slash", date: "Mar 8, 2019", price: "$29.99", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/601150/capsule_sm_120.jpg" },
-                    { title: "Sekiro: Shadows Die Twice", tags: "Souls-like, Difficult", date: "Mar 22, 2019", price: "$59.99", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/814380/capsule_sm_120.jpg" },
-                    { title: "Batman: Arkham Knight", tags: "Open World, Superhero", date: "Jun 23, 2015", price: "$19.99", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/208650/capsule_sm_120.jpg" }
-                ]
-            },
-
-            // 6. ANIME
-            "anime": {
-                title: "Anime Games",
-                hero: [
-                    { title: "Persona 5 Royal", vid: "https://videos.pexels.com/video-files/854121/854121-hd_1920_1080_24fps.mp4", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1687950/header.jpg", desc: "Don the mask and join the Phantom Thieves of Hearts.", price: "$59.99" },
-                    { title: "GUILTY GEAR -STRIVE-", vid: "https://videos.pexels.com/video-files/3129957/3129957-hd_1920_1080_25fps.mp4", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1384160/header.jpg", desc: "The cutting-edge 2D/3D hybrid graphics.", price: "$39.99" },
-                    { title: "Tales of Arise", vid: "https://videos.pexels.com/video-files/3943962/3943962-hd_1920_1080_25fps.mp4", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/740130/header.jpg", desc: "Challenge the fate that binds you.", price: "$39.99" }
-                ],
-                popular: [
-                    { title: "DRAGON BALL Z: KAKAROT", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/851850/header.jpg", price: "$14.99", discount: "-75%", oldPrice: "$59.99" },
-                    { title: "NARUTO SHIPPUDEN: Storm 4", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/349040/header.jpg", price: "$19.99" },
-                    { title: "One Piece Odyssey", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/814000/header.jpg", price: "$59.99" },
-                    { title: "Hatsune Miku: Project DIVA", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1761390/header.jpg", price: "$19.99", discount: "-50%", oldPrice: "$39.99" },
-                    { title: "Code Vein", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/678960/header.jpg", price: "$8.99", discount: "-85%", oldPrice: "$59.99" }
-                ],
-                list: [
-                    { title: "Doki Doki Literature Club", tags: "Psychological Horror, Anime", date: "Sep 22, 2017", price: "Free", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/698780/capsule_sm_120.jpg" },
-                    { title: "Nier: Automata", tags: "Action, Female Protagonist", date: "Mar 17, 2017", price: "$39.99", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/524220/capsule_sm_120.jpg" },
-                    { title: "Attack on Titan 2", tags: "Action, Anime", date: "Mar 15, 2018", price: "$59.99", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/601050/capsule_sm_120.jpg" }
-                ]
-            },
-
-            // 7. STRATEGY
-            "strategy": {
-                title: "Strategy Games",
-                hero: [
-                    { title: "Civilization® VI", vid: "https://videos.pexels.com/video-files/854121/854121-hd_1920_1080_24fps.mp4", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/289070/header.jpg", desc: "Build an empire to stand the test of time.", price: "$59.99" },
-                    { title: "Total War: WARHAMMER III", vid: "https://videos.pexels.com/video-files/3129957/3129957-hd_1920_1080_25fps.mp4", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1142710/header.jpg", desc: "The cataclysmic conclusion to the Total War trilogy.", price: "$59.99" },
-                    { title: "Stellaris", vid: "https://videos.pexels.com/video-files/3943962/3943962-hd_1920_1080_25fps.mp4", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/281990/header.jpg", desc: "Explore a galaxy full of wonders.", price: "$39.99" }
-                ],
-                popular: [
-                    { title: "Age of Empires IV", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1466860/header.jpg", price: "$19.99", discount: "-50%", oldPrice: "$39.99" },
-                    { title: "Cities: Skylines II", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/949230/header.jpg", price: "$49.99" },
-                    { title: "XCOM® 2", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/268500/header.jpg", price: "$2.99", discount: "-95%", oldPrice: "$59.99" },
-                    { title: "Company of Heroes 3", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1677280/header.jpg", price: "$59.99" },
-                    { title: "Crusader Kings III", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1158310/header.jpg", price: "$24.99", discount: "-50%", oldPrice: "$49.99" }
-                ],
-                list: [
-                    { title: "Dota 2", tags: "MOBA, Strategy", date: "Jul 9, 2013", price: "Free", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/570/capsule_sm_120.jpg" },
-                    { title: "Factorio", tags: "Automation, Base Building", date: "Aug 14, 2020", price: "$35.00", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/427520/capsule_sm_120.jpg" },
-                    { title: "Hearts of Iron IV", tags: "Grand Strategy, WWII", date: "Jun 6, 2016", price: "$39.99", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/394360/capsule_sm_120.jpg" }
-                ]
-            },
-
-            // 8. SIMULATION
-            "simulation": {
-                title: "Simulation Games",
-                hero: [
-                    { title: "Farming Simulator 22", vid: "https://videos.pexels.com/video-files/854121/854121-hd_1920_1080_24fps.mp4", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1248130/header.jpg", desc: "Create your farm and let the good times grow!", price: "$29.99" },
-                    { title: "Microsoft Flight Sim", vid: "https://videos.pexels.com/video-files/3943962/3943962-hd_1920_1080_25fps.mp4", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1250410/header.jpg", desc: "Explore the world in amazing detail.", price: "$59.99" },
-                    { title: "The Sims™ 4", vid: "https://videos.pexels.com/video-files/3129957/3129957-hd_1920_1080_25fps.mp4", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1222670/header.jpg", desc: "Play with life and discover the possibilities.", price: "Free to Play" }
-                ],
-                popular: [
-                    { title: "Euro Truck Simulator 2", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/227300/header.jpg", price: "$19.99" },
-                    { title: "PowerWash Simulator", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1290000/header.jpg", price: "$24.99" },
-                    { title: "Planet Zoo", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/703080/header.jpg", price: "$44.99" },
-                    { title: "Satisfactory", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/526870/header.jpg", price: "$29.99" },
-                    { title: "House Flipper", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/613100/header.jpg", price: "$24.99" }
-                ],
-                list: [
-                    { title: "Stardew Valley", tags: "Farming, Pixel Art", date: "Feb 26, 2016", price: "$14.99", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/413150/capsule_sm_120.jpg" },
-                    { title: "Garry's Mod", tags: "Sandbox, Multiplayer", date: "Nov 29, 2006", price: "$9.99", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/4000/capsule_sm_120.jpg" },
-                    { title: "Kerbal Space Program", tags: "Space, Physics", date: "Apr 27, 2015", price: "$39.99", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/220200/capsule_sm_120.jpg" }
-                ]
-            },
-
-            // 9. PUZZLE
-            "puzzle": {
-                title: "Puzzle Games",
-                hero: [
-                    { title: "Portal 2", vid: "https://videos.pexels.com/video-files/3943962/3943962-hd_1920_1080_25fps.mp4", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/620/header.jpg", desc: "The perpetual testing initiative awaits.", price: "$9.99" },
-                    { title: "Tetris® Effect: Connected", vid: "https://videos.pexels.com/video-files/854121/854121-hd_1920_1080_24fps.mp4", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1003590/header.jpg", desc: "Tetris like you've never seen, heard, or felt before.", price: "$39.99" },
-                    { title: "The Talos Principle 2", vid: "https://videos.pexels.com/video-files/3129957/3129957-hd_1920_1080_25fps.mp4", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/835960/header.jpg", desc: "A thought-provoking first-person puzzle experience.", price: "$29.99" }
-                ],
-                popular: [
-                    { title: "Inside", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/304430/header.jpg", price: "$19.99" },
-                    { title: "Limbo", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/48000/header.jpg", price: "$9.99" },
-                    { title: "Baba Is You", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/736260/header.jpg", price: "$14.99" },
-                    { title: "Superliminal", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1049410/header.jpg", price: "$19.99" },
-                    { title: "Dorfromantik", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1455840/header.jpg", price: "$13.99" }
-                ],
-                list: [
-                    { title: "Monument Valley", tags: "Relaxing, Beautiful", date: "Jul 12, 2022", price: "$7.99", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1927720/capsule_sm_120.jpg" },
-                    { title: "World of Goo", tags: "Physics, Classic", date: "Oct 13, 2008", price: "$14.99", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/22000/capsule_sm_120.jpg" },
-                    { title: "FEZ", tags: "Platformer, 2D/3D", date: "May 1, 2013", price: "$9.99", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/224760/capsule_sm_120.jpg" }
-                ]
-            },
-
-            // 10. SURVIVAL
-            "survival": {
-                title: "Survival Games",
-                hero: [
-                    { title: "Rust", vid: "https://videos.pexels.com/video-files/3943962/3943962-hd_1920_1080_25fps.mp4", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/252490/header.jpg", desc: "The only aim in Rust is to survive.", price: "$39.99" },
-                    { title: "ARK: Survival Evolved", vid: "https://videos.pexels.com/video-files/854121/854121-hd_1920_1080_24fps.mp4", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/346110/header.jpg", desc: "Stranded on the shores of a mysterious island.", price: "$14.99" },
-                    { title: "Sons Of The Forest", vid: "https://videos.pexels.com/video-files/3129957/3129957-hd_1920_1080_25fps.mp4", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1326470/header.jpg", desc: "Find a missing billionaire on a remote island.", price: "$29.99" }
-                ],
-                popular: [
-                    { title: "Valheim", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/892970/header.jpg", price: "$9.99", discount: "-50%", oldPrice: "$19.99" },
-                    { title: "Raft", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/648800/header.jpg", price: "$19.99" },
-                    { title: "Subnautica", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/264710/header.jpg", price: "$14.99", discount: "-50%", oldPrice: "$29.99" },
-                    { title: "DayZ", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/221100/header.jpg", price: "$26.99", discount: "-40%", oldPrice: "$44.99" },
-                    { title: "Terraria", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/105600/header.jpg", price: "$4.99", discount: "-50%", oldPrice: "$9.99" }
-                ],
-                list: [
-                    { title: "Don't Starve Together", tags: "Survival, Co-op", date: "Apr 21, 2016", price: "$14.99", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/322330/capsule_sm_120.jpg" },
-                    { title: "The Long Dark", tags: "Survival, Atmospheric", date: "Aug 1, 2017", price: "$34.99", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/305620/capsule_sm_120.jpg" },
-                    { title: "Project Zomboid", tags: "Zombies, Open World", date: "Nov 8, 2013", price: "$19.99", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/108600/capsule_sm_120.jpg" }
-                ]
-            },
-
-            // 11. SPORTS
-            "sports": {
-                title: "Sports Games",
-                hero: [
-                    { title: "EA SPORTS FC™ 24", vid: "https://videos.pexels.com/video-files/854121/854121-hd_1920_1080_24fps.mp4", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/2195250/header.jpg", desc: "The world's game. The most true-to-football experience.", price: "$69.99" },
-                    { title: "NBA 2K24", vid: "https://videos.pexels.com/video-files/3129957/3129957-hd_1920_1080_25fps.mp4", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/2338770/header.jpg", desc: "Experience hoops culture in NBA 2K24.", price: "$59.99" },
-                    { title: "PGA TOUR 2K23", vid: "https://videos.pexels.com/video-files/3943962/3943962-hd_1920_1080_25fps.mp4", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1588010/header.jpg", desc: "Hit the links with more swag in PGA TOUR 2K23.", price: "$59.99" }
-                ],
-                popular: [
-                    { title: "WWE 2K23", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1942660/header.jpg", price: "$14.99", discount: "-75%", oldPrice: "$59.99" },
-                    { title: "Madden NFL 24", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/2140330/header.jpg", price: "$29.99", discount: "-50%", oldPrice: "$59.99" },
-                    { title: "Football Manager 2024", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/2252570/header.jpg", price: "$59.99" },
-                    { title: "Riders Republic", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/2290180/header.jpg", price: "$19.99" },
-                    { title: "Steep", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/460920/header.jpg", price: "$29.99" }
-                ],
-                list: [
-                    { title: "Rocket League", tags: "Soccer, Driving", date: "Jul 7, 2015", price: "Free", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/252950/capsule_sm_120.jpg" },
-                    { title: "Golf With Your Friends", tags: "Mini Golf, Multiplayer", date: "May 19, 2020", price: "$14.99", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/431240/capsule_sm_120.jpg" },
-                    { title: "Descenders", tags: "Cycling, Roguelite", date: "May 7, 2019", price: "$24.99", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/681280/capsule_sm_120.jpg" }
-                ]
-            },
-
-            // 12. FIGHTING
-            "fighting": {
-                title: "Fighting Games",
-                hero: [
-                    { title: "TEKKEN 8", vid: "https://videos.pexels.com/video-files/3129957/3129957-hd_1920_1080_25fps.mp4", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1778820/header.jpg", desc: "Fist Meets Fate in TEKKEN 8.", price: "$69.99" },
-                    { title: "Street Fighter™ 6", vid: "https://videos.pexels.com/video-files/854121/854121-hd_1920_1080_24fps.mp4", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1364780/header.jpg", desc: "Here comes a new challenger! The next evolution is here.", price: "$59.99" },
-                    { title: "Mortal Kombat 1", vid: "https://videos.pexels.com/video-files/3943962/3943962-hd_1920_1080_25fps.mp4", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1971870/header.jpg", desc: "Discover a reborn Mortal Kombat Universe.", price: "$69.99" }
-                ],
-                popular: [
-                    { title: "GUILTY GEAR -STRIVE-", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1384160/header.jpg", price: "$19.99", discount: "-50%", oldPrice: "$39.99" },
-                    { title: "Dragon Ball FighterZ", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/678950/header.jpg", price: "$8.99", discount: "-85%", oldPrice: "$59.99" },
-                    { title: "Injustice™ 2", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/627270/header.jpg", price: "$4.99", discount: "-90%", oldPrice: "$49.99" },
-                    { title: "For Honor", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/304390/header.jpg", price: "$14.99" },
-                    { title: "Soulcalibur VI", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/544750/header.jpg", price: "$59.99" }
-                ],
-                list: [
-                    { title: "Brawlhalla", tags: "Platform Fighter, Free", date: "Oct 17, 2017", price: "Free", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/291550/capsule_sm_120.jpg" },
-                    { title: "Skullgirls 2nd Encore", tags: "2D Fighter, Indie", date: "Aug 22, 2013", price: "$24.99", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/245170/capsule_sm_120.jpg" },
-                    { title: "Ultimate Chicken Horse", tags: "Funny, Fighting", date: "Mar 4, 2016", price: "$14.99", img: "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/448510/capsule_sm_120.jpg" }
-                ]
-            },
-
-            // Default Fallback
-            "default": { title: "Steam Store", hero: [], popular: [], list: [] }
-        };
-
-        // --- PAGINATION STATE ---
-        let currentListItems = [];
-        let visibleCount = 0;
-        const BATCH_SIZE = 10;
-
-        // --- INITIALIZATION ---
-        document.addEventListener('DOMContentLoaded', () => {
-            const params = new URLSearchParams(window.location.search);
-            const catParam = params.get('cat') || 'action';
-            const data = db[catParam] || db['default'];
-
-            document.getElementById('category-header').textContent = data.title;
-            document.title = `Steam Store - ${data.title}`;
-
-            renderHero(data.hero, data.title);
-            renderPopular(data.popular);
-
-            currentListItems = data.list;
-            loadMoreItems();
-
-            document.getElementById('loadMoreBtn').addEventListener('click', loadMoreItems);
-        });
-
-        function loadMoreItems() {
-            const container = document.getElementById('game-list-container');
-            const btn = document.getElementById('loadMoreBtn');
-
-            const nextBatch = currentListItems.slice(visibleCount, visibleCount + BATCH_SIZE);
-
-            nextBatch.forEach(game => {
-                const html = `
-                <a href="#" class="game-list-item">
-                    <img src="${game.img}" class="list-img" alt="${game.title}">
-                    <div class="list-info">
-                        <span class="list-title">${game.title}</span>
-                        <span class="list-tags">${game.tags}</span>
+                if (data.success) {
+                    allGames = data.all_games;
+                    renderHeroCarousel(data.genre_name, data.hero_games);
+                    renderPopularTitles(data.popular_games);
+                    renderBrowseAll(data.genre_name);
+                    loadMoreGames();
+                } else {
+                    document.getElementById('mainContent').innerHTML = `
+                        <div class="error-message">
+                            <i class="fas fa-exclamation-triangle fa-3x mb-3"></i>
+                            <h3>Category Not Found</h3>
+                            <p>${data.message}</p>
+                            <a href="index.php" class="btn btn-primary mt-3">Back to Home</a>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error loading category:', error);
+                document.getElementById('mainContent').innerHTML = `
+                    <div class="error-message">
+                        <i class="fas fa-exclamation-triangle fa-3x mb-3"></i>
+                        <h3>Error Loading Category</h3>
+                        <p>Please try again later.</p>
+                        <a href="index.php" class="btn btn-primary mt-3">Back to Home</a>
                     </div>
-                    <div class="list-meta">
-                        <div class="text-secondary small mb-1">${game.date}</div>
-                        <div class="text-white small">${game.price}</div>
-                    </div>
-                </a>
-            `;
-                container.insertAdjacentHTML('beforeend', html);
-            });
-
-            visibleCount += nextBatch.length;
-
-            if (visibleCount >= currentListItems.length) {
-                btn.style.display = 'none';
-            } else {
-                btn.style.display = 'block';
-                btn.textContent = `Load More (${currentListItems.length - visibleCount} remaining)`;
+                `;
             }
         }
 
-        function renderHero(heroData, categoryTitle) {
-            const container = document.getElementById('hero-carousel-inner');
-            const indicators = document.getElementById('hero-indicators');
-            container.innerHTML = ""; indicators.innerHTML = "";
-
-            heroData.forEach((item, index) => {
-                const activeClass = index === 0 ? 'active' : '';
-                const indBtn = `<button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="${index}" class="${activeClass}"></button>`;
-                indicators.innerHTML += indBtn;
-                const badges = `<span class="badge steam-badge">Top Seller</span><span class="badge steam-badge">${categoryTitle.split(' ')[0]}</span>`;
-
-                const slideHTML = `
-            <div class="carousel-item ${activeClass}">
-                <a href="#" class="hero-card row g-0 rounded-top-1 text-decoration-none">
-                    <div class="col-lg-8 col-video">
-                        <video autoplay muted loop playsinline poster="${item.img}"><source src="${item.vid}" type="video/mp4"></video>
+        function renderHeroCarousel(genreName, games) {
+            if (games.length === 0) {
+                document.getElementById('mainContent').innerHTML = `
+                    <div class="steam-wrapper">
+                        <h2 class="section-title">${genreName} Games</h2>
+                        <p>No games found in this category.</p>
                     </div>
-                    <div class="col-lg-4 col-info">
-                        <div class="info-content d-flex flex-column">
-                            <div class="capsule-overlap"><img src="${item.img}" class="img-fluid rounded-1" alt="${item.title}"></div>
-                            <h2 class="text-white fw-light mb-2" style="font-size: 28px;">${item.title}</h2>
-                            <div class="d-flex flex-wrap gap-1 mb-3">${badges}</div>
-                            <p class="description-truncate">${item.desc}</p>
-                            <div class="mt-auto ms-auto pb-2"><span class="hero-price-btn">${item.price}</span></div>
+                `;
+                return;
+            }
+
+            const carouselItems = games.map((game, index) => `
+                <div class="carousel-item ${index === 0 ? 'active' : ''}">
+                    <a href="game-details.php?game_id=${game.game_id}" class="hero-card">
+                        <div class="col-video col-md-8">
+                            ${game.video_url ? 
+                                `<video autoplay loop muted playsinline><source src="../${game.video_url}" type="video/mp4"></video>` :
+                                `<img src="../${game.header_image}" alt="${game.title}">`
+                            }
+                        </div>
+                        <div class="col-info col-md-4">
+                            <div class="info-content d-flex flex-column justify-content-between">
+                                <div class="capsule-overlap">
+                                    <img src="../${game.thumbnail_image}" class="img-fluid" alt="${game.title}">
+                                </div>
+                                <div class="d-flex flex-column flex-grow-1">
+                                    <div class="mb-2">
+                                        ${game.genres.map(g => `<span class="steam-badge">${g}</span>`).join('')}
+                                    </div>
+                                    <p class="description-truncate">${game.description || 'No description available.'}</p>
+                                </div>
+                                <div class="text-end">
+                                    <span class="hero-price-btn">$${parseFloat(game.price).toFixed(2)}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            `).join('');
+
+            const indicators = games.map((_, index) => 
+                `<button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="${index}" 
+                 class="${index === 0 ? 'active' : ''}" aria-label="Slide ${index + 1}"></button>`
+            ).join('');
+
+            const content = `
+                <div class="steam-wrapper">
+                    <h2 class="section-title">${genreName} Games</h2>
+                    <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner" id="hero-carousel-inner">
+                            ${carouselItems}
+                        </div>
+                        <button class="steam-nav-btn prev-btn" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+                            <svg viewBox="0 0 50 100" style="transform: rotate(180deg);">
+                                <polygon points="0,0.093 0,25.702 24.323,50.026 0,74.349 0,99.955 49.929,50.026 "></polygon>
+                            </svg>
+                        </button>
+                        <button class="steam-nav-btn next-btn" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+                            <svg viewBox="0 0 50 100">
+                                <polygon points="0,0.093 0,25.702 24.323,50.026 0,74.349 0,99.955 49.929,50.026 "></polygon>
+                            </svg>
+                        </button>
+                        <div class="indicators-container">
+                            <div class="carousel-indicators custom-indicators-style">
+                                ${indicators}
+                            </div>
                         </div>
                     </div>
-                </a>
-            </div>`;
-                container.innerHTML += slideHTML;
+                </div>
+            `;
+
+            document.getElementById('mainContent').innerHTML = content;
+        }
+
+        function renderPopularTitles(games) {
+            if (games.length === 0) return;
+
+            const chunkedGames = [];
+            for (let i = 0; i < games.length; i += 5) {
+                chunkedGames.push(games.slice(i, i + 5));
+            }
+
+            const carouselItems = chunkedGames.map((chunk, slideIndex) => {
+                const firstGame = chunk[0];
+                const remainingGames = chunk.slice(1);
+
+                return `
+                    <div class="carousel-item ${slideIndex === 0 ? 'active' : ''}">
+                        <div class="row g-2">
+                            <div class="col-md-6">
+                                <a href="game-details.php?game_id=${firstGame.game_id}" class="grid-card grid-lg d-block">
+                                    <img src="../${firstGame.header_image}" class="grid-img" alt="${firstGame.title}">
+                                    <div class="grid-black-strip">
+                                        <span class="grid-title">${firstGame.title}</span>
+                                        <div class="price-badge-container">
+                                            <span class="badge-price">$${parseFloat(firstGame.price).toFixed(2)}</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-6">
+                                ${remainingGames.map(game => `
+                                    <a href="game-details.php?game_id=${game.game_id}" class="grid-card grid-sm d-block">
+                                        <img src="../${game.header_image}" class="grid-img" alt="${game.title}">
+                                        <div class="grid-black-strip">
+                                            <span class="grid-title">${game.title}</span>
+                                            <div class="price-badge-container">
+                                                <span class="badge-price">$${parseFloat(game.price).toFixed(2)}</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            const popularSection = `
+                <div class="steam-wrapper">
+                    <h2 class="section-title">Popular Titles</h2>
+                    <div id="popularCarousel" class="carousel slide" data-bs-ride="false">
+                        <div class="carousel-inner">
+                            ${carouselItems}
+                        </div>
+                        <button class="steam-nav-btn prev-btn" type="button" data-bs-target="#popularCarousel" data-bs-slide="prev" style="top:50%">
+                            <svg viewBox="0 0 50 100" style="transform: rotate(180deg);">
+                                <polygon points="0,0.093 0,25.702 24.323,50.026 0,74.349 0,99.955 49.929,50.026 "></polygon>
+                            </svg>
+                        </button>
+                        <button class="steam-nav-btn next-btn" type="button" data-bs-target="#popularCarousel" data-bs-slide="next" style="top:50%">
+                            <svg viewBox="0 0 50 100">
+                                <polygon points="0,0.093 0,25.702 24.323,50.026 0,74.349 0,99.955 49.929,50.026 "></polygon>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('mainContent').innerHTML += popularSection;
+        }
+
+        function renderBrowseAll(genreName) {
+            const browseSection = `
+                <div class="steam-wrapper">
+                    <div class="d-flex justify-content-between align-items-end mb-3">
+                        <h2 class="section-title mb-0" style="margin-top:0;">Browse All</h2>
+                    </div>
+                    <div id="game-list-container"></div>
+                    <button id="loadMoreBtn" class="load-more-btn">Load More</button>
+                </div>
+            `;
+
+            document.getElementById('mainContent').innerHTML += browseSection;
+
+            document.getElementById('loadMoreBtn').addEventListener('click', loadMoreGames);
+        }
+
+        function loadMoreGames() {
+            const container = document.getElementById('game-list-container');
+            const btn = document.getElementById('loadMoreBtn');
+            
+            const gamesToShow = allGames.slice(displayedGames, displayedGames + gamesPerLoad);
+            
+            gamesToShow.forEach(game => {
+                const gameItem = document.createElement('a');
+                gameItem.href = `game-details.php?game_id=${game.game_id}`;
+                gameItem.className = 'game-list-item';
+                gameItem.innerHTML = `
+                    <img src="../${game.thumbnail_image}" class="list-img" alt="${game.title}">
+                    <div class="list-info">
+                        <span class="list-title">${game.title}</span>
+                        <div class="list-tags">${game.tags || 'No tags'}</div>
+                    </div>
+                    <div class="list-meta">
+                        <div style="font-size:0.8rem; color:#8f98a0;">${game.release_date}</div>
+                        <div style="font-size:1rem; font-weight:bold; color:#fff;">$${parseFloat(game.price).toFixed(2)}</div>
+                    </div>
+                `;
+                container.appendChild(gameItem);
             });
-        }
 
-        function renderPopular(items) {
-            const container = document.getElementById('popular-carousel-inner');
-            container.innerHTML = "";
-            const chunkSize = 5;
-            for (let i = 0; i < items.length; i += chunkSize) {
-                const chunk = items.slice(i, i + chunkSize);
-                const activeClass = i === 0 ? 'active' : '';
-                const i1 = chunk[0]; const i2 = chunk[1]; const i3 = chunk[2]; const i4 = chunk[3]; const i5 = chunk[4];
+            displayedGames += gamesToShow.length;
 
-                let slideContent = `<div class="carousel-item ${activeClass}"><div class="container-fluid px-0">`;
-                slideContent += `<div class="row g-3 mb-3">`;
-                if (i1) slideContent += createGridHTML(i1, 'col-6 grid-lg');
-                if (i2) slideContent += createGridHTML(i2, 'col-6 grid-lg');
-                slideContent += `</div><div class="row g-3">`;
-                if (i3) slideContent += createGridHTML(i3, 'col-4 grid-sm');
-                if (i4) slideContent += createGridHTML(i4, 'col-4 grid-sm');
-                if (i5) slideContent += createGridHTML(i5, 'col-4 grid-sm');
-                slideContent += `</div></div></div>`;
-                container.innerHTML += slideContent;
+            if (displayedGames >= allGames.length) {
+                btn.disabled = true;
+                btn.textContent = 'No More Games';
             }
         }
 
-        function createGridHTML(item, colClass) {
-            let priceHTML = '';
-            if (item.price === "Free" || item.price === "Free to Play") {
-                priceHTML = `<div class="price-badge-container"><span class="badge-free">Free to Play</span></div>`;
-            } else if (item.discount) {
-                priceHTML = `<div class="price-badge-container"><div class="badge-discount">${item.discount}</div><div class="badge-price"><span class="price-original">${item.oldPrice}</span><span class="price-final">${item.price}</span></div></div>`;
-            } else {
-                priceHTML = `<div class="price-badge-container" style="background: transparent;"><div class="badge-price"><span class="price-final">${item.price}</span></div></div>`;
-            }
-            return `
-            <div class="${colClass}">
-                <a href="#" class="grid-card h-100 w-100">
-                    <img src="${item.img}" class="grid-img" alt="${item.title}">
-                    <div class="grid-black-strip"><div class="grid-title" title="${item.title}">${item.title}</div>${priceHTML}</div>
-                </a>
-            </div>`;
-        }
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', loadCategoryData);
     </script>
-</body>
 
+</body>
 </html>

@@ -710,15 +710,7 @@
                 <div class="filter-box">
                     <div class="filter-header">Narrow by Tag</div>
                     <div id="tag-filters">
-                        <label class="filter-option"><input type="checkbox" value="Action"> Action</label>
-                        <label class="filter-option"><input type="checkbox" value="Adventure"> Adventure</label>
-                        <label class="filter-option"><input type="checkbox" value="RPG"> RPG</label>
-                        <label class="filter-option"><input type="checkbox" value="Strategy"> Strategy</label>
-                        <label class="filter-option"><input type="checkbox" value="Indie"> Indie</label>
-                        <label class="filter-option"><input type="checkbox" value="Simulation"> Simulation</label>
-                        <label class="filter-option"><input type="checkbox" value="Horror"> Horror</label>
-                        <label class="filter-option"><input type="checkbox" value="Roguelike"> Roguelike</label>
-                        <label class="filter-option"><input type="checkbox" value="Sci-Fi"> Sci-Fi</label>
+                        <!-- Genres loaded dynamically -->
                     </div>
                 </div>
 
@@ -732,7 +724,6 @@
                         <select id="sort-select" class="styled-select">
                             <option value="lowest">Price: Lowest First</option>
                             <option value="highest">Price: Highest First</option>
-                            <option value="discount">Discount %</option>
                             <option value="name">Name (A-Z)</option>
                             <option value="newest">Release Date</option>
                         </select>
@@ -822,49 +813,68 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        /* ===========================
-           1. DATASET (Mock Data)
-           =========================== */
-        const gamesData = [
-            // UNDER $5
-            { id: 1, title: "Vampire Survivors", img: "../assets/images/s1_header.jpg", tags: ["Indie", "Roguelike", "Action"], date: "2022-10-20", original: 4.99, discount: 0 },
-            { id: 2, title: "Terraria", img: "../assets/images/s2_header.jpg", tags: ["Indie", "Adventure", "Sandbox"], date: "2011-05-16", original: 9.99, discount: 50 }, 
-            { id: 3, title: "Left 4 Dead 2", img: "../assets/images/s3_header.jpg", tags: ["Action", "Horror", "FPS"], date: "2009-11-17", original: 9.99, discount: 90 }, 
-            { id: 4, title: "Portal 2", img: "../assets/images/s4_header.jpg", tags: ["Puzzle", "Action", "Sci-Fi"], date: "2011-04-18", original: 9.99, discount: 90 }, 
-            { id: 5, title: "Among Us", img: "../assets/images/headees.jpg", tags: ["Indie", "Multiplayer"], date: "2018-11-16", original: 4.99, discount: 0 },
-            { id: 6, title: "Don't Starve", img: "../assets/images/repo.jpg", tags: ["Survival", "Indie", "Adventure"], date: "2013-04-23", original: 9.99, discount: 75 }, 
-            { id: 7, title: "Celeste", img: "../assets/images/vein.jpg", tags: ["Indie", "Platformer", "Difficult"], date: "2018-01-25", original: 19.99, discount: 75 }, 
-            
-            // UNDER $10 
-            { id: 8, title: "Hollow Knight", img: "../assets/images/rally.jpg", tags: ["Indie", "Metroidvania", "Action"], date: "2017-02-24", original: 14.99, discount: 50 }, 
-            { id: 9, title: "Stardew Valley", img: "../assets/images/s1_header.jpg", tags: ["Indie", "Simulation", "RPG"], date: "2016-02-26", original: 14.99, discount: 40 }, 
-            { id: 10, title: "The Witcher 3: Wild Hunt", img: "../assets/images/s2_header.jpg", tags: ["RPG", "Open World"], date: "2015-05-18", original: 39.99, discount: 80 }, 
-            { id: 11, title: "Fallout: New Vegas", img: "../assets/images/s3_header.jpg", tags: ["RPG", "Open World", "Post-apocalyptic"], date: "2010-10-19", original: 9.99, discount: 0 },
-            { id: 12, title: "Phasmophobia", img: "../assets/images/s4_header.jpg", tags: ["Horror", "VR", "Multiplayer"], date: "2020-09-18", original: 13.99, discount: 30 }, 
-            { id: 13, title: "Euro Truck Simulator 2", img: "../assets/images/headees.jpg", tags: ["Simulation", "Driving"], date: "2012-10-19", original: 19.99, discount: 75 }, 
-            { id: 14, title: "Sid Meier's Civilization VI", img: "../assets/images/repo.jpg", tags: ["Strategy", "Turn-Based"], date: "2016-10-21", original: 59.99, discount: 90 }, 
-            { id: 15, title: "Dead by Daylight", img: "../assets/images/vein.jpg", tags: ["Horror", "Multiplayer", "Action"], date: "2016-06-14", original: 19.99, discount: 60 }, 
-        ];
-
-        // --- HELPER: Calculate price ---
-        function calculateFinalPrice(original, discount) {
-            return (original - (original * (discount / 100))).toFixed(2);
-        }
-
         // --- DOM ELEMENTS ---
         const listContainer = document.getElementById('game-list-container');
         const sortSelect = document.getElementById('sort-select');
         const searchInput = document.getElementById('search-input');
         const priceRadios = document.querySelectorAll('input[name="priceLimit"]');
-        const tagCheckboxes = document.querySelectorAll('#tag-filters input');
         const loadMoreBtn = document.getElementById('load-more-btn');
         const resultsCount = document.getElementById('results-count');
         const dynamicTitle = document.getElementById('dynamic-title');
+        const tagFiltersContainer = document.getElementById('tag-filters');
 
         // --- STATE ---
         let currentPriceLimit = 10; // Default
         let itemsToShow = 10; // Pagination limit
+        let gamesData = [];
         let filteredData = []; // Stores currently filtered results
+        let tagCheckboxes = [];
+
+        // --- LOAD DATA FROM DATABASE ---
+        async function loadData() {
+            try {
+                const response = await fetch(`../php_backend/get_cheap_games.php?max_price=${currentPriceLimit}`);
+                const data = await response.json();
+
+                if (data.success) {
+                    gamesData = data.games;
+                    
+                    // Load genres and tags as filters
+                    tagFiltersContainer.innerHTML = '';
+                    
+                    // Add genres
+                    if (data.filter_genres && data.filter_genres.length > 0) {
+                        data.filter_genres.forEach(genre => {
+                            const label = document.createElement('label');
+                            label.className = 'filter-option';
+                            label.innerHTML = `<input type="checkbox" value="${genre.genre_name}" data-type="genre"> ${genre.genre_name}`;
+                            tagFiltersContainer.appendChild(label);
+                        });
+                    }
+                    
+                    // Add tags
+                    if (data.filter_tags && data.filter_tags.length > 0) {
+                        data.filter_tags.forEach(tag => {
+                            const label = document.createElement('label');
+                            label.className = 'filter-option';
+                            label.innerHTML = `<input type="checkbox" value="${tag}" data-type="tag"> ${tag}`;
+                            tagFiltersContainer.appendChild(label);
+                        });
+                    }
+                    
+                    // Re-attach event listeners
+                    tagCheckboxes = tagFiltersContainer.querySelectorAll('input');
+                    tagCheckboxes.forEach(cb => cb.addEventListener('change', updateData));
+                    
+                    updateData();
+                } else {
+                    listContainer.innerHTML = `<div class="text-center py-5 text-danger">Error loading games: ${data.message}</div>`;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                listContainer.innerHTML = `<div class="text-center py-5 text-danger">Error loading games. Please try again.</div>`;
+            }
+        }
 
         // --- RENDER FUNCTION ---
         function renderList() {
@@ -880,32 +890,20 @@
             }
 
             visibleItems.forEach(game => {
-                const finalPrice = calculateFinalPrice(game.original, game.discount);
-                const dateStr = new Date(game.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+                const dateStr = new Date(game.release_date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+                const tags = game.tags.length > 0 ? game.tags.join(', ') : 'No tags';
 
-                let priceHTML = '';
-                if (game.discount > 0) {
-                    priceHTML = `
-                        <div class="discount-block">
-                            <div class="discount-pct">-${game.discount}%</div>
-                            <div class="discount-prices">
-                                <div class="original-price">$${game.original}</div>
-                                <div class="final-price">$${finalPrice}</div>
-                            </div>
-                        </div>`;
-                } else {
-                    priceHTML = `<div class="regular-price-text">$${finalPrice}</div>`;
-                }
+                const priceHTML = `<div class="regular-price-text">$${parseFloat(game.price).toFixed(2)}</div>`;
 
                 const html = `
-                <a href="#" class="game-card-row">
+                <a href="game-details.php?game_id=${game.game_id}" class="game-card-row">
                     <div class="list-img">
-                        <img src="${game.img}" alt="${game.title}" onerror="this.src='https://placehold.co/120x70/1b2838/fff?text=Game'">
+                        <img src="../${game.thumbnail_image}" alt="${game.title}" onerror="this.src='https://placehold.co/120x70/1b2838/fff?text=Game'">
                     </div>
                     <div class="list-info">
                         <div class="list-title-block">
                             <div class="list-game-title">${game.title}</div>
-                            <div class="list-tags">${game.tags.join(', ')}</div>
+                            <div class="list-tags">${tags}</div>
                         </div>
                         <div class="list-meta-block">
                             <div class="release-date d-none d-md-block">${dateStr}</div>
@@ -930,32 +928,51 @@
         function updateData() {
             const searchTerm = searchInput.value.toLowerCase();
             const sortMode = sortSelect.value;
-            const selectedTags = Array.from(tagCheckboxes).filter(c => c.checked).map(c => c.value);
+            
+            // Separate genre and tag filters
+            const selectedGenres = [];
+            const selectedTags = [];
+            
+            Array.from(tagCheckboxes).filter(c => c.checked).forEach(checkbox => {
+                const type = checkbox.getAttribute('data-type');
+                const value = checkbox.value;
+                if (type === 'genre') {
+                    selectedGenres.push(value);
+                } else if (type === 'tag') {
+                    selectedTags.push(value);
+                }
+            });
 
             filteredData = gamesData.filter(game => {
-                const finalPrice = parseFloat(calculateFinalPrice(game.original, game.discount));
-                
-                if (finalPrice > currentPriceLimit) return false;
+                // Search filter
                 if (searchTerm && !game.title.toLowerCase().includes(searchTerm)) return false;
+                
+                // Genre filter - check if game has any of the selected genres
+                if (selectedGenres.length > 0) {
+                    const hasGenre = game.genres && game.genres.some(g => selectedGenres.includes(g));
+                    if (!hasGenre) return false;
+                }
+                
+                // Tag filter - check if game has any of the selected tags
                 if (selectedTags.length > 0) {
-                    const hasTag = game.tags.some(t => selectedTags.includes(t));
+                    const hasTag = game.tags && game.tags.some(t => selectedTags.includes(t));
                     if (!hasTag) return false;
                 }
+                
                 return true;
             });
 
             filteredData.sort((a, b) => {
-                const priceA = parseFloat(calculateFinalPrice(a.original, a.discount));
-                const priceB = parseFloat(calculateFinalPrice(b.original, b.discount));
+                const priceA = parseFloat(a.price);
+                const priceB = parseFloat(b.price);
                 
                 if (sortMode === 'lowest') return priceA - priceB;
                 if (sortMode === 'highest') return priceB - priceA;
-                if (sortMode === 'discount') return b.discount - a.discount;
-                if (sortMode === 'newest') return new Date(b.date) - new Date(a.date);
+                if (sortMode === 'newest') return new Date(b.release_date) - new Date(a.release_date);
                 if (sortMode === 'name') return a.title.localeCompare(b.title);
+                return 0;
             });
 
-            // Check logic to hide/show "Load More" if we just filtered
             if(filteredData.length <= 10) {
                 itemsToShow = 10;
             }
@@ -967,14 +984,13 @@
             radio.addEventListener('change', (e) => {
                 currentPriceLimit = parseInt(e.target.value);
                 dynamicTitle.innerText = `Under $${currentPriceLimit} USD`;
-                itemsToShow = 10; // Reset pagination on filter change
-                updateData();
+                itemsToShow = 10;
+                loadData();
             });
         });
 
         sortSelect.addEventListener('change', updateData);
         searchInput.addEventListener('input', updateData);
-        tagCheckboxes.forEach(cb => cb.addEventListener('change', updateData));
         
         loadMoreBtn.addEventListener('click', () => {
             itemsToShow += 10;
@@ -983,30 +999,24 @@
 
         // --- INITIALIZATION WITH URL PARAMETER ---
         function init() {
-            // 1. Get the URL parameters (e.g., ?price=5)
             const urlParams = new URLSearchParams(window.location.search);
-            const priceParam = urlParams.get('price');
+            const priceParam = urlParams.get('price') || urlParams.get('max_price');
 
-            // 2. If a price is found, set it
             if (priceParam) {
                 const priceVal = parseInt(priceParam);
                 if (priceVal === 5 || priceVal === 10) {
                     currentPriceLimit = priceVal;
                     
-                    // Update the Sidebar Radio Button UI to match
                     const targetRadio = document.querySelector(`input[name="priceLimit"][value="${priceVal}"]`);
                     if (targetRadio) targetRadio.checked = true;
 
-                    // Update Title
                     dynamicTitle.innerText = `Under $${priceVal} USD`;
                 }
             }
 
-            // 3. Run initial render
-            updateData();
+            loadData();
         }
 
-        // Run Init
         init();
 
     </script>

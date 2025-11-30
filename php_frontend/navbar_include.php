@@ -21,8 +21,8 @@
             </a>
 
             <div class="mobile-search-container d-md-none ms-auto">
-                <form class="header-search-group input-group" role="search" aria-label="Mobile Search">
-                    <input class="header-search-input form-control" type="search" placeholder="Search"
+                <form class="header-search-group input-group" role="search" aria-label="Mobile Search" action="games-list.php" method="get">
+                    <input class="header-search-input form-control" type="search" placeholder="Search" name="q"
                         aria-label="Search" style="width: 240px;">
                     <button class="header-search-btn btn d-flex align-items-center justify-content-center" type="submit"
                         aria-label="Search">
@@ -87,8 +87,9 @@
                 <a class="nav-link subnav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" role="button"
                     aria-expanded="false">Browse</a>
                 <ul class="dropdown-menu custom-dropdown-menu">
+                    <li><a class="dropdown-item custom-dropdown-item" href="games-list.php">All Games</a></li>
                     <li><a class="dropdown-item custom-dropdown-item" href="browse-more.php">Browse More</a></li>
-                    <li><a class="dropdown-item custom-dropdown-item" href="browse-cheap.php">Under $10</a></li>
+                    <li><a class="dropdown-item custom-dropdown-item" href="browse-cheap.php?max_price=10">Under $10</a></li>
                 </ul>
             </li>
             <li class="nav-item dropdown">
@@ -117,8 +118,8 @@
             </li>
         </ul>
 
-        <form class="header-search-group desktop-search-form d-none d-md-flex input-group" role="search" aria-label="Desktop Search">
-            <input class="header-search-input form-control" type="search" placeholder="Search"
+        <form class="header-search-group desktop-search-form d-none d-md-flex input-group" role="search" aria-label="Desktop Search" action="games-list.php" method="get">
+            <input class="header-search-input form-control" type="search" placeholder="Search" name="q"
                 aria-label="Search">
             <button class="header-search-btn btn d-flex align-items-center justify-content-center" type="submit"
                 aria-label="Search">
@@ -135,8 +136,9 @@
                 <a class="nav-link subnav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" role="button"
                     aria-expanded="false">Browse</a>
                 <ul class="dropdown-menu custom-dropdown-menu">
+                    <li><a class="dropdown-item custom-dropdown-item" href="games-list.php">All Games</a></li>
                     <li><a class="dropdown-item custom-dropdown-item" href="browse-more.php">Browse More</a></li>
-                    <li><a class="dropdown-item custom-dropdown-item" href="browse-cheap.php">Under $10</a></li>
+                    <li><a class="dropdown-item custom-dropdown-item" href="browse-cheap.php?max_price=10">Under $10</a></li>
                 </ul>
             </li>
             <li class="nav-item dropdown">

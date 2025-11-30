@@ -1695,7 +1695,7 @@
 
                         const slide = `
                             <div class="carousel-item ${isActive} hero-carousel-item">
-                                <a href="#" class="hero-card row g-0 rounded-top-1 text-decoration-none">
+                                <a href="game-details.php?game_id=${game.game_id}" class="hero-card row g-0 rounded-top-1 text-decoration-none">
                                     <div class="col-lg-8 col-video">
                                         <div class="media-header text-white">
                                             <span class="text-info fw-bold">${hasVideo ? 'Trailer Preview' : 'Featured Game'}</span> &nbsp;|&nbsp; ${game.title}
@@ -1798,7 +1798,7 @@
 
                             slideHTML += `
                                 ${isFirstTwo ? `<div class="${colClass}">` : ''}
-                                <div class="capsule ${capsuleClass}">
+                                <a href="game-details.php?game_id=${game.game_id}" class="capsule ${capsuleClass}" style="text-decoration: none; display: block;">
                                     <div class="capsule-img-container">
                                         <img src="../${game.thumbnail_image}" alt="${game.title}">
                                     </div>
@@ -1814,7 +1814,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </a>
                                 ${isFirstTwo ? `</div>` : ''}
                             `;
                         });
@@ -1921,7 +1921,7 @@
                             
                             slideHTML += `
                                 <div class="col-lg-3 col-md-6">
-                                    <a href="category-details.php?cat=${categorySlug}&genre_id=${category.genre_id}" class="category-card">
+                                    <a href="category-details.php?genre_id=${category.genre_id}" class="category-card">
                                         <img src="${categoryImage}" alt="${category.genre_name}" class="category-bg">
                                         <div class="category-overlay"></div>
                                         <div class="category-title">${category.genre_name.toUpperCase()}</div>
@@ -2000,7 +2000,7 @@
 
                         const slide = `
                             <div class="slide-item carousel-item ${isActive}">
-                                <div class="row g-0 h-100">
+                                <a href="game-details.php?game_id=${game.game_id}" class="row g-0 h-100" style="text-decoration: none; display: flex;">
                                     <div class="featured-image-container col-md-8 px-0">
                                         <img src="../${game.header_image}" data-original="../${game.header_image}"
                                             alt="${game.title}" class="featured-game-image">
@@ -2023,7 +2023,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                         `;
                         
@@ -2101,12 +2101,12 @@
                             
                             slideHTML += `
                                 <div class="col-md-3 col-6">
-                                    <div class="steam-card">
+                                    <a href="game-details.php?game_id=${game.game_id}" class="steam-card" style="text-decoration: none; display: block;">
                                         <img src="../${game.header_image}" alt="${game.title}">
                                         <div class="card-body-steam">
                                             <span class="regular-price-badge">${priceDisplay}</span>
                                         </div>
-                                    </div>
+                                    </a>
                                 </div>
                             `;
                         });
