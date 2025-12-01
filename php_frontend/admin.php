@@ -299,6 +299,43 @@ $conn->close();
             background: rgba(145, 71, 255, 0.3);
         }
 
+        .btn-edit {
+            background: linear-gradient(90deg, #4CAF50 0%, #45a049 100%);
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .btn-edit:hover {
+            background: linear-gradient(90deg, #45a049 0%, #4CAF50 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+        }
+
+        .btn-delete {
+            background: rgba(244, 67, 54, 0.2);
+            border: 1px solid rgba(244, 67, 54, 0.4);
+            color: #f44336;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .btn-delete:hover {
+            background: rgba(244, 67, 54, 0.3);
+            border-color: rgba(244, 67, 54, 0.6);
+        }
+
         .btn-featured:disabled {
             opacity: 0.5;
             cursor: not-allowed;
@@ -369,6 +406,58 @@ $conn->close();
                     <span class="visually-hidden">Loading...</span>
                 </div>
                 <p class="mt-3">Loading games...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Media Modal -->
+    <div class="modal fade" id="mediaModal" tabindex="-1" aria-labelledby="mediaModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="background-color: #1b2838; border: 1px solid #66c0f4;">
+                <div class="modal-header" style="border-bottom: 1px solid #3e6c96;">
+                    <h5 class="modal-title text-white" id="mediaModalLabel">
+                        <i class="fas fa-photo-video me-2"></i>Add Media for <span id="modalGameTitle"></span>
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="mediaUploadForm" enctype="multipart/form-data">
+                        <input type="hidden" id="modal_game_id" name="game_id">
+                        
+                        <div class="mb-3">
+                            <label for="media_type" class="form-label" style="color: #66c0f4;">Media Type</label>
+                            <select class="form-select" id="media_type" name="media_type" required style="background-color: #2a475e; border: 1px solid #000; color: #fff;">
+                                <option value="">Select Type</option>
+                                <option value="screenshot">Screenshot</option>
+                                <option value="gif">GIF</option>
+                                <option value="thumbnail">Thumbnail</option>
+                                <option value="video">Video</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="media_file" class="form-label" style="color: #66c0f4;">Select File</label>
+                            <input type="file" class="form-control" id="media_file" name="media_file" required style="background-color: #2a475e; border: 1px solid #000; color: #fff;">
+                            <div class="form-text" style="color: #8f98a0;">
+                                <small>Images: JPG, PNG, GIF, WEBP | Videos: MP4, WEBM, OGG</small>
+                            </div>
+                        </div>
+
+                        <div id="uploadProgress" class="mb-3" style="display: none;">
+                            <div class="progress" style="height: 25px;">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%; background-color: #66c0f4;" id="progressBar">0%</div>
+                            </div>
+                        </div>
+
+                        <div id="uploadMessage" class="mb-3" style="display: none;"></div>
+                    </form>
+                </div>
+                <div class="modal-footer" style="border-top: 1px solid #3e6c96;">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="uploadMedia()" style="background: linear-gradient(90deg, #06bfff 0%, #2d73ff 100%);">
+                        <i class="fas fa-upload"></i> Upload Media
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -484,6 +573,15 @@ $conn->close();
                                         <i class="fas fa-thumbs-up"></i> Recommended
                                     </button>
                                 `}
+                                <button class="btn-edit" onclick="editGame(${game.game_id})">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="btn-edit" onclick="openMediaModal(${game.game_id}, '${game.title.replace(/'/g, "\\'")}')">
+                                    <i class="fas fa-photo-video"></i> Add Media
+                                </button>
+                                <button class="btn-delete" onclick="deleteGame(${game.game_id}, '${game.title.replace(/'/g, "\\'")}')">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
                                 <!-- Additional action buttons can be added here -->
                             </div>
                         </div>
@@ -585,6 +683,138 @@ $conn->close();
             setTimeout(() => {
                 container.innerHTML = '';
             }, 5000);
+        }
+
+        function editGame(gameId) {
+            window.location.href = `admin_add_game.php?edit=1&game_id=${gameId}`;
+        }
+
+        function openMediaModal(gameId, gameTitle) {
+            document.getElementById('modal_game_id').value = gameId;
+            document.getElementById('modalGameTitle').textContent = gameTitle;
+            document.getElementById('mediaUploadForm').reset();
+            document.getElementById('uploadProgress').style.display = 'none';
+            document.getElementById('uploadMessage').style.display = 'none';
+            
+            const modal = new bootstrap.Modal(document.getElementById('mediaModal'));
+            modal.show();
+        }
+
+        async function uploadMedia() {
+            const form = document.getElementById('mediaUploadForm');
+            const formData = new FormData(form);
+            const progressBar = document.getElementById('progressBar');
+            const uploadProgress = document.getElementById('uploadProgress');
+            const uploadMessage = document.getElementById('uploadMessage');
+
+            // Validate form
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            // Show progress bar
+            uploadProgress.style.display = 'block';
+            uploadMessage.style.display = 'none';
+            progressBar.style.width = '0%';
+            progressBar.textContent = '0%';
+
+            try {
+                const xhr = new XMLHttpRequest();
+
+                // Upload progress
+                xhr.upload.addEventListener('progress', (e) => {
+                    if (e.lengthComputable) {
+                        const percentComplete = Math.round((e.loaded / e.total) * 100);
+                        progressBar.style.width = percentComplete + '%';
+                        progressBar.textContent = percentComplete + '%';
+                    }
+                });
+
+                // Upload complete
+                xhr.addEventListener('load', () => {
+                    try {
+                        const data = JSON.parse(xhr.responseText);
+                        
+                        if (data.success) {
+                            uploadMessage.innerHTML = `<div class="alert alert-success" style="background-color: rgba(102, 192, 244, 0.1); border-left: 3px solid #66c0f4; color: #66c0f4;">
+                                <i class="fas fa-check-circle"></i> ${data.message}
+                            </div>`;
+                            uploadMessage.style.display = 'block';
+                            
+                            // Reset form after 2 seconds
+                            setTimeout(() => {
+                                form.reset();
+                                uploadProgress.style.display = 'none';
+                                uploadMessage.style.display = 'none';
+                            }, 2000);
+                        } else {
+                            uploadMessage.innerHTML = `<div class="alert alert-danger" style="background-color: rgba(255, 107, 107, 0.1); border-left: 3px solid #ff6b6b; color: #ff6b6b;">
+                                <i class="fas fa-exclamation-circle"></i> ${data.message || 'Upload failed'}
+                            </div>`;
+                            uploadMessage.style.display = 'block';
+                            uploadProgress.style.display = 'none';
+                        }
+                    } catch (error) {
+                        console.error('Error parsing response:', error);
+                        uploadMessage.innerHTML = `<div class="alert alert-danger" style="background-color: rgba(255, 107, 107, 0.1); border-left: 3px solid #ff6b6b; color: #ff6b6b;">
+                            <i class="fas fa-exclamation-circle"></i> Error processing upload
+                        </div>`;
+                        uploadMessage.style.display = 'block';
+                        uploadProgress.style.display = 'none';
+                    }
+                });
+
+                // Upload error
+                xhr.addEventListener('error', () => {
+                    uploadMessage.innerHTML = `<div class="alert alert-danger" style="background-color: rgba(255, 107, 107, 0.1); border-left: 3px solid #ff6b6b; color: #ff6b6b;">
+                        <i class="fas fa-exclamation-circle"></i> Network error during upload
+                    </div>`;
+                    uploadMessage.style.display = 'block';
+                    uploadProgress.style.display = 'none';
+                });
+
+                xhr.open('POST', '../php_backend/add_game_media.php');
+                xhr.send(formData);
+
+            } catch (error) {
+                console.error('Error uploading media:', error);
+                uploadMessage.innerHTML = `<div class="alert alert-danger" style="background-color: rgba(255, 107, 107, 0.1); border-left: 3px solid #ff6b6b; color: #ff6b6b;">
+                    <i class="fas fa-exclamation-circle"></i> Error uploading media. Please try again.
+                </div>`;
+                uploadMessage.style.display = 'block';
+                uploadProgress.style.display = 'none';
+            }
+        }
+
+        async function deleteGame(gameId, gameTitle) {
+            if (!confirm(`Are you sure you want to delete "${gameTitle}"?\n\nThis will permanently remove:\n• The game from the database\n• All associated genres and tags\n• All reviews for this game\n• All media files\n• The game from user libraries and wishlists\n\nThis action cannot be undone!`)) {
+                return;
+            }
+
+            try {
+                const response = await fetch('../php_backend/delete_game.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        game_id: gameId
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showMessage(data.message, 'success');
+                    loadGames(); // Reload games list
+                } else {
+                    showMessage(data.message || 'Failed to delete game', 'danger');
+                }
+            } catch (error) {
+                console.error('Error deleting game:', error);
+                showMessage('Error deleting game. Please try again.', 'danger');
+            }
         }
 
         // Load games on page load
