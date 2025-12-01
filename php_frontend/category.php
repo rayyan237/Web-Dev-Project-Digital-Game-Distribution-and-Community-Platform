@@ -198,116 +198,22 @@
 
         <div id="categoryCarousel" class="carousel slide" data-bs-ride="false" data-bs-touch="true">
 
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#categoryCarousel" data-bs-slide-to="0" class="active"
-                    aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#categoryCarousel" data-bs-slide-to="1"
-                    aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#categoryCarousel" data-bs-slide-to="2"
-                    aria-label="Slide 3"></button>
+            <div class="carousel-indicators" id="categoryIndicators">
+                <!-- Indicators will be dynamically generated -->
             </div>
 
-            <div class="carousel-inner">
-
+            <div class="carousel-inner" id="categoryCarouselInner">
+                <!-- Loading spinner -->
                 <div class="carousel-item active">
                     <div class="row g-3">
-                        <div class="col-lg-3 col-md-6">
-                            <a href="category-details.php?cat=rpg" class="category-card">
-                                <img src="../assets/images/anime.webp" alt="Anime" class="category-bg">
-                                <div class="category-overlay"></div>
-                                <div class="category-title">ROLE PLAYING</div>
-                            </a>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <a href="category-details.php?cat=adventure" class="category-card">
-                                <img src="../assets/images/story_rich.webp" alt="Story-Rich" class="category-bg">
-                                <div class="category-overlay"></div>
-                                <div class="category-title">ADVENTURE</div>
-                            </a>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <a href="category-details.php?cat=racing" class="category-card">
-                                <img src="../assets/images/multiplayer_coop.webp" alt="Co-operative" class="category-bg">
-                                <div class="category-overlay"></div>
-                                <div class="category-title">RACING</div>
-                            </a>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <a href="category-details.html?cat=freetoplay" class="category-card">
-                                <img src="../assets/images/racing.webp" alt="Racing" class="category-bg">
-                                <div class="category-overlay"></div>
-                                <div class="category-title">FREE TO PLAY</div>
-                            </a>
+                        <div class="col-12 text-center py-5">
+                            <div class="spinner-border text-light" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="text-light mt-2">Loading categories...</p>
                         </div>
                     </div>
                 </div>
-
-                <div class="carousel-item">
-                    <div class="row g-3">
-                        <div class="col-lg-3 col-md-6">
-                            <a href="category-details.php?cat=action" class="category-card">
-                                <img src="../assets/images/freetoplay.webp" alt="Free to Play" class="category-bg">
-                                <div class="category-overlay"></div>
-                                <div class="category-title">ACTION</div>
-                            </a>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <a href="category-details.php?cat=anime" class="category-card">
-                                <img src="../assets/images/simulation.webp" alt="Simulation" class="category-bg">
-                                <div class="category-overlay"></div>
-                                <div class="category-title">ANIME</div>
-                            </a>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <a href="category-details.php?cat=strategy" class="category-card">
-                                <img src="../assets/images/survival.webp" alt="Survival" class="category-bg">
-                                <div class="category-overlay"></div>
-                                <div class="category-title">STRATEGY</div>
-                            </a>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <a href="category-details.php?cat=simulation" class="category-card">
-                                <img src="../assets/images/visual_novel.webp" alt="Visual Novel" class="category-bg">
-                                <div class="category-overlay"></div>
-                                <div class="category-title">SIMULATION</div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="carousel-item">
-                    <div class="row g-3">
-                        <div class="col-lg-3 col-md-6">
-                            <a href="category-details.php?cat=puzzle" class="category-card">
-                                <img src="../assets/images/strategy.webp" alt="Strategy" class="category-bg">
-                                <div class="category-overlay"></div>
-                                <div class="category-title">PUZZLE</div>
-                            </a>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <a href="category-details.php?cat=fighting" class="category-card">
-                                <img src="../assets/images/fighting_martial_arts.webp" alt="Fighting" class="category-bg">
-                                <div class="category-overlay"></div>
-                                <div class="category-title">FIGHTING</div>
-                            </a>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <a href="category-details.php?cat=survival" class="category-card">
-                                <img src="../assets/images/action.webp" alt="Action" class="category-bg">
-                                <div class="category-overlay"></div>
-                                <div class="category-title">SURVIVAL</div>
-                            </a>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <a href="category-details.php?cat=sports" class="category-card">
-                                <img src="../assets/images/science_fiction.webp" alt="Sci-Fi" class="category-bg">
-                                <div class="category-overlay"></div>
-                                <div class="category-title">SPORTS</div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                
             </div>
 
             <button class="custom-nav-arrow arrow-prev carousel-control-prev" type="button" data-bs-target="#categoryCarousel"
@@ -324,6 +230,130 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Category image mapping (using existing images)
+        const categoryImages = {
+            'Action': '../assets/images/action.webp',
+            'Adventure': '../assets/images/story_rich.webp',
+            'Role-Playing (RPG)': '../assets/images/anime.webp',
+            'Strategy': '../assets/images/strategy.webp',
+            'Simulation': '../assets/images/simulation.webp',
+            'Sports': '../assets/images/racing.webp',
+            'Racing': '../assets/images/racing.webp',
+            'Puzzle': '../assets/images/strategy.webp',
+            'Fighting': '../assets/images/fighting_martial_arts.webp',
+            'Horror': '../assets/images/survival.webp',
+            'MOBA': '../assets/images/multiplayer_coop.webp',
+            'Survival': '../assets/images/survival.webp',
+            'Sandbox': '../assets/images/freetoplay.webp',
+            'Platformer': '../assets/images/anime.webp',
+            'Stealth': '../assets/images/science_fiction.webp',
+            'Anime': '../assets/images/anime.webp',
+            'Sci-Fi': '../assets/images/science_fiction.webp',
+            'Visual Novel': '../assets/images/visual_novel.webp',
+            'Free to Play': '../assets/images/freetoplay.webp',
+            'Multiplayer': '../assets/images/multiplayer_coop.webp'
+        };
+
+        // Load categories (genres) carousel from database
+        async function loadCategories() {
+            try {
+                const response = await fetch('../php_backend/get_categories.php');
+                const data = await response.json();
+
+                if (data.success && data.categories.length > 0) {
+                    const carouselInner = document.getElementById('categoryCarouselInner');
+                    const indicatorsContainer = document.getElementById('categoryIndicators');
+                    
+                    // Clear loading spinner
+                    carouselInner.innerHTML = '';
+                    indicatorsContainer.innerHTML = '';
+
+                    // Group categories into slides (4 per slide)
+                    const categoriesPerSlide = 4;
+                    const slides = [];
+                    for (let i = 0; i < data.categories.length; i += categoriesPerSlide) {
+                        slides.push(data.categories.slice(i, i + categoriesPerSlide));
+                    }
+
+                    // Create slides
+                    slides.forEach((slideCategories, slideIndex) => {
+                        const isActive = slideIndex === 0 ? 'active' : '';
+                        
+                        let slideHTML = `
+                            <div class="carousel-item ${isActive}">
+                                <div class="row g-3">
+                        `;
+
+                        slideCategories.forEach(category => {
+                            const categoryImage = categoryImages[category.genre_name] || '../assets/images/anime.webp';
+                            
+                            slideHTML += `
+                                <div class="col-lg-3 col-md-6">
+                                    <a href="category-details.php?genre_id=${category.genre_id}" class="category-card">
+                                        <img src="${categoryImage}" alt="${category.genre_name}" class="category-bg">
+                                        <div class="category-overlay"></div>
+                                        <div class="category-title">${category.genre_name.toUpperCase()}</div>
+                                    </a>
+                                </div>
+                            `;
+                        });
+
+                        slideHTML += `
+                                </div>
+                            </div>
+                        `;
+                        
+                        carouselInner.innerHTML += slideHTML;
+
+                        // Create indicator
+                        const indicator = `
+                            <button type="button" data-bs-target="#categoryCarousel" data-bs-slide-to="${slideIndex}" 
+                                ${isActive ? 'class="active" aria-current="true"' : ''} aria-label="Slide ${slideIndex + 1}"></button>
+                        `;
+                        indicatorsContainer.innerHTML += indicator;
+                    });
+
+                    // Reinitialize carousel
+                    const categoryCarousel = document.getElementById('categoryCarousel');
+                    if (categoryCarousel) {
+                        new bootstrap.Carousel(categoryCarousel, {
+                            interval: false,
+                            ride: false,
+                            touch: true
+                        });
+                    }
+                } else {
+                    const carouselInner = document.getElementById('categoryCarouselInner');
+                    carouselInner.innerHTML = `
+                        <div class="carousel-item active">
+                            <div class="row g-3">
+                                <div class="col-12 text-center py-5">
+                                    <p class="text-light">No categories available</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error loading categories:', error);
+                const carouselInner = document.getElementById('categoryCarouselInner');
+                carouselInner.innerHTML = `
+                    <div class="carousel-item active">
+                        <div class="row g-3">
+                            <div class="col-12 text-center py-5">
+                                <p class="text-danger">Error loading categories. Please try again later.</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // Load categories on page load
+        document.addEventListener('DOMContentLoaded', loadCategories);
+    </script>
 </body>
 
 </html>

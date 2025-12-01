@@ -25,16 +25,18 @@ try {
     $genre = $result->fetch_assoc();
     $stmt->close();
     
-    // Get 3 cheapest games for hero carousel (excluding free games)
+    // Get up to 3 games for hero carousel (prioritize paid games, then include free games if needed)
     $stmt = $conn->prepare("
         SELECT DISTINCT g.game_id, g.title, g.developer_name, g.price, g.description,
                g.header_image, g.thumbnail_image
         FROM games g
         INNER JOIN game_genre gg ON g.game_id = gg.game_id
         LEFT JOIN game_media gm ON g.game_id = gm.game_id AND gm.media_type = 'video'
-        WHERE gg.genre_id = ? AND g.is_published = 1 AND g.price > 0
+        WHERE gg.genre_id = ? AND g.is_published = 1
         GROUP BY g.game_id
-        ORDER BY g.price ASC
+        ORDER BY 
+            CASE WHEN g.price > 0 THEN 0 ELSE 1 END,
+            g.price ASC
         LIMIT 3
     ");
     $stmt->bind_param("i", $genre_id);

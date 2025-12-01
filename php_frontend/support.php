@@ -259,14 +259,14 @@
                     <form action="mailto:hmsk606@gmail.com" method="post" enctype="text/plain">
                         <div class="row g-3 mb-3">
                             <div class="col-md-6">
-                                <input type="text" name="name" class="form-control form-control-dark" placeholder="Your Name">
+                                <input type="text" name="name" id="nameField" class="form-control form-control-dark" placeholder="Your Name">
                             </div>
                             <div class="col-md-6">
                                 <input type="email" name="email" class="form-control form-control-dark" placeholder="Your Email">
                             </div>
                         </div>
                         <div class="mb-3">
-                            <input type="text" name="subject" class="form-control form-control-dark" placeholder="Subject">
+                            <input type="text" name="subject" id="subjectField" class="form-control form-control-dark" placeholder="Subject">
                         </div>
                         <div class="mb-3">
                             <textarea name="message" class="form-control form-control-dark" rows="6" placeholder="Message"></textarea>
@@ -336,5 +336,26 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Check if subject parameter is present in URL and pre-fill the subject field
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const subject = urlParams.get('subject');
+            
+            if (subject) {
+                const subjectField = document.getElementById('subjectField');
+                if (subjectField) {
+                    subjectField.value = decodeURIComponent(subject);
+                    
+                    // Focus on the name field after pre-filling subject
+                    const nameField = document.getElementById('nameField');
+                    if (nameField) {
+                        nameField.focus();
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>

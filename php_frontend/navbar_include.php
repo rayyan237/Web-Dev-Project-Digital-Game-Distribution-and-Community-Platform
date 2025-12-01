@@ -88,7 +88,7 @@
                     aria-expanded="false">Browse</a>
                 <ul class="dropdown-menu custom-dropdown-menu">
                     <li><a class="dropdown-item custom-dropdown-item" href="games-list.php">All Games</a></li>
-                    <li><a class="dropdown-item custom-dropdown-item" href="browse-more.php">Browse More</a></li>
+                    <!-- <li><a class="dropdown-item custom-dropdown-item" href="browse-more.php">Browse More</a></li> -->
                     <li><a class="dropdown-item custom-dropdown-item" href="browse-cheap.php?max_price=10">Under $10</a></li>
                 </ul>
             </li>
@@ -112,8 +112,9 @@
                 <a class="nav-link subnav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" role="button"
                     aria-expanded="false">More</a>
                 <ul class="dropdown-menu custom-dropdown-menu">
-                    <li><a class="dropdown-item custom-dropdown-item" href="special-offers.php">Special Offers</a></li>
-                    <li><a class="dropdown-item custom-dropdown-item" href="#">Hardware</a></li>
+                    <!-- <li><a class="dropdown-item custom-dropdown-item" href="special-offers.php">Special Offers</a></li>
+                    <li><a class="dropdown-item custom-dropdown-item" href="#">Hardware</a></li> -->
+                    <li><a class="dropdown-item custom-dropdown-item" href="support.php?subject=Game%20Request">Request a Game</a></li>
                 </ul>
             </li>
         </ul>
@@ -137,7 +138,7 @@
                     aria-expanded="false">Browse</a>
                 <ul class="dropdown-menu custom-dropdown-menu">
                     <li><a class="dropdown-item custom-dropdown-item" href="games-list.php">All Games</a></li>
-                    <li><a class="dropdown-item custom-dropdown-item" href="browse-more.php">Browse More</a></li>
+                    <!-- <li><a class="dropdown-item custom-dropdown-item" href="browse-more.php">Browse More</a></li> -->
                     <li><a class="dropdown-item custom-dropdown-item" href="browse-cheap.php?max_price=10">Under $10</a></li>
                 </ul>
             </li>
@@ -161,8 +162,9 @@
                 <a class="nav-link subnav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" role="button"
                     aria-expanded="false">More</a>
                 <ul class="dropdown-menu custom-dropdown-menu">
-                    <li><a class="dropdown-item custom-dropdown-item" href="special-offers.php">Special Offers</a></li>
-                    <li><a class="dropdown-item custom-dropdown-item" href="#">Hardware</a></li>
+                    <!-- <li><a class="dropdown-item custom-dropdown-item" href="special-offers.php">Special Offers</a></li>
+                    <li><a class="dropdown-item custom-dropdown-item" href="#">Hardware</a></li> -->
+                    <li><a class="dropdown-item custom-dropdown-item" href="support.php?subject=Game%20Request">Request a Game</a></li>
                 </ul>
             </li>
         </ul>
