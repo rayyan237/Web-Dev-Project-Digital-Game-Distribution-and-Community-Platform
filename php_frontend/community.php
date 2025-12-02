@@ -1,3 +1,7 @@
+<?php
+session_start();
+$isLoggedIn = isset($_SESSION['user_id']);
+?>
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="dark">
 <head>
@@ -20,6 +24,7 @@
         }
 
         body { background-color: var(--steam-bg-main); color: var(--steam-text); font-family: sans-serif; }
+        body.no-scroll { overflow: hidden; height: 100vh; }
         a { text-decoration: none; color: var(--steam-text); cursor: pointer; }
         .text-accent { color: var(--steam-accent) !important; }
         .text-highlight { color: var(--z-highlight) !important; }
@@ -158,16 +163,150 @@
             border-radius: 4px;
         }
 
+        /* --- Login Required Modal --- */
+        .login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-modal-box {
+            background: linear-gradient(135deg, rgba(23, 26, 33, 0.98), rgba(27, 40, 56, 0.98));
+            border: 2px solid var(--steam-accent);
+            border-radius: 12px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+            animation: slideDown 0.4s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-modal-icon {
+            font-size: 4rem;
+            color: var(--steam-accent);
+            margin-bottom: 20px;
+        }
+
+        .login-modal-title {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .login-modal-text {
+            color: var(--steam-text);
+            font-size: 1rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .login-modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-login-primary {
+            background: linear-gradient(90deg, #06bfff 0%, #2d73ff 100%);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-login-primary:hover {
+            background: linear-gradient(90deg, #2d73ff 0%, #06bfff 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 192, 244, 0.5);
+        }
+
+        .btn-login-secondary {
+            background: transparent;
+            color: var(--steam-accent);
+            padding: 12px 30px;
+            border: 2px solid var(--steam-accent);
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-login-secondary:hover {
+            background: var(--steam-card-bg);
+            color: white;
+            border-color: white;
+        }
+
         @media (max-width: 768px) {
             .chat-container { margin-bottom: 2rem; }
             .btn-hide-chat { top: -30px; font-size: 0.8rem; }
             .col-md-3.mb-4 { margin-bottom: 1rem !important; }
             .profile-avatar-lg { width: 80px; height: 80px; }
+            .login-modal-box { padding: 30px 20px; }
+            .login-modal-title { font-size: 1.5rem; }
+            .login-modal-buttons { flex-direction: column; }
         }
 
     </style>
 </head>
-<body>
+<body<?php if (!$isLoggedIn) echo ' class="no-scroll"'; ?>>
+
+    <?php if (!$isLoggedIn): ?>
+    <!-- Login Required Overlay -->
+    <div class="login-overlay" id="loginOverlay">
+        <div class="login-modal-box">
+            <div class="login-modal-icon">
+                <i class="fas fa-lock"></i>
+            </div>
+            <h2 class="login-modal-title">Login Required</h2>
+            <p class="login-modal-text">
+                You must be logged in to access the Z Community. Join our community to chat, create posts, and connect with other gamers!
+            </p>
+            <div class="login-modal-buttons">
+                <a href="login.php" class="btn-login-primary">
+                    <i class="fas fa-sign-in-alt me-2"></i>Login
+                </a>
+                <a href="signup.php" class="btn-login-secondary">
+                    <i class="fas fa-user-plus me-2"></i>Create Account
+                </a>
+            </div>
+            <p class="text-secondary mt-4 mb-0" style="font-size: 0.85rem;">
+                <a href="index.php" class="text-accent text-decoration-none"><i class="fas fa-home me-1"></i>Return to Homepage</a>
+            </p>
+        </div>
+    </div>
+    <?php endif; ?>
 
     <?php include 'navbar_include.php'; ?>
 
@@ -369,6 +508,44 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Check if user is logged in
+        const isLoggedIn = <?php echo $isLoggedIn ? 'true' : 'false'; ?>;
+        
+        // Prevent all interactions if not logged in
+        if (!isLoggedIn) {
+            // Disable all interactions
+            document.addEventListener('DOMContentLoaded', function() {
+                // Prevent scrolling
+                document.body.style.overflow = 'hidden';
+                
+                // Prevent any clicks on the page content
+                document.addEventListener('click', function(e) {
+                    if (!e.target.closest('.login-overlay')) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }
+                }, true);
+                
+                // Prevent keyboard navigation
+                document.addEventListener('keydown', function(e) {
+                    e.preventDefault();
+                }, true);
+                
+                // Prevent mouse wheel scrolling
+                document.addEventListener('wheel', function(e) {
+                    e.preventDefault();
+                }, { passive: false });
+                
+                // Prevent touch scrolling
+                document.addEventListener('touchmove', function(e) {
+                    e.preventDefault();
+                }, { passive: false });
+            });
+            
+            // Stop execution of other scripts
+            throw new Error('Login required');
+        }
+        
         // --- DATA STORE ---
         let postsData = [];
         
