@@ -117,28 +117,24 @@
         }
 
         /* The Arrows */
-        .custom-nav-arrow {
+        .carousel-control-prev,
+        .carousel-control-next {
             width: 45px;
-            height: 90px; /* Match source height */
-            background-color: rgba(0, 0, 0, 0.7); /* Match source color */
-            border: none;
-            z-index: 10;
-            opacity: 0.5;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: absolute;
+            height: 100px;
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.01));
             top: 50%;
             transform: translateY(-50%);
-            /* Remove default Bootstrap border-radius if preferred, or keep slight round */
-            border-radius: 4px; 
+            opacity: 1;
+            border-radius: 3px;
         }
 
-        /* Arrow Hover State */
-        .custom-nav-arrow:hover {
-            opacity: 1;
-            background-color: rgba(0, 0, 0, 0.9); /* Darker on hover */
+        .carousel-control-next {
+            background: linear-gradient(to left, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.01));
+        }
+
+        .carousel-control-prev:hover,
+        .carousel-control-next:hover {
+            background-color: rgba(171, 171, 171, 0.2);
         }
 
         /* Positioning */
@@ -187,8 +183,6 @@
 </head>
 
 <body>
-
-    <?php include 'navbar_include.php'; ?>
 
     <div class="container mt-5 steam-container-width special-offers-carousel-container">
 

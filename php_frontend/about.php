@@ -423,7 +423,7 @@
 <body>
 
     <!-- NAVBAR (Centralized Include) -->
-    <?php include 'navbar_include.php'; ?>
+    <?php include 'section-navbar.php'; ?>
 
     <!-- HERO (Unchanged) -->
     <section class="about-hero">

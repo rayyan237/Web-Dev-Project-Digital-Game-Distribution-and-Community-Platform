@@ -201,7 +201,7 @@
 <body>
 
     <!-- NAVBAR (Centralized Include) -->
-    <?php include 'navbar_include.php'; ?>
+    <?php include 'section-navbar.php'; ?>
 
     <!-- SUPPORT SECTION -->
     <section class="support-container">

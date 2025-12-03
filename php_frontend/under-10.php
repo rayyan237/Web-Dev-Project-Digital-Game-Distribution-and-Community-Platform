@@ -41,7 +41,6 @@
             gap: 10px;
         }
 
-        /* APPLIED YOUR REQUESTED STYLE LOGIC HERE */
         .btn-browse-more {
             display: inline-block;
             color: #c6d4df;
@@ -83,6 +82,7 @@
             display: flex;
             flex-direction: column;
             border: none;
+            text-decoration: none;
         }
 
         .steam-card:hover {
@@ -102,101 +102,24 @@
         /* Footer Area */
         .card-body-steam {
             background: #10151d;
-            /* Dark footer background */
             padding: 4px 8px;
             height: 36px;
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            /* Left Align */
             margin-top: auto;
         }
 
-        /* --- DISCOUNTED PRICE BLOCKS --- */
-        .discount-wrapper {
-            display: inline-flex;
-            height: 100%;
-            align-items: center;
-        }
-
-        .discount-badge {
+        /* NEW PRICE BUTTON STYLE */
+        .price-btn {
             background-color: #4c6b22;
-            color: #beee11;
-            font-size: 15px;
-            font-weight: 700;
-            padding: 2px 6px;
-            height: 100%;
-            display: flex;
-            align-items: center;
-        }
-
-        .price-box {
-            background-color: #344654;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-end;
-            padding: 0 6px;
-            height: 100%;
-            min-width: 50px;
-        }
-
-        .original-price {
-            color: #738895;
-            text-decoration: line-through;
-            font-size: 9px;
-            line-height: 1;
-            position: relative;
-            top: 1px;
-        }
-
-        .final-price {
-            color: #beee11;
-            font-size: 12px;
-            font-weight: 600;
-            line-height: 1;
-        }
-
-        /* --- REGULAR PRICE BADGE --- */
-        .regular-price-badge {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #000000;
-            /* Dark Badge Background */
-            color: #ffffff;
-            font-size: 12px;
-            font-weight: 600;
-            padding: 0 8px;
-            height: 24px;
-            border-radius: 1px;
-            margin-left: 0;
-        }
-
-        /* Live Tag */
-        .live-tag {
-            position: absolute;
-            top: 0;
-            left: 0;
-            background-color: #d94126;
-            color: #fff;
-            padding: 1px 6px;
-            font-size: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            z-index: 2;
-            letter-spacing: 0.5px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .live-dot {
-            height: 6px;
-            width: 6px;
-            background: #fff;
-            border-radius: 50%;
+            font-size: 13px;
+            padding: 4px 12px;
+            color: white;
+            border-radius: 2px;
+            white-space: nowrap;
             display: inline-block;
+            font-weight: 500;
         }
 
         /* =========================================
@@ -294,117 +217,12 @@
 
         <div id="steamGameCarousel" class="carousel slide" data-bs-ride="false">
 
-            <div class="carousel-inner">
-
-                <div class="carousel-item active">
-                    <div class="row g-3">
-
-                        <div class="col-md-3 col-6">
-                            <div class="steam-card">
-                                <img src="../assets/images/s1_header.jpg" alt="Vein">
-                                <div class="card-body-steam">
-                                    <span class="regular-price-badge">$8.19 USD</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 col-6">
-                            <div class="steam-card">
-                                <img src="../assets/images/s2_header.jpg" alt="DMC5">
-                                <div class="card-body-steam">
-                                    <div class="discount-wrapper">
-                                        <div class="discount-badge">-67%</div>
-                                        <div class="price-box">
-                                            <span class="original-price">$23.99</span>
-                                            <span class="final-price">$7.91 USD</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 col-6">
-                            <div class="steam-card">
-                                <img src="../assets/images/s3_header.jpg" alt="SpaceBourne">
-                                <div class="card-body-steam">
-                                    <div class="discount-wrapper">
-                                        <div class="discount-badge">-20%</div>
-                                        <div class="price-box">
-                                            <span class="original-price">$8.19</span>
-                                            <span class="final-price">$6.55 USD</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 col-6">
-                            <div class="steam-card">
-                                <img src="../assets/images/s4_header.jpg" alt="Moria">
-                                <div class="card-body-steam">
-                                    <div class="discount-wrapper">
-                                        <div class="discount-badge">-50%</div>
-                                        <div class="price-box">
-                                            <span class="original-price">$10.49</span>
-                                            <span class="final-price">$5.24 USD</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+            <div class="carousel-inner" id="under10CarouselInner">
+                <div class="text-center py-5">
+                    <div class="spinner-border text-light" role="status">
+                        <span class="visually-hidden">Loading...</span>
                     </div>
                 </div>
-
-                <div class="carousel-item">
-                    <div class="row g-3">
-                        <div class="col-md-3 col-6">
-                            <div class="steam-card">
-                                <img src="../assets/images/headees.jpg" alt="Hades">
-                                <div class="card-body-steam">
-                                    <div class="discount-wrapper">
-                                        <div class="discount-badge">-20%</div>
-                                        <div class="price-box">
-                                            <span class="original-price">$10.49</span>
-                                            <span class="final-price">$8.39 USD</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-6">
-                            <div class="steam-card">
-                                <img src="../assets/images/repo.jpg" alt="REPO">
-                                <div class="card-body-steam">
-                                    <span class="regular-price-badge">$5.49 USD</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-6">
-                            <div class="steam-card">
-                                <img src="../assets/images/rally.jpg" alt="Rally">
-                                <div class="card-body-steam">
-                                    <div class="discount-wrapper">
-                                        <div class="discount-badge">-20%</div>
-                                        <div class="price-box">
-                                            <span class="original-price">$10.49</span>
-                                            <span class="final-price">$8.39 USD</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-6">
-                            <div class="steam-card">
-                                <img src="../assets/images/vein.jpg" alt="Vein">
-                                <div class="card-body-steam">
-                                    <span class="regular-price-badge">$9.99 USD</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
 
             <button class="carousel-control-prev" type="button" data-bs-target="#steamGameCarousel"
@@ -418,16 +236,104 @@
                 <span class="visually-hidden">Next</span>
             </button>
 
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#steamGameCarousel" data-bs-slide-to="0" class="active"
-                    aria-current="true"></button>
-                <button type="button" data-bs-target="#steamGameCarousel" data-bs-slide-to="1"></button>
-            </div>
+            <div class="carousel-indicators" id="under10Indicators"></div>
 
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            loadUnder10Games();
+        });
+
+        async function loadUnder10Games() {
+            try {
+                const response = await fetch('../php_backend/get_under_10_games.php');
+                const data = await response.json();
+
+                const carouselInner = document.getElementById('under10CarouselInner');
+                const indicatorsContainer = document.getElementById('under10Indicators');
+
+                if (data.success && data.games.length > 0) {
+                    
+                    carouselInner.innerHTML = '';
+                    indicatorsContainer.innerHTML = '';
+
+                    // Group games into slides (4 games per slide)
+                    const gamesPerSlide = 4;
+                    const slides = [];
+                    for (let i = 0; i < data.games.length; i += gamesPerSlide) {
+                        slides.push(data.games.slice(i, i + gamesPerSlide));
+                    }
+
+                    slides.forEach((slideGames, slideIndex) => {
+                        const isActive = slideIndex === 0 ? 'active' : '';
+
+                        let slideHTML = `
+                            <div class="carousel-item ${isActive}">
+                                <div class="row g-3">
+                        `;
+
+                        slideGames.forEach(game => {
+                            // Calculate final price
+                            const finalPrice = parseFloat(game.price).toFixed(2);
+                            
+                            // Render price strictly using .price-btn class
+                            const priceHTML = `
+                                <div class="price-btn">$${finalPrice} USD</div>
+                            `;
+
+                            slideHTML += `
+                                <div class="col-md-3 col-6">
+                                    <a href="game-details.php?game_id=${game.game_id}" class="steam-card">
+                                        <img src="../${game.header_image}" alt="${game.title}">
+                                        <div class="card-body-steam">
+                                            ${priceHTML}
+                                        </div>
+                                    </a>
+                                </div>
+                            `;
+                        });
+
+                        slideHTML += `
+                                </div>
+                            </div>
+                        `;
+
+                        carouselInner.innerHTML += slideHTML;
+
+                        // Add Indicator
+                        const indicator = `
+                            <button type="button" data-bs-target="#steamGameCarousel" data-bs-slide-to="${slideIndex}" 
+                                ${isActive ? 'class="active" aria-current="true"' : ''}></button>
+                        `;
+                        indicatorsContainer.innerHTML += indicator;
+                    });
+
+                    // Reinitialize Bootstrap Carousel
+                    const steamCarousel = document.getElementById('steamGameCarousel');
+                    const carouselInstance = bootstrap.Carousel.getOrCreateInstance(steamCarousel); 
+                    
+                } else {
+                    carouselInner.innerHTML = `
+                        <div class="carousel-item active">
+                            <div class="row g-3">
+                                <div class="col-12 text-center py-5">
+                                    <h5 style="color: #8f98a0;">No games under $10 available at the moment</h5>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    indicatorsContainer.innerHTML = '';
+                }
+            } catch (error) {
+                console.error('Error loading under $10 games:', error);
+                document.getElementById('under10CarouselInner').innerHTML = '<p class="text-center text-danger mt-4">Failed to load games.</p>';
+            }
+        }
+    </script>
 </body>
 
 </html>
