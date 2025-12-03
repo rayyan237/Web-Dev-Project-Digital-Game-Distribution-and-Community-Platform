@@ -70,7 +70,7 @@ $conn->close();
             margin: 0;
         }
 
-        .featured-info {
+        /* .featured-info {
             background: rgba(102, 192, 244, 0.1);
             border-left: 3px solid #66c0f4;
             padding: 15px 20px;
@@ -89,7 +89,7 @@ $conn->close();
             color: #c7d5e0;
             margin: 0;
             font-size: 0.9rem;
-        }
+        } */
 
         .games-grid {
             display: flex;
@@ -105,8 +105,8 @@ $conn->close();
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            min-height: 150px;
-            max-height: 150px;
+            min-height: 120px;
+            max-height: 120px;
         }
 
         .game-card:hover {
@@ -120,19 +120,20 @@ $conn->close();
         }
 
         .game-thumbnail {
-            width: 200px;
-            min-width: 200px;
-            height: 150px;
+            width: 215px;
+            min-width: 215px;
+            height: 120px;
             object-fit: cover;
             flex-shrink: 0;
         }
 
         .game-info {
-            padding: 20px;
+            padding: 15px;
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 15px;
             flex: 1;
+            overflow: hidden;
         }
 
         .game-details {
@@ -142,9 +143,9 @@ $conn->close();
 
         .game-title {
             color: #ffffff;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 600;
-            margin-bottom: 5px;
+            margin-bottom: 3px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -152,15 +153,15 @@ $conn->close();
 
         .game-developer {
             color: #8f98a0;
-            font-size: 0.85rem;
-            margin-bottom: 8px;
+            font-size: 0.8rem;
+            margin-bottom: 5px;
         }
 
         .game-meta {
             display: flex;
             align-items: center;
-            gap: 15px;
-            font-size: 0.85rem;
+            gap: 10px;
+            font-size: 0.8rem;
         }
 
         .game-price {
@@ -171,15 +172,16 @@ $conn->close();
         .game-status {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 6px;
             flex-wrap: wrap;
         }
 
         .game-actions {
             display: flex;
-            gap: 10px;
+            gap: 6px;
             flex-shrink: 0;
-            padding-right: 20px;
+            padding-right: 15px;
+            flex-wrap: wrap;
         }
 
         .badge-featured {
@@ -226,14 +228,16 @@ $conn->close();
         }
 
         .btn-featured {
-            padding: 10px 20px;
+            padding: 6px 10px;
             border: none;
             border-radius: 4px;
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             cursor: pointer;
             transition: all 0.3s ease;
             white-space: nowrap;
+            min-width: 80px;
+            text-align: center;
         }
 
         .btn-add-featured {
@@ -302,14 +306,16 @@ $conn->close();
         .btn-edit {
             background: linear-gradient(90deg, #4CAF50 0%, #45a049 100%);
             color: #ffffff;
-            padding: 10px 20px;
+            padding: 6px 10px;
             border: none;
             border-radius: 4px;
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             cursor: pointer;
             transition: all 0.3s ease;
             white-space: nowrap;
+            min-width: 80px;
+            text-align: center;
         }
 
         .btn-edit:hover {
@@ -322,13 +328,15 @@ $conn->close();
             background: rgba(244, 67, 54, 0.2);
             border: 1px solid rgba(244, 67, 54, 0.4);
             color: #f44336;
-            padding: 10px 20px;
+            padding: 6px 10px;
             border-radius: 4px;
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             cursor: pointer;
             transition: all 0.3s ease;
             white-space: nowrap;
+            min-width: 80px;
+            text-align: center;
         }
 
         .btn-delete:hover {
@@ -339,6 +347,81 @@ $conn->close();
         .btn-featured:disabled {
             opacity: 0.5;
             cursor: not-allowed;
+        }
+
+        .search-container {
+            background: linear-gradient(135deg, rgba(23, 26, 33, 0.98), rgba(27, 40, 56, 0.98));
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(102, 192, 244, 0.2);
+        }
+
+        .search-box {
+            position: relative;
+            max-width: 600px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 45px 12px 45px;
+            background: rgba(42, 71, 94, 0.6);
+            border: 2px solid rgba(102, 192, 244, 0.3);
+            border-radius: 6px;
+            color: #c7d5e0;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #66c0f4;
+            background: rgba(42, 71, 94, 0.8);
+            box-shadow: 0 0 15px rgba(102, 192, 244, 0.2);
+        }
+
+        .search-box input::placeholder {
+            color: #8f98a0;
+        }
+
+        .search-box .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #66c0f4;
+            font-size: 1.1rem;
+            pointer-events: none;
+        }
+
+        .search-box .clear-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #8f98a0;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: none;
+            transition: color 0.3s ease;
+        }
+
+        .search-box .clear-icon:hover {
+            color: #66c0f4;
+        }
+
+        .search-box .clear-icon.active {
+            display: block;
+        }
+
+        .search-results-info {
+            color: #8f98a0;
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+
+        .search-results-info strong {
+            color: #66c0f4;
         }
 
         .loading-spinner {
@@ -377,7 +460,7 @@ $conn->close();
             <p>Manage featured games for the hero carousel on the homepage</p>
         </div>
 
-        <div class="featured-info">
+        <!-- <div class="featured-info">
             <h5><i class="fas fa-info-circle"></i> Featured Games Rules</h5>
             <p>• You can feature between 2 and 4 games for the hero carousel</p>
             <p>• Games with video trailers will display videos; others will show their banner image</p>
@@ -396,16 +479,41 @@ $conn->close();
             <p>• You can feature between 1 and 2 games for the "Featured & Recommended" section</p>
             <p>• These games will display with full descriptions and large showcases</p>
             <p>• Perfect for highlighting new releases or exceptional titles</p>
-        </div>
+        </div> -->
 
-        <div id="messageContainer"></div>
+        <div class="container mt-5">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 class="text-white">Admin Panel - Manage Games</h1>
+                <a href="admin_add_game.php" class="btn btn-success btn-lg">
+                    <i class="fas fa-plus-circle me-2"></i>Add New Game
+                </a>
+            </div>
 
-        <div id="gamesContainer" class="games-grid">
-            <div class="loading-spinner">
-                <div class="spinner-border" role="status">
-                    <span class="visually-hidden">Loading...</span>
+            <div class="alert alert-info">
+                <strong>Featured Games:</strong> Add 2-4 games to the hero carousel (shows video trailers)<br>
+                <strong>50% Off:</strong> Add 4-8 games to special offers section<br>
+                <strong>Recommended:</strong> Add 1-2 games to Featured & Recommended section
+            </div>
+
+            <div id="messageContainer"></div>
+
+            <!-- Search Bar -->
+            <div class="search-container">
+                <div class="search-box">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="gameSearchInput" placeholder="Search games by title, developer, genre, or tags..." autocomplete="off">
+                    <i class="fas fa-times clear-icon" id="clearSearch"></i>
                 </div>
-                <p class="mt-3">Loading games...</p>
+                <div class="search-results-info" id="searchResultsInfo"></div>
+            </div>
+
+            <div id="gamesContainer" class="games-grid">
+                <div class="loading-spinner">
+                    <div class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-3">Loading games...</p>
+                </div>
             </div>
         </div>
     </div>
@@ -468,6 +576,7 @@ $conn->close();
         let featuredCount = 0;
         let specialOfferCount = 0;
         let recommendedCount = 0;
+        let allGames = []; // Store all games for search filtering
         const MIN_FEATURED = 2;
         const MAX_FEATURED = 4;
         const MIN_SPECIAL_OFFERS = 4;
@@ -481,10 +590,12 @@ $conn->close();
                 const data = await response.json();
 
                 if (data.success) {
+                    allGames = data.games; // Store games globally for search
                     featuredCount = data.games.filter(g => g.is_featured == 1).length;
                     specialOfferCount = data.games.filter(g => g.is_special_offer == 1).length;
                     recommendedCount = data.games.filter(g => g.is_recommended == 1).length;
                     renderGames(data.games);
+                    updateSearchInfo(data.games.length, data.games.length);
                 } else {
                     showMessage(data.message || 'Failed to load games', 'danger');
                 }
@@ -817,8 +928,93 @@ $conn->close();
             }
         }
 
+        // Setup search functionality
+        function setupSearch() {
+            const searchInput = document.getElementById('gameSearchInput');
+            const clearBtn = document.getElementById('clearSearch');
+
+            searchInput.addEventListener('input', function(e) {
+                const searchTerm = e.target.value.trim();
+                
+                // Show/hide clear button
+                if (searchTerm) {
+                    clearBtn.classList.add('active');
+                } else {
+                    clearBtn.classList.remove('active');
+                }
+
+                filterGames(searchTerm);
+            });
+
+            clearBtn.addEventListener('click', function() {
+                searchInput.value = '';
+                clearBtn.classList.remove('active');
+                filterGames('');
+                searchInput.focus();
+            });
+
+            // Clear search on Escape key
+            searchInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    searchInput.value = '';
+                    clearBtn.classList.remove('active');
+                    filterGames('');
+                }
+            });
+        }
+
+        // Filter games based on search term
+        function filterGames(searchTerm) {
+            if (!searchTerm) {
+                renderGames(allGames);
+                updateSearchInfo(allGames.length, allGames.length);
+                return;
+            }
+
+            const lowerSearch = searchTerm.toLowerCase();
+            const filteredGames = allGames.filter(game => {
+                // Search in title
+                if (game.title && game.title.toLowerCase().includes(lowerSearch)) {
+                    return true;
+                }
+                // Search in developer
+                if (game.developer_name && game.developer_name.toLowerCase().includes(lowerSearch)) {
+                    return true;
+                }
+                // Search in description
+                if (game.short_description && game.short_description.toLowerCase().includes(lowerSearch)) {
+                    return true;
+                }
+                // Search in genres (comma-separated)
+                if (game.genres && game.genres.toLowerCase().includes(lowerSearch)) {
+                    return true;
+                }
+                // Search in tags (comma-separated)
+                if (game.tags && game.tags.toLowerCase().includes(lowerSearch)) {
+                    return true;
+                }
+                return false;
+            });
+
+            renderGames(filteredGames);
+            updateSearchInfo(filteredGames.length, allGames.length);
+        }
+
+        // Update search results info
+        function updateSearchInfo(shown, total) {
+            const infoDiv = document.getElementById('searchResultsInfo');
+            if (shown === total) {
+                infoDiv.innerHTML = `Showing <strong>${total}</strong> game${total !== 1 ? 's' : ''}`;
+            } else {
+                infoDiv.innerHTML = `Showing <strong>${shown}</strong> of <strong>${total}</strong> game${total !== 1 ? 's' : ''}`;
+            }
+        }
+
         // Load games on page load
-        document.addEventListener('DOMContentLoaded', loadGames);
+        document.addEventListener('DOMContentLoaded', function() {
+            loadGames();
+            setupSearch();
+        });
     </script>
 </body>
 
