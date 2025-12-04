@@ -15,7 +15,7 @@ $game_id = intval($_GET['game_id']);
     <title>Game Details | Professional Distro</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    
+    <link rel="stylesheet" href="../css/style.css">
     <style>
         /* --- 1. CORE VARIABLES --- */
         :root {
@@ -315,20 +315,11 @@ $game_id = intval($_GET['game_id']);
             padding: 100px 20px;
             color: #ff6b6b;
         }
-
-        footer {
-            background: #000;
-            padding: 40px 0;
-            text-align: center;
-            color: #8f98a0;
-            font-size: 12px;
-            margin-top: 50px;
-        }
     </style>
 </head>
 <body>
 
-<?php include 'navbar_include.php'; ?>
+<?php include 'section-navbar.php'; ?>
 
 <div class="page-wrapper" id="mainContent">
     <div class="loading-spinner">
@@ -339,11 +330,9 @@ $game_id = intval($_GET['game_id']);
     </div>
 </div>
 
-<footer>
-    <div class="page-wrapper">
-        <p>&copy; 2025 Professional Distro. All rights reserved.</p>
-    </div>
-</footer>
+<div class="section-spacer"></div>
+
+<?php include 'section-footer.php'; ?>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>

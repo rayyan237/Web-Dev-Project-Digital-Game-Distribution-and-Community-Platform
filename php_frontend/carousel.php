@@ -113,35 +113,25 @@
             align-items: center;
             margin-top: 15px;
             margin-bottom: 15px;
+            flex-wrap: wrap; 
+            gap: 5px;
         }
 
-        .status-text {
-            color: #c7d5e0;
-            font-size: 0.9rem;
-            margin-right: 8px;
-            margin-bottom: 0;
-        }
-
-        .price-text {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #fff;
-            margin-bottom: 0;
+        /* --- NEW PRICE BUTTON STYLE --- */
+        .price-btn {
+            background-color: #4c6b22;
+            font-size: 13px;
+            padding: 4px 12px;
+            color: white;
+            border-radius: 2px;
+            white-space: nowrap;
+            display: inline-block; /* Added to ensure it respects padding/width correctly */
+            width: fit-content;    /* Prevents it from stretching to full width */
         }
 
         /* Specific Badges (No reusable utility) */
         .status-badge-blue {
             background-color: #3b5a7e;
-            color: #e0e6e9;
-            padding: 3px 6px;
-            border-radius: 3px;
-            font-size: 0.75em;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .status-badge-gray {
-            background-color: #797979;
             color: #e0e6e9;
             padding: 3px 6px;
             border-radius: 3px;
@@ -273,260 +263,13 @@
     <div class="container mt-5 position-relative main-container">
         <div id="gameCarousel" class="carousel slide" data-bs-ride="false" data-bs-interval="false">
 
-            <div class="store-carousel-box carousel-inner rounded-3 overflow-hidden shadow-lg">
-
-                <div class="slide-item carousel-item active">
-                    <div class="row g-0 h-100">
-                        <div class="featured-image-container col-md-8 px-0">
-                            <img src="\assets\images\s1_header.jpg" data-original="\assets\images\s1_header.jpg"
-                                alt="Counter-Strike 2 Header" class="featured-game-image">
-                        </div>
-                        <div class="col-md-4 p-0">
-                            <div class="game-details-panel">
-                                <div class="game-title-box d-flex align-items-center">
-                                    <h3 class="game-title-text">Counter-Strike 2</h3>
-                                </div>
-                                <div class="thumbnails-grid">
-                                    <div><img class="thumbnail-image" src="\assets\images\s1_ss1.jpg" alt="Screenshot 1"></div>
-                                    <div><img class="thumbnail-image" src="\assets\images\s1_ss2.jpg" alt="Screenshot 2"></div>
-                                    <div><img class="thumbnail-image" src="\assets\images\s1_ss3.jpg" alt="Screenshot 3"></div>
-                                    <div><img class="thumbnail-image" src="\assets\images\s1_ss4.jpg" alt="Screenshot 4"></div>
-                                </div>
-                                <div class="bottom-info-row">
-                                    <div class="status-row">
-                                        <p class="status-text">Now Available</p>
-                                        <span class="status-badge-blue">Top Seller</span>
-                                    </div>
-                                    <p class="price-text">Free to Play</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div class="store-carousel-box carousel-inner rounded-3 overflow-hidden shadow-lg" id="carousel-items-container">
+                <div class="text-center p-5 text-secondary w-100 h-100 d-flex align-items-center justify-content-center">
+                    Loading Recommended Games...
                 </div>
-
-                <div class="slide-item carousel-item">
-                    <div class="row g-0 h-100">
-                        <div class="featured-image-container col-md-8 px-0">
-                            <img src="\assets\images\s2_header.jpg" data-original="\assets\images\s2_header.jpg"
-                                alt="Dota 2 Header" class="featured-game-image">
-                        </div>
-                        <div class="col-md-4 p-0">
-                            <div class="game-details-panel">
-                                <div class="game-title-box d-flex align-items-center">
-                                    <h3 class="game-title-text">Dota 2</h3>
-                                </div>
-                                <div class="thumbnails-grid">
-                                    <div><img class="thumbnail-image" src="\assets\images\s2_ss1.jpg" alt="Screenshot 1"></div>
-                                    <div><img class="thumbnail-image" src="\assets\images\s2_ss2.jpg" alt="Screenshot 2"></div>
-                                    <div><img class="thumbnail-image" src="\assets\images\s2_ss3.jpg" alt="Screenshot 3"></div>
-                                    <div><img class="thumbnail-image" src="\assets\images\s2_ss4.jpg" alt="Screenshot 4"></div>
-                                </div>
-                                <div class="bottom-info-row">
-                                    <div class="status-row">
-                                        <p class="status-text">Now Available</p>
-                                        <span class="status-badge-blue">Most Played</span>
-                                    </div>
-                                    <p class="price-text">Free to Play</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="slide-item carousel-item">
-                    <div class="row g-0 h-100">
-                        <div class="featured-image-container col-md-8 px-0">
-                            <img src="\assets\images\s3_header.jpg" data-original="\assets\images\s3_header.jpg"
-                                alt="Cyberpunk 2077 Header" class="featured-game-image">
-                        </div>
-                        <div class="col-md-4 p-0">
-                            <div class="game-details-panel">
-                                <div class="game-title-box d-flex align-items-center">
-                                    <h3 class="game-title-text">Hollow Knight</h3>
-                                </div>
-                                <div class="thumbnails-grid">
-                                    <div><img class="thumbnail-image" src="\assets\images\s3_ss1.jpg" alt="Screenshot 1"></div>
-                                    <div><img class="thumbnail-image" src="\assets\images\s3_ss2.jpg" alt="Screenshot 2"></div>
-                                    <div><img class="thumbnail-image" src="\assets\images\s3_ss3.jpg" alt="Screenshot 3"></div>
-                                    <div><img class="thumbnail-image" src="\assets\images\s3_ss4.jpg" alt="Screenshot 4"></div>
-                                </div>
-                                <div class="bottom-info-row">
-                                    <div class="status-row">
-                                        <p class="status-text">Available Now</p>
-                                        <span class="status-badge-blue">New Release</span>
-                                    </div>
-                                    <p class="price-text">$59.99 USD</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="slide-item carousel-item">
-                    <div class="row g-0 h-100">
-                        <div class="featured-image-container col-md-8 px-0">
-                            <img src="\assets\images\s4_header.jpg" data-original="\assets\images\s4_header.jpg"
-                                alt="Hogwarts Legacy Header" class="featured-game-image">
-                        </div>
-                        <div class="col-md-4 p-0">
-                            <div class="game-details-panel">
-                                <div class="game-title-box d-flex align-items-center">
-                                    <h3 class="game-title-text">PUBG BATTLEGROUNDS</h3>
-                                </div>
-                                <div class="thumbnails-grid">
-                                    <div><img class="thumbnail-image" src="\assets\images\s4_ss1.jpg" alt="Screenshot 1"></div>
-                                    <div><img class="thumbnail-image" src="\assets\images\s4_ss2.jpg" alt="Screenshot 2"></div>
-                                    <div><img class="thumbnail-image" src="\assets\images\s4_ss3.jpg" alt="Screenshot 3"></div>
-                                    <div><img class="thumbnail-image" src="\assets\images\s4_ss4.jpg" alt="Screenshot 4"></div>
-                                </div>
-                                <div class="bottom-info-row">
-                                    <div class="status-row">
-                                        <p class="status-text">Available Now</p>
-                                        <span class="status-badge-gray">Discount!</span>
-                                    </div>
-                                    <p class="price-text">$49.99 USD</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="slide-item carousel-item">
-                    <div class="row g-0 h-100">
-                        <div class="featured-image-container col-md-8 px-0">
-                            <img src="\assets\images\s5_header.jpg" data-original="\assets\images\s5_header.jpg"
-                                alt="Forza Horizon 5 Header" class="featured-game-image">
-                        </div>
-                        <div class="col-md-4 p-0">
-                            <div class="game-details-panel">
-                                <div class="game-title-box d-flex align-items-center">
-                                    <h3 class="game-title-text">Resident Evil Requim</h3>
-                                </div>
-                                <div class="thumbnails-grid">
-                                    <div><img class="thumbnail-image" src="\assets\images\s5_ss1.jpg" alt="Screenshot 1"></div>
-                                    <div><img class="thumbnail-image" src="\assets\images\s5_ss2.jpg" alt="Screenshot 2"></div>
-                                    <div><img class="thumbnail-image" src="\assets\images\s5_ss3.jpg" alt="Screenshot 3"></div>
-                                    <div><img class="thumbnail-image" src="\assets\images\s5_ss4.jpg" alt="Screenshot 4"></div>
-                                </div>
-                                <div class="bottom-info-row">
-                                    <div class="status-row">
-                                        <p class="status-text">Available Now</p>
-                                        <span class="status-badge-blue">Top Seller</span>
-                                    </div>
-                                    <p class="price-text">$39.99 USD</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="slide-item carousel-item">
-                    <div class="row g-0 h-100">
-                        <div class="featured-image-container col-md-8 px-0">
-                            <img src="\assets\images\s6_header.jpg" data-original="\assets\images\s6_header.jpg"
-                                alt="Elden Ring Header" class="featured-game-image">
-                        </div>
-                        <div class="col-md-4 p-0">
-                            <div class="game-details-panel">
-                                <div class="game-title-box d-flex align-items-center">
-                                    <h3 class="game-title-text">BATTLEFIELD 6</h3>
-                                </div>
-                                <div class="thumbnails-grid">
-                                    <div><img class="thumbnail-image" src="\assets\images\s6_ss1.jpg" alt="Screenshot 1"></div>
-                                    <div><img class="thumbnail-image" src="\assets\images\s6_ss2.jpg" alt="Screenshot 2"></div>
-                                    <div><img class="thumbnail-image" src="\assets\images\s6_ss3.jpg" alt="Screenshot 3"></div>
-                                    <div><img class="thumbnail-image" src="\assets\images\s6_ss4.jpg" alt="Screenshot 4"></div>
-                                </div>
-                                <div class="bottom-info-row">
-                                    <div class="status-row">
-                                        <p class="status-text">Available Now</p>
-                                        <span class="status-badge-blue">Fan Favorite</span>
-                                    </div>
-                                    <p class="price-text">$59.99 USD</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="slide-item carousel-item">
-                    <div class="row g-0 h-100">
-                        <div class="featured-image-container col-md-8 px-0">
-                            <img src="\assets\images\s7_header.jpg" data-original="\assets\images\s7_header.jpg"
-                                alt="Baldur's Gate 3 Header" class="featured-game-image">
-                        </div>
-                        <div class="col-md-4 p-0">
-                            <div class="game-details-panel">
-                                <div class="game-title-box d-flex align-items-center">
-                                    <h3 class="game-title-text">World Of Warships</h3>
-                                </div>
-                                <div class="thumbnails-grid">
-                                    <div><img class="thumbnail-image" src="\assets\images\s7_ss1.jpg" alt="Screenshot 1"></div>
-                                    <div><img class="thumbnail-image" src="\assets\images\s7_ss2.jpg" alt="Screenshot 2"></div>
-                                    <div><img class="thumbnail-image" src="\assets\images\s7_ss3.jpg" alt="Screenshot 3"></div>
-                                    <div><img class="thumbnail-image" src="\assets\images\s7_ss4.jpg" alt="Screenshot 4"></div>
-                                </div>
-                                <div class="bottom-info-row">
-                                    <div class="status-row">
-                                        <p class="status-text">Available Now</p>
-                                        <span class="status-badge-blue">Top Rated</span>
-                                    </div>
-                                    <p class="price-text">$69.99 USD</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="slide-item carousel-item">
-                    <div class="row g-0 h-100">
-                        <div class="featured-image-container col-md-8 px-0">
-                            <img src="\assets\images\s8_header.jpg" data-original="\assets\images\s8_header.jpg"
-                                alt="Palworld Header" class="featured-game-image">
-                        </div>
-                        <div class="col-md-4 p-0">
-                            <div class="game-details-panel">
-                                <div class="game-title-box d-flex align-items-center">
-                                    <h3 class="game-title-text">RUST</h3>
-                                </div>
-                                <div class="thumbnails-grid">
-                                    <div><img class="thumbnail-image" src="\assets\images\s8_ss1.jpg" alt="Screenshot 1"></div>
-                                    <div><img class="thumbnail-image" src="\assets\images\s8_ss2.jpg" alt="Screenshot 2"></div>
-                                    <div><img class="thumbnail-image" src="\assets\images\s8_ss3.jpg" alt="Screenshot 3"></div>
-                                    <div><img class="thumbnail-image" src="\assets\images\s8_ss4.jpg" alt="Screenshot 4"></div>
-                                </div>
-                                <div class="bottom-info-row">
-                                    <div class="status-row">
-                                        <p class="status-text">Coming Soon</p>
-                                        <span class="status-badge-blue">Pre-Order</span>
-                                    </div>
-                                    <p class="price-text">$29.99 USD</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
 
-            <div class="carousel-indicators-custom carousel-indicators">
-                <button type="button" data-bs-target="#gameCarousel" data-bs-slide-to="0" class="active"
-                    aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#gameCarousel" data-bs-slide-to="1"
-                    aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#gameCarousel" data-bs-slide-to="2"
-                    aria-label="Slide 3"></button>
-                <button type="button" data-bs-target="#gameCarousel" data-bs-slide-to="3"
-                    aria-label="Slide 4"></button>
-                <button type="button" data-bs-target="#gameCarousel" data-bs-slide-to="4"
-                    aria-label="Slide 5"></button>
-                <button type="button" data-bs-target="#gameCarousel" data-bs-slide-to="5"
-                    aria-label="Slide 6"></button>
-                <button type="button" data-bs-target="#gameCarousel" data-bs-slide-to="6"
-                    aria-label="Slide 7"></button>
-                <button type="button" data-bs-target="#gameCarousel" data-bs-slide-to="7"
-                    aria-label="Slide 8"></button>
-            </div>
+            <div class="carousel-indicators-custom carousel-indicators" id="carousel-indicators-container"></div>
 
             <button class="custom-nav-arrow carousel-control-prev" type="button"
                 data-bs-target="#gameCarousel" data-bs-slide="prev"
@@ -546,17 +289,14 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        // 1. Define Interaction Logic (Re-used after fetch)
+        function initInteractions() {
             const carouselElement = document.getElementById('gameCarousel');
-            
-            // Updated selector to match new class name
             const screenshotImages = document.querySelectorAll('.thumbnail-image');
 
-            // Hover Logic for Screenshots (Desktop Only)
+            // Screenshot Hover Logic
             screenshotImages.forEach(screenshotImg => {
                 const carouselItem = screenshotImg.closest('.carousel-item');
-                
-                // Updated selector to match new class name
                 const mainImage = carouselItem ? carouselItem.querySelector('.featured-game-image') : null;
 
                 if (mainImage) {
@@ -576,27 +316,123 @@
                 }
             });
 
-            // Reset Main Image on Slide
+            // Reset Main Image on Slide Change
             carouselElement.addEventListener('slid.bs.carousel', function (event) {
                 const activeItem = event.relatedTarget;
-                
-                // Updated selector to match new class name
                 const mainImage = activeItem.querySelector('.featured-game-image');
-
                 if (mainImage) {
                     mainImage.src = mainImage.getAttribute('data-original');
                 }
             });
-            
-            // Explicitly pause Bootstrap's carousel logic on mobile views
+
+            // Pause on Mobile
             if (window.innerWidth < 768) {
-                const carouselInstance = bootstrap.Carousel.getInstance(carouselElement);
-                if (carouselInstance) {
-                    carouselInstance.pause();
-                }
+                const carouselInstance = bootstrap.Carousel.getOrCreateInstance(carouselElement);
+                carouselInstance.pause();
             }
-        });
+        }
+
+        // 2. Fetch and Render Logic
+        async function loadRecommendedGames() {
+            try {
+                // Using your backend API endpoint
+                const response = await fetch('../php_backend/get_recommended_games.php');
+                const data = await response.json();
+
+                if (data.success && data.games.length > 0) {
+                    const carouselInner = document.getElementById('carousel-items-container');
+                    const indicatorsContainer = document.getElementById('carousel-indicators-container');
+                    
+                    carouselInner.innerHTML = '';
+                    indicatorsContainer.innerHTML = '';
+
+                    data.games.forEach((game, index) => {
+                        const isActive = index === 0 ? 'active' : '';
+                        const priceDisplay = game.price == 0 ? 'Free to Play' : `$${parseFloat(game.price).toFixed(2)} USD`;
+                        
+                        // Limit tags to 3 to prevent layout breaking on small screens
+                        const tagsHTML = game.tags && game.tags.length > 0 
+                            ? game.tags.slice(0, 3).map(tag => `<span class="status-badge-blue">${tag}</span>`).join('')
+                            : '<span class="status-badge-gray">No Tags</span>';
+
+                        // Generate Screenshots Grid (Limit to 4)
+                        let screenshotsHTML = '';
+                        if (game.screenshots && game.screenshots.length > 0) {
+                            game.screenshots.slice(0, 4).forEach((screenshot, idx) => {
+                                screenshotsHTML += `<div><img class="thumbnail-image" src="../${screenshot}" alt="Screenshot ${idx + 1}"></div>`;
+                            });
+                        } else {
+                            // Fallback if no screenshots
+                            screenshotsHTML = `<div class="text-white small">No previews available</div>`;
+                        }
+
+                        const slide = `
+                            <div class="slide-item carousel-item ${isActive}">
+                                <div class="row g-0 h-100">
+                                    <div class="featured-image-container col-md-8 px-0">
+                                        <img src="../${game.header_image}" data-original="../${game.header_image}"
+                                            alt="${game.title} Header" class="featured-game-image">
+                                    </div>
+                                    <div class="col-md-4 p-0">
+                                        <div class="game-details-panel">
+                                            <div class="game-title-box d-flex align-items-center">
+                                                <h3 class="game-title-text">${game.title}</h3>
+                                            </div>
+                                            <div class="thumbnails-grid">
+                                                ${screenshotsHTML}
+                                            </div>
+                                            <div class="bottom-info-row">
+                                                <div class="status-row">
+                                                    ${tagsHTML}
+                                                </div>
+                                                <div class="price-btn">${priceDisplay}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        
+                        carouselInner.innerHTML += slide;
+
+                        // Create Indicator Button
+                        const indicator = `
+                            <button type="button" data-bs-target="#gameCarousel" data-bs-slide-to="${index}" 
+                                ${isActive ? 'class="active" aria-current="true"' : ''} aria-label="Slide ${index + 1}"></button>
+                        `;
+                        indicatorsContainer.innerHTML += indicator;
+                    });
+
+                    // Re-initialize carousel functionality from Bootstrap
+                    const carouselEl = document.getElementById('gameCarousel');
+                    new bootstrap.Carousel(carouselEl, {
+                        interval: false, 
+                        ride: false
+                    });
+
+                    // Call the interaction logic AFTER DOM is ready
+                    initInteractions();
+
+                } else {
+                    document.getElementById('carousel-items-container').innerHTML = `
+                        <div class="d-flex align-items-center justify-content-center h-100 w-100">
+                            <h3 class="text-secondary">No recommended games found.</h3>
+                        </div>`;
+                }
+            } catch (error) {
+                console.error('Error loading recommended games:', error);
+                document.getElementById('carousel-items-container').innerHTML = `
+                        <div class="d-flex align-items-center justify-content-center h-100 w-100">
+                            <h3 class="text-danger">Error loading data.</h3>
+                        </div>`;
+            }
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', loadRecommendedGames);
     </script>
+    
+    
 </body>
 
 </html>

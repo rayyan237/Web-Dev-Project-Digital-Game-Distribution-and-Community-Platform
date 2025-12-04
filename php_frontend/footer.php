@@ -241,7 +241,7 @@
                 <div class="row align-items-center gy-4">
                     <div class="col-lg-6">
                         <div>
-                            <h2 class="footer-brand-heading">[Game Platform Name]</h2>
+                            <h2 class="footer-brand-heading">JAMEEL'S J.</h2>
                             <p class="footer-tagline mb-0">Where Worlds Collide.</p>
                         </div>
                     </div>

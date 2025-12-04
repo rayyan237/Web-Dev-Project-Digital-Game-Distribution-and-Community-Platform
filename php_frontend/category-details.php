@@ -26,7 +26,6 @@ $genre_id = intval($_GET['genre_id']);
             font-family: "Arial", sans-serif;
             color: #c7d5e0;
             overflow-x: hidden;
-            padding-bottom: 50px;
         }
 
         .steam-wrapper {
@@ -224,81 +223,90 @@ $genre_id = intval($_GET['genre_id']);
             box-shadow: 0 0 5px #66C0F4;
         }
 
-        /* =========================================
-       3. POPULAR TITLES
-       ========================================= */
-        .grid-card {
+       /* =========================================
+           3. POPULAR TITLES (Grid Layout)
+           ========================================= */
+        .pop-grid-card {
             display: block;
             position: relative;
             text-decoration: none;
             overflow: hidden;
             border: 1px solid transparent;
-            transition: border 0.2s, transform 0.2s;
+            transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            height: 220px; /* Fixed height for consistency */
         }
 
-        .grid-card:hover {
+        .pop-grid-card:hover {
             border-color: #66C0F4;
-            transform: scale(1.02);
+            transform: translateY(-5px);
             z-index: 10;
         }
 
-        .grid-lg {
-            height: 250px;
-        }
-
-        .grid-sm {
-            height: 180px;
-            margin-top: 15px;
-        }
-
-        .grid-img {
+        .pop-grid-card img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: transform 0.4s ease;
         }
 
-        .grid-black-strip {
+        .pop-grid-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .pop-grid-info {
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(2px);
-            padding: 5px 8px;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 70%, transparent 100%);
+            padding: 20px 15px 10px 15px;
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            align-items: flex-end;
         }
 
-        .grid-title {
+        .pop-title {
             color: #fff;
-            font-size: 0.9rem;
+            font-size: 1rem;
+            font-weight: 500;
+            text-shadow: 1px 1px 3px rgba(0,0,0,1);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            max-width: 55%;
+            max-width: 70%;
         }
 
-        .price-badge-container {
-            display: flex;
-            align-items: center;
-            background: #000;
-            padding: 2px;
-            height: 24px;
+        .pop-price {
+            background-color: #000;
+            color: #66C0F4;
+            padding: 2px 8px;
+            font-size: 0.9rem;
+            border-radius: 2px;
         }
 
-        .badge-price {
+        .pop-load-btn {
+            display: block;
+            margin: 20px auto;
+            background: #2a475e;
+            color: #66c0f4;
+            border: none;
+            padding: 10px 40px;
+            border-radius: 2px;
+            transition: 0.2s;
+        }
+        
+        .pop-load-btn:hover {
+            background: #66c0f4;
             color: #fff;
-            font-size: 13px;
-            padding: 0 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
+        .pop-load-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: #2a3f5a;
+        }
         /* =========================================
        4. LIST VIEW & LOAD MORE
        ========================================= */
@@ -429,7 +437,7 @@ $genre_id = intval($_GET['genre_id']);
 
 <body>
 
-    <?php include 'navbar_include.php'; ?>
+    <?php include 'section-navbar.php'; ?>
 
     <div id="mainContent">
         <div class="loading-spinner">
@@ -441,297 +449,267 @@ $genre_id = intval($_GET['genre_id']);
     </div>
 
     <!-- Footer -->
-    <footer data-bs-theme="dark">
-        <div class="main-footer-section">
-            <div class="container">
-                <div class="row align-items-center gy-4">
-                    <div class="col-lg-6">
-                        <div>
-                            <h2 class="footer-brand-heading">[Steam Clone]</h2>
-                            <p class="footer-tagline mb-0">Where Worlds Collide.</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div>
-                            <label for="newsletter-email" class="newsletter-label mb-2">Join our Newsletter</label>
-                            <div class="newsletter-input-group input-group">
-                                <input type="email" id="newsletter-email" class="newsletter-input form-control"
-                                    placeholder="your.email@universe.com" required>
-                                <button class="newsletter-submit-btn btn" type="submit">→</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="d-flex flex-column flex-md-row justify-content-between align-items-center border-top border-secondary-subtle mt-5 pt-5">
-                    <nav class="nav flex-wrap justify-content-center">
-                        <a class="footer-nav-link nav-link px-2 px-md-3" href="index.php">Store</a>
-                        <a class="footer-nav-link nav-link px-2 px-md-3" href="about.php">About</a>
-                        <a class="footer-nav-link nav-link px-2 px-md-3" href="community.php">Community</a>
-                        <a class="footer-nav-link nav-link px-2 px-md-3" href="support.php">Support</a>
-                    </nav>
-                    <div class="d-flex gap-4 mt-4 mt-md-0">
-                        <a href="#" aria-label="Discord" class="footer-social-icon icon-discord fab fa-discord"></a>
-                        <a href="#" aria-label="Reddit" class="footer-social-icon icon-reddit fab fa-reddit-alien"></a>
-                        <a href="#" aria-label="YouTube" class="footer-social-icon icon-youtube fab fa-youtube"></a>
-                        <a href="#" aria-label="Twitter" class="footer-social-icon icon-twitter fab fa-twitter"></a>
-                        <a href="#" aria-label="TikTok" class="footer-social-icon icon-tiktok fab fa-tiktok"></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="footer-bottom-bar">
-            <div class="footer-glow-border"></div>
-            <div class="container">
-                <div class="row align-items-center py-3 gy-2">
-                    <div class="col-md-6 text-center text-md-start">
-                        <small class="footer-copyright">© 2025 [Game Platform Name]. All Rights Reserved.</small>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="d-flex gap-3 gap-md-4 justify-content-center justify-content-md-end">
-                            <a class="footer-legal-link" href="#"><small>Terms of Service</small></a>
-                            <a class="footer-legal-link" href="#"><small>Privacy Policy</small></a>
-                            <a class="footer-legal-link" href="#"><small>Refund Policy</small></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <?php include 'section-footer.php'; ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        const genreId = <?php echo $genre_id; ?>;
-        let allGames = [];
-        let displayedGames = 0;
-        const gamesPerLoad = 10;
+    const genreId = <?php echo $genre_id; ?>;
+    
+    // Data Storage
+    let allGames = [];
+    let popularGamesData = [];
+    
+    // Counters for "Load More" logic
+    let displayedGames = 0; // For Browse All
+    let displayedPopular = 0; // For Popular Section
+    
+    const gamesPerLoad = 10; // For Browse All
 
-        async function loadCategoryData() {
-            try {
-                const response = await fetch(`../php_backend/get_category_details.php?genre_id=${genreId}`);
-                const data = await response.json();
+    async function loadCategoryData() {
+        try {
+            const response = await fetch(`../php_backend/get_category_details.php?genre_id=${genreId}`);
+            const data = await response.json();
 
-                if (data.success) {
-                    allGames = data.all_games;
-                    renderHeroCarousel(data.genre_name, data.hero_games);
-                    renderPopularTitles(data.popular_games);
-                    renderBrowseAll(data.genre_name);
-                    loadMoreGames();
-                } else {
-                    document.getElementById('mainContent').innerHTML = `
-                        <div class="error-message">
-                            <i class="fas fa-exclamation-triangle fa-3x mb-3"></i>
-                            <h3>Category Not Found</h3>
-                            <p>${data.message}</p>
-                            <a href="index.php" class="btn btn-primary mt-3">Back to Home</a>
-                        </div>
-                    `;
-                }
-            } catch (error) {
-                console.error('Error loading category:', error);
+            if (data.success) {
+                allGames = data.all_games;
+                popularGamesData = data.popular_games; // Store popular games separately
+
+                // 1. Render Hero Carousel (Original Logic Restored)
+                renderHeroCarousel(data.genre_name, data.hero_games);
+                
+                // 2. Render Popular Grid (New Logic)
+                renderPopularTitlesStructure();
+                loadMorePopular(); 
+
+                // 3. Render Browse All
+                renderBrowseAll(data.genre_name);
+                loadMoreGames();
+            } else {
                 document.getElementById('mainContent').innerHTML = `
                     <div class="error-message">
                         <i class="fas fa-exclamation-triangle fa-3x mb-3"></i>
-                        <h3>Error Loading Category</h3>
-                        <p>Please try again later.</p>
+                        <h3>Category Not Found</h3>
+                        <p>${data.message}</p>
                         <a href="index.php" class="btn btn-primary mt-3">Back to Home</a>
                     </div>
                 `;
             }
+        } catch (error) {
+            console.error('Error loading category:', error);
+            document.getElementById('mainContent').innerHTML = `
+                <div class="error-message">
+                    <i class="fas fa-exclamation-triangle fa-3x mb-3"></i>
+                    <h3>Error Loading Category</h3>
+                    <p>Please try again later.</p>
+                    <a href="index.php" class="btn btn-primary mt-3">Back to Home</a>
+                </div>
+            `;
+        }
+    }
+
+    // ==========================================
+    // 1. HERO CAROUSEL (Restored Full Version)
+    // ==========================================
+    function renderHeroCarousel(genreName, games) {
+        if (games.length === 0) {
+            document.getElementById('mainContent').innerHTML = `
+                <div class="steam-wrapper">
+                    <h2 class="section-title">${genreName} Games</h2>
+                    <p>No games found in this category.</p>
+                </div>
+            `;
+            return;
         }
 
-        function renderHeroCarousel(genreName, games) {
-            if (games.length === 0) {
-                document.getElementById('mainContent').innerHTML = `
-                    <div class="steam-wrapper">
-                        <h2 class="section-title">${genreName} Games</h2>
-                        <p>No games found in this category.</p>
+        const carouselItems = games.map((game, index) => `
+            <div class="carousel-item ${index === 0 ? 'active' : ''}">
+                <a href="game-details.php?game_id=${game.game_id}" class="hero-card">
+                    <div class="col-video col-md-8">
+                        ${game.video_url ? 
+                            `<video autoplay loop muted playsinline><source src="../${game.video_url}" type="video/mp4"></video>` :
+                            `<img src="../${game.header_image}" alt="${game.title}">`
+                        }
                     </div>
-                `;
-                return;
+                    <div class="col-info col-md-4">
+                        <div class="info-content d-flex flex-column justify-content-between">
+                            <div class="capsule-overlap">
+                                <img src="../${game.thumbnail_image}" class="img-fluid" alt="${game.title}">
+                            </div>
+                            <div class="d-flex flex-column flex-grow-1">
+                                <div class="mb-2">
+                                    ${game.genres.map(g => `<span class="steam-badge">${g}</span>`).join('')}
+                                </div>
+                                <p class="description-truncate">${game.description || 'No description available.'}</p>
+                            </div>
+                            <div class="text-end">
+                                <span class="hero-price-btn">$${parseFloat(game.price).toFixed(2)}</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        `).join('');
+
+        const indicators = games.map((_, index) => 
+            `<button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="${index}" 
+             class="${index === 0 ? 'active' : ''}" aria-label="Slide ${index + 1}"></button>`
+        ).join('');
+
+        const content = `
+            <div class="steam-wrapper">
+                <h2 class="section-title">${genreName} Games</h2>
+                <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner" id="hero-carousel-inner">
+                        ${carouselItems}
+                    </div>
+                    <button class="steam-nav-btn prev-btn" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+                        <svg viewBox="0 0 50 100" style="transform: rotate(180deg);">
+                            <polygon points="0,0.093 0,25.702 24.323,50.026 0,74.349 0,99.955 49.929,50.026 "></polygon>
+                        </svg>
+                    </button>
+                    <button class="steam-nav-btn next-btn" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+                        <svg viewBox="0 0 50 100">
+                            <polygon points="0,0.093 0,25.702 24.323,50.026 0,74.349 0,99.955 49.929,50.026 "></polygon>
+                        </svg>
+                    </button>
+                    <div class="indicators-container">
+                        <div class="carousel-indicators custom-indicators-style">
+                            ${indicators}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.getElementById('mainContent').innerHTML = content;
+    }
+
+    // ==========================================
+    // 2. POPULAR TITLES (New Grid Logic)
+    // ==========================================
+    function renderPopularTitlesStructure() {
+        // Appends the Popular section structure AFTER the Hero Carousel
+        const sectionHTML = `
+            <div class="steam-wrapper">
+                <h2 class="section-title">Popular Titles</h2>
+                <div class="row g-3" id="popular-grid-container">
+                    </div>
+                <div class="text-center">
+                    <button id="btn-load-popular" class="pop-load-btn" onclick="loadMorePopular()">
+                        Load More Popular
+                    </button>
+                </div>
+            </div>
+        `;
+        document.getElementById('mainContent').insertAdjacentHTML('beforeend', sectionHTML);
+    }
+
+    function loadMorePopular() {
+        const container = document.getElementById('popular-grid-container');
+        const btn = document.getElementById('btn-load-popular');
+        
+        // Define batch size (2 + 3 + 2 = 7)
+        const batchSize = 7;
+        const nextGames = popularGamesData.slice(displayedPopular, displayedPopular + batchSize);
+
+        if (nextGames.length === 0) {
+            btn.style.display = 'none';
+            return;
+        }
+
+        nextGames.forEach((game, index) => {
+            let colClass = 'col-md-4'; // Default to 3 per row (for middle row)
+
+            // Logic for 2-3-2 Pattern within a batch of 7 (Indices 0-6)
+            // Indices 0, 1 -> Row 1 (2 items) -> col-md-6
+            // Indices 2, 3, 4 -> Row 2 (3 items) -> col-md-4
+            // Indices 5, 6 -> Row 3 (2 items) -> col-md-6
+            
+            // Note: We use the index relative to this specific batch
+            if (index === 0 || index === 1) {
+                colClass = 'col-md-6';
+            } else if (index >= 2 && index <= 4) {
+                colClass = 'col-md-4';
+            } else if (index === 5 || index === 6) {
+                colClass = 'col-md-6';
             }
 
-            const carouselItems = games.map((game, index) => `
-                <div class="carousel-item ${index === 0 ? 'active' : ''}">
-                    <a href="game-details.php?game_id=${game.game_id}" class="hero-card">
-                        <div class="col-video col-md-8">
-                            ${game.video_url ? 
-                                `<video autoplay loop muted playsinline><source src="../${game.video_url}" type="video/mp4"></video>` :
-                                `<img src="../${game.header_image}" alt="${game.title}">`
-                            }
-                        </div>
-                        <div class="col-info col-md-4">
-                            <div class="info-content d-flex flex-column justify-content-between">
-                                <div class="capsule-overlap">
-                                    <img src="../${game.thumbnail_image}" class="img-fluid" alt="${game.title}">
-                                </div>
-                                <div class="d-flex flex-column flex-grow-1">
-                                    <div class="mb-2">
-                                        ${game.genres.map(g => `<span class="steam-badge">${g}</span>`).join('')}
-                                    </div>
-                                    <p class="description-truncate">${game.description || 'No description available.'}</p>
-                                </div>
-                                <div class="text-end">
-                                    <span class="hero-price-btn">$${parseFloat(game.price).toFixed(2)}</span>
-                                </div>
-                            </div>
+            const gameHTML = `
+                <div class="${colClass} col-sm-12">
+                    <a href="game-details.php?game_id=${game.game_id}" class="pop-grid-card">
+                        <img src="../${game.header_image}" alt="${game.title}">
+                        <div class="pop-grid-info">
+                            <span class="pop-title">${game.title}</span>
+                            <span class="pop-price">$${parseFloat(game.price).toFixed(2)}</span>
                         </div>
                     </a>
                 </div>
-            `).join('');
+            `;
+            container.insertAdjacentHTML('beforeend', gameHTML);
+        });
 
-            const indicators = games.map((_, index) => 
-                `<button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="${index}" 
-                 class="${index === 0 ? 'active' : ''}" aria-label="Slide ${index + 1}"></button>`
-            ).join('');
+        displayedPopular += nextGames.length;
 
-            const content = `
-                <div class="steam-wrapper">
-                    <h2 class="section-title">${genreName} Games</h2>
-                    <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
-                        <div class="carousel-inner" id="hero-carousel-inner">
-                            ${carouselItems}
-                        </div>
-                        <button class="steam-nav-btn prev-btn" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
-                            <svg viewBox="0 0 50 100" style="transform: rotate(180deg);">
-                                <polygon points="0,0.093 0,25.702 24.323,50.026 0,74.349 0,99.955 49.929,50.026 "></polygon>
-                            </svg>
-                        </button>
-                        <button class="steam-nav-btn next-btn" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
-                            <svg viewBox="0 0 50 100">
-                                <polygon points="0,0.093 0,25.702 24.323,50.026 0,74.349 0,99.955 49.929,50.026 "></polygon>
-                            </svg>
-                        </button>
-                        <div class="indicators-container">
-                            <div class="carousel-indicators custom-indicators-style">
-                                ${indicators}
-                            </div>
-                        </div>
-                    </div>
+        // Hide button if no more games
+        if (displayedPopular >= popularGamesData.length) {
+            btn.textContent = "No More Titles";
+            btn.disabled = true;
+        }
+    }
+
+    // ==========================================
+    // 3. BROWSE ALL (Unchanged)
+    // ==========================================
+    function renderBrowseAll(genreName) {
+        const browseSection = `
+            <div class="steam-wrapper">
+                <div class="d-flex justify-content-between align-items-end mb-3">
+                    <h2 class="section-title mb-0" style="margin-top:0;">Browse All</h2>
+                </div>
+                <div id="game-list-container"></div>
+                <button id="loadMoreBtn" class="load-more-btn">Load More</button>
+            </div>
+        `;
+
+        document.getElementById('mainContent').insertAdjacentHTML('beforeend', browseSection);
+        document.getElementById('loadMoreBtn').addEventListener('click', loadMoreGames);
+    }
+
+    function loadMoreGames() {
+        const container = document.getElementById('game-list-container');
+        const btn = document.getElementById('loadMoreBtn');
+        
+        const gamesToShow = allGames.slice(displayedGames, displayedGames + gamesPerLoad);
+        
+        gamesToShow.forEach(game => {
+            const gameItem = document.createElement('a');
+            gameItem.href = `game-details.php?game_id=${game.game_id}`;
+            gameItem.className = 'game-list-item';
+            gameItem.innerHTML = `
+                <img src="../${game.thumbnail_image}" class="list-img" alt="${game.title}">
+                <div class="list-info">
+                    <span class="list-title">${game.title}</span>
+                    <div class="list-tags">${game.tags || 'No tags'}</div>
+                </div>
+                <div class="list-meta">
+                    <div style="font-size:0.8rem; color:#8f98a0;">${game.release_date}</div>
+                    <div style="font-size:1rem; font-weight:bold; color:#fff;">$${parseFloat(game.price).toFixed(2)}</div>
                 </div>
             `;
+            container.appendChild(gameItem);
+        });
 
-            document.getElementById('mainContent').innerHTML = content;
+        displayedGames += gamesToShow.length;
+
+        if (displayedGames >= allGames.length) {
+            btn.disabled = true;
+            btn.textContent = 'No More Games';
         }
+    }
 
-        function renderPopularTitles(games) {
-            if (games.length === 0) return;
-
-            const chunkedGames = [];
-            for (let i = 0; i < games.length; i += 5) {
-                chunkedGames.push(games.slice(i, i + 5));
-            }
-
-            const carouselItems = chunkedGames.map((chunk, slideIndex) => {
-                const firstGame = chunk[0];
-                const remainingGames = chunk.slice(1);
-
-                return `
-                    <div class="carousel-item ${slideIndex === 0 ? 'active' : ''}">
-                        <div class="row g-2">
-                            <div class="col-md-6">
-                                <a href="game-details.php?game_id=${firstGame.game_id}" class="grid-card grid-lg d-block">
-                                    <img src="../${firstGame.header_image}" class="grid-img" alt="${firstGame.title}">
-                                    <div class="grid-black-strip">
-                                        <span class="grid-title">${firstGame.title}</span>
-                                        <div class="price-badge-container">
-                                            <span class="badge-price">$${parseFloat(firstGame.price).toFixed(2)}</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-md-6">
-                                ${remainingGames.map(game => `
-                                    <a href="game-details.php?game_id=${game.game_id}" class="grid-card grid-sm d-block">
-                                        <img src="../${game.header_image}" class="grid-img" alt="${game.title}">
-                                        <div class="grid-black-strip">
-                                            <span class="grid-title">${game.title}</span>
-                                            <div class="price-badge-container">
-                                                <span class="badge-price">$${parseFloat(game.price).toFixed(2)}</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                `).join('')}
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-
-            const popularSection = `
-                <div class="steam-wrapper">
-                    <h2 class="section-title">Popular Titles</h2>
-                    <div id="popularCarousel" class="carousel slide" data-bs-ride="false">
-                        <div class="carousel-inner">
-                            ${carouselItems}
-                        </div>
-                        <button class="steam-nav-btn prev-btn" type="button" data-bs-target="#popularCarousel" data-bs-slide="prev" style="top:50%">
-                            <svg viewBox="0 0 50 100" style="transform: rotate(180deg);">
-                                <polygon points="0,0.093 0,25.702 24.323,50.026 0,74.349 0,99.955 49.929,50.026 "></polygon>
-                            </svg>
-                        </button>
-                        <button class="steam-nav-btn next-btn" type="button" data-bs-target="#popularCarousel" data-bs-slide="next" style="top:50%">
-                            <svg viewBox="0 0 50 100">
-                                <polygon points="0,0.093 0,25.702 24.323,50.026 0,74.349 0,99.955 49.929,50.026 "></polygon>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            `;
-
-            document.getElementById('mainContent').innerHTML += popularSection;
-        }
-
-        function renderBrowseAll(genreName) {
-            const browseSection = `
-                <div class="steam-wrapper">
-                    <div class="d-flex justify-content-between align-items-end mb-3">
-                        <h2 class="section-title mb-0" style="margin-top:0;">Browse All</h2>
-                    </div>
-                    <div id="game-list-container"></div>
-                    <button id="loadMoreBtn" class="load-more-btn">Load More</button>
-                </div>
-            `;
-
-            document.getElementById('mainContent').innerHTML += browseSection;
-
-            document.getElementById('loadMoreBtn').addEventListener('click', loadMoreGames);
-        }
-
-        function loadMoreGames() {
-            const container = document.getElementById('game-list-container');
-            const btn = document.getElementById('loadMoreBtn');
-            
-            const gamesToShow = allGames.slice(displayedGames, displayedGames + gamesPerLoad);
-            
-            gamesToShow.forEach(game => {
-                const gameItem = document.createElement('a');
-                gameItem.href = `game-details.php?game_id=${game.game_id}`;
-                gameItem.className = 'game-list-item';
-                gameItem.innerHTML = `
-                    <img src="../${game.thumbnail_image}" class="list-img" alt="${game.title}">
-                    <div class="list-info">
-                        <span class="list-title">${game.title}</span>
-                        <div class="list-tags">${game.tags || 'No tags'}</div>
-                    </div>
-                    <div class="list-meta">
-                        <div style="font-size:0.8rem; color:#8f98a0;">${game.release_date}</div>
-                        <div style="font-size:1rem; font-weight:bold; color:#fff;">$${parseFloat(game.price).toFixed(2)}</div>
-                    </div>
-                `;
-                container.appendChild(gameItem);
-            });
-
-            displayedGames += gamesToShow.length;
-
-            if (displayedGames >= allGames.length) {
-                btn.disabled = true;
-                btn.textContent = 'No More Games';
-            }
-        }
-
-        // Initialize on page load
-        window.addEventListener('DOMContentLoaded', loadCategoryData);
-    </script>
+    // Initialize on page load
+    window.addEventListener('DOMContentLoaded', loadCategoryData);
+</script>
 
 </body>
 </html>
