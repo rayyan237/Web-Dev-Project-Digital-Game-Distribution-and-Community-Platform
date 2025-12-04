@@ -452,7 +452,7 @@ $conn->close();
 </head>
 
 <body>
-    <?php include 'navbar_include.php'; ?>
+    <?php include 'section-navbar.php'; ?>
 
     <div class="admin-container">
         <div class="admin-header">

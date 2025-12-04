@@ -18,23 +18,33 @@
 
     <?php include 'section-navbar.php'; ?>
 
-    <?php include 'section-hero.php'; ?>
+    <section id="#hero">
+        <?php include 'section-hero.php'; ?>
+    </section>
 
     <div class="section-spacer"></div>
 
-    <?php include 'section-discounts.php'; ?>
+    <section id="dis">
+        <?php include 'section-discounts.php'; ?>
+    </section>
 
     <div class="section-spacer"></div>
 
-    <?php include 'section-category_browse.php'; ?>
+    <section id="#cat">
+        <?php include 'section-category_browse.php'; ?>
+    </section>
+    
+    <div class="section-spacer"></div>
+
+    <section id="rec">
+        <?php include 'section-recommended_games.php'; ?>
+    </section>
 
     <div class="section-spacer"></div>
 
-    <?php include 'section-recommended_games.php'; ?>
-
-    <div class="section-spacer"></div>
-
-    <?php include 'section-under-10.php'; ?>
+    <section id="under">
+        <?php include 'section-under-10.php'; ?>
+    </section>
 
     <div class="section-spacer"></div>
 
