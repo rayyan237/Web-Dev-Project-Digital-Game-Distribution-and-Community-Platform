@@ -127,7 +127,7 @@ if ($tags_result) {
 </head>
 <body>
 
-    <?php include 'navbar_include.php'; ?>
+    <?php include 'section-navbar.php'; ?>
 
     <div class="container">
         <div class="row justify-content-center">
