@@ -4,6 +4,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
 ?>
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="dark">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,22 +15,46 @@ $isLoggedIn = isset($_SESSION['user_id']);
     <style>
         /* --- Theme Variables --- */
         :root {
-            --steam-bg-main: #1b2838;     
-            --steam-bg-secondary: #171a21; 
-            --steam-card-bg: #2a475e;      
-            --steam-card-hover: #31536f;   
-            --steam-text: #c7d5e0;         
-            --steam-accent: #66c0f4;       
-            --z-highlight: #ffffff; 
+            --steam-bg-main: #1b2838;
+            --steam-bg-secondary: #171a21;
+            --steam-card-bg: #2a475e;
+            --steam-card-hover: #31536f;
+            --steam-text: #c7d5e0;
+            --steam-accent: #66c0f4;
+            --z-highlight: #ffffff;
         }
 
-        body { background-color: var(--steam-bg-main); color: var(--steam-text); font-family: sans-serif; }
-        body.no-scroll { overflow: hidden; height: 100vh; }
-        a { text-decoration: none; color: var(--steam-text); cursor: pointer; }
-        .text-accent { color: var(--steam-accent) !important; }
-        .text-highlight { color: var(--z-highlight) !important; }
-        .bg-steam-secondary { background-color: var(--steam-bg-secondary); }
-        .rounded-steam { border-radius: 12px !important; }
+        body {
+            background-color: var(--steam-bg-main);
+            color: var(--steam-text);
+        }
+
+        body.no-scroll {
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--steam-text);
+            cursor: pointer;
+        }
+
+        .text-accent {
+            color: var(--steam-accent) !important;
+        }
+
+        .text-highlight {
+            color: var(--z-highlight) !important;
+        }
+
+        .bg-steam-secondary {
+            background-color: var(--steam-bg-secondary);
+        }
+
+        .rounded-steam {
+            border-radius: 12px !important;
+        }
 
         /* --- Toggle Navigation --- */
         .z-nav-container {
@@ -50,7 +75,9 @@ $isLoggedIn = isset($_SESSION['user_id']);
             transition: 0.3s;
         }
 
-        .z-nav-item:hover { color: white; }
+        .z-nav-item:hover {
+            color: white;
+        }
 
         .z-nav-item.active {
             color: white;
@@ -73,88 +100,273 @@ $isLoggedIn = isset($_SESSION['user_id']);
             background: linear-gradient(to bottom, rgba(42, 71, 94, 0.5), rgba(27, 40, 56, 1));
             border: 1px solid rgba(102, 192, 244, 0.2);
         }
-        .profile-avatar-lg { width: 120px; height: 120px; border-radius: 50%; border: 4px solid var(--steam-card-bg); }
+
+        .profile-avatar-lg {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid var(--steam-card-bg);
+        }
+
         .activity-item {
             border-left: 2px solid #3d4d5d;
             padding-left: 20px;
             padding-bottom: 25px;
             position: relative;
         }
+
         .activity-item::before {
-            content: ''; position: absolute; left: -6px; top: 0; width: 10px; height: 10px;
-            background: var(--steam-accent); border-radius: 50%;
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 0;
+            width: 10px;
+            height: 10px;
+            background: var(--steam-accent);
+            border-radius: 50%;
         }
-        .activity-item:last-child { border-left: none; }
+
+        .activity-item:last-child {
+            border-left: none;
+        }
 
         /* --- Standard Elements --- */
         .btn-white {
-            background-color: #ffffff; color: #171a21; font-weight: 700; border: none; transition: 0.2s;
-            display: inline-flex; align-items: center; justify-content: center; width: fit-content; white-space: nowrap;
+            background-color: #ffffff;
+            color: #171a21;
+            font-weight: 700;
+            border: none;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: fit-content;
+            white-space: nowrap;
         }
-        .btn-white:hover { background-color: #dcdcdc; color: #000; }
+
+        .btn-white:hover {
+            background-color: #dcdcdc;
+            color: #000;
+        }
 
         .btn-steam-outline {
-            border: 2px solid var(--steam-card-bg); color: var(--steam-accent); background: transparent; font-weight: 600;
+            border: 2px solid var(--steam-card-bg);
+            color: var(--steam-accent);
+            background: transparent;
+            font-weight: 600;
         }
-        .btn-steam-outline:hover, .btn-steam-outline.active { 
-            border-color: var(--steam-accent); color: white; background: var(--steam-card-bg); 
+
+        .btn-steam-outline:hover,
+        .btn-steam-outline.active {
+            border-color: var(--steam-accent);
+            color: white;
+            background: var(--steam-card-bg);
         }
 
         .btn-action-link {
-            padding: 0; color: #687987; font-size: 0.8rem; text-decoration: none; background: none; border: none; font-weight: 600; transition: 0.2s;
+            padding: 0;
+            color: #687987;
+            font-size: 0.8rem;
+            text-decoration: none;
+            background: none;
+            border: none;
+            font-weight: 600;
+            transition: 0.2s;
         }
-        .btn-action-link:hover, .btn-action-link.active { color: var(--steam-accent); }
+
+        .btn-action-link:hover,
+        .btn-action-link.active {
+            color: var(--steam-accent);
+        }
 
         /* --- Inputs --- */
-        .form-control-steam { background-color: #0e1116; border: 1px solid #373f49; color: var(--steam-text); }
-        .form-control-steam:focus { background-color: #12151a; border-color: var(--steam-accent); box-shadow: none; color: white; }
-        .form-select-steam { background-color: #0e1116; border: 1px solid #373f49; color: var(--steam-text); }
-        .form-select-steam:focus { border-color: var(--steam-accent); box-shadow: none; }
+        .form-control-steam {
+            background-color: #0e1116;
+            border: 1px solid #373f49;
+            color: var(--steam-text);
+        }
+
+        .form-control-steam:focus {
+            background-color: #12151a;
+            border-color: var(--steam-accent);
+            box-shadow: none;
+            color: white;
+        }
+
+        .form-select-steam {
+            background-color: #0e1116;
+            border: 1px solid #373f49;
+            color: var(--steam-text);
+        }
+
+        .form-select-steam:focus {
+            border-color: var(--steam-accent);
+            box-shadow: none;
+        }
 
         /* --- Chat --- */
-        .chat-container { max-width: 900px; margin: 0 auto; position: relative; }
+        .chat-container {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+        }
+
         .chat-window {
-            height: 350px; overflow-y: auto; overflow-x: hidden; background-color: rgba(0,0,0,0.2);
-            border: 1px solid rgba(255,255,255,0.05); padding: 20px; position: relative;
+            height: 350px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            background-color: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            position: relative;
         }
-        .chat-window::-webkit-scrollbar { width: 8px; }
-        .chat-window::-webkit-scrollbar-thumb { background: var(--steam-card-bg); border-radius: 4px; }
-        .chat-message { display: flex; margin-bottom: 12px; align-items: flex-start; max-width: 100%; }
-        .chat-avatar { width: 36px; height: 36px; border-radius: 50%; margin-right: 10px; flex-shrink: 0; border: 2px solid var(--steam-card-bg); }
+
+        .chat-window::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .chat-window::-webkit-scrollbar-thumb {
+            background: var(--steam-card-bg);
+            border-radius: 4px;
+        }
+
+        .chat-message {
+            display: flex;
+            margin-bottom: 12px;
+            align-items: flex-start;
+            max-width: 100%;
+        }
+
+        .chat-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            margin-right: 10px;
+            flex-shrink: 0;
+            border: 2px solid var(--steam-card-bg);
+        }
+
         .chat-bubble {
-            background-color: var(--steam-card-bg); padding: 8px 14px; border-radius: 12px; border-top-left-radius: 2px;
-            font-size: 0.95rem; word-wrap: break-word; word-break: break-word; overflow-wrap: break-word; white-space: pre-wrap; max-width: 100%;
+            background-color: var(--steam-card-bg);
+            padding: 8px 14px;
+            border-radius: 12px;
+            border-top-left-radius: 2px;
+            font-size: 0.95rem;
+            word-wrap: break-word;
+            word-break: break-word;
+            overflow-wrap: break-word;
+            white-space: pre-wrap;
+            max-width: 100%;
         }
-        .chat-meta { font-size: 0.75rem; color: var(--steam-accent); margin-bottom: 2px; font-weight: bold; }
-        .btn-hide-chat { position: absolute; top: -40px; right: 0; color: #8a9ea7; font-size: 0.9rem; background: transparent; border: none; }
+
+        .chat-meta {
+            font-size: 0.75rem;
+            color: var(--steam-accent);
+            margin-bottom: 2px;
+            font-weight: bold;
+        }
+
+        .btn-hide-chat {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: #8a9ea7;
+            font-size: 0.9rem;
+            background: transparent;
+            border: none;
+        }
+
         .chat-collapsed-bar {
-            display: none; width: 100%; height: 60px; background-color: rgba(255, 255, 255, 0.08);
-            border-radius: 12px; justify-content: center; align-items: center; cursor: pointer; transition: background 0.2s; user-select: none;
+            display: none;
+            width: 100%;
+            height: 60px;
+            background-color: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background 0.2s;
+            user-select: none;
         }
-        .chat-collapsed-text { font-weight: bold; color: white; font-size: 1rem; }
+
+        .chat-collapsed-text {
+            font-weight: bold;
+            color: white;
+            font-size: 1rem;
+        }
 
         /* --- Sidebar & Posts --- */
         .category-link {
-            display: flex; justify-content: space-between; align-items: center; padding: 12px 20px;
-            color: #8a9ea7; font-weight: 500; transition: 0.2s; border-radius: 50px; margin-bottom: 5px; cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px;
+            color: #8a9ea7;
+            font-weight: 500;
+            transition: 0.2s;
+            border-radius: 50px;
+            margin-bottom: 5px;
+            cursor: pointer;
         }
-        .category-link:hover, .category-link.active { background-color: var(--steam-card-bg); color: var(--steam-accent); }
-        .badge-count { background-color: #e6ebf0; color: #171a21; font-weight: 700; border-radius: 50px; padding: 5px 10px; min-width: 30px; text-align: center;}
+
+        .category-link:hover,
+        .category-link.active {
+            background-color: var(--steam-card-bg);
+            color: var(--steam-accent);
+        }
+
+        .badge-count {
+            background-color: #e6ebf0;
+            color: #171a21;
+            font-weight: 700;
+            border-radius: 50px;
+            padding: 5px 10px;
+            min-width: 30px;
+            text-align: center;
+        }
 
         .post-card-box {
-            background-color: var(--steam-card-bg); height: 160px; padding: 20px; cursor: pointer;
-            transition: transform 0.2s, background-color 0.2s; border: 1px solid rgba(0,0,0,0.1); overflow: hidden; position: relative;
+            background-color: var(--steam-card-bg);
+            height: 160px;
+            padding: 20px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative;
         }
-        .post-card-box:hover { transform: translateY(-3px); background-color: var(--steam-card-hover); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+
+        .post-card-box:hover {
+            transform: translateY(-3px);
+            background-color: var(--steam-card-hover);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
         .post-body-truncated {
-            display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; color: #a0b5c4;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: #a0b5c4;
         }
 
         /* --- Modals --- */
-        .modal-content { background-color: var(--steam-bg-main); border: 1px solid var(--steam-accent); }
-        .modal-header, .modal-footer { border-color: rgba(255,255,255,0.1); }
-        .reply-box { border-left: 3px solid #2a475e; padding-left: 15px; }
-        
+        .modal-content {
+            background-color: var(--steam-bg-main);
+            border: 1px solid var(--steam-accent);
+        }
+
+        .modal-header,
+        .modal-footer {
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .reply-box {
+            border-left: 3px solid #2a475e;
+            padding-left: 15px;
+        }
+
         .tag-highlight {
             color: var(--steam-accent);
             font-weight: 700;
@@ -195,6 +407,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
                 opacity: 0;
                 transform: translateY(-50px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -269,43 +482,64 @@ $isLoggedIn = isset($_SESSION['user_id']);
         }
 
         @media (max-width: 768px) {
-            .chat-container { margin-bottom: 2rem; }
-            .btn-hide-chat { top: -30px; font-size: 0.8rem; }
-            .col-md-3.mb-4 { margin-bottom: 1rem !important; }
-            .profile-avatar-lg { width: 80px; height: 80px; }
-            .login-modal-box { padding: 30px 20px; }
-            .login-modal-title { font-size: 1.5rem; }
-            .login-modal-buttons { flex-direction: column; }
-        }
+            .chat-container {
+                margin-bottom: 2rem;
+            }
 
+            .btn-hide-chat {
+                top: -30px;
+                font-size: 0.8rem;
+            }
+
+            .col-md-3.mb-4 {
+                margin-bottom: 1rem !important;
+            }
+
+            .profile-avatar-lg {
+                width: 80px;
+                height: 80px;
+            }
+
+            .login-modal-box {
+                padding: 30px 20px;
+            }
+
+            .login-modal-title {
+                font-size: 1.5rem;
+            }
+
+            .login-modal-buttons {
+                flex-direction: column;
+            }
+        }
     </style>
 </head>
 <body<?php if (!$isLoggedIn) echo ' class="no-scroll"'; ?>>
 
     <?php if (!$isLoggedIn): ?>
-    <!-- Login Required Overlay -->
-    <div class="login-overlay" id="loginOverlay">
-        <div class="login-modal-box">
-            <div class="login-modal-icon">
-                <i class="fas fa-lock"></i>
+        <!-- Login Required Overlay -->
+        <div class="login-overlay" id="loginOverlay">
+            <div class="login-modal-box">
+                <div class="login-modal-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h2 class="login-modal-title">Login Required</h2>
+                <p class="login-modal-text">
+                    You must be logged in to access the Z Community. Join our community to chat, create posts, and connect with other gamers!
+                </p>
+                <div class="login-modal-buttons">
+                    <a href="login.php" class="btn-login-primary">
+                        <i class="fas fa-sign-in-alt me-2"></i>Login
+                    </a>
+                    <a href="signup.php" class="btn-login-secondary">
+                        <i class="fas fa-user-plus me-2"></i>Create Account
+                    </a>
+                </div>
+                <p class="text-secondary mt-4 mb-0" style="font-size: 0.85rem;">
+                    <a href="index.php" class="text-accent text-decoration-none"><i class="fas fa-home me-1"></i>Return to Homepage</a>
+                </p>
             </div>
-            <h2 class="login-modal-title">Login Required</h2>
-            <p class="login-modal-text">
-                You must be logged in to access the Z Community. Join our community to chat, create posts, and connect with other gamers!
-            </p>
-            <div class="login-modal-buttons">
-                <a href="login.php" class="btn-login-primary">
-                    <i class="fas fa-sign-in-alt me-2"></i>Login
-                </a>
-                <a href="signup.php" class="btn-login-secondary">
-                    <i class="fas fa-user-plus me-2"></i>Create Account
-                </a>
-            </div>
-            <p class="text-secondary mt-4 mb-0" style="font-size: 0.85rem;">
-                <a href="index.php" class="text-accent text-decoration-none"><i class="fas fa-home me-1"></i>Return to Homepage</a>
-            </p>
         </div>
-    </div>
     <?php endif; ?>
 
     <?php include 'section-navbar.php'; ?>
@@ -384,7 +618,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
 
                 <div class="col-md-9">
                     <div class="row g-3" id="posts-container">
-                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -399,7 +633,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
                         </div>
                         <h2 class="text-white fw-bold mb-1" id="profile-display-name">Loading...</h2>
                         <p class="text-accent mb-3" id="profile-username">@username</p>
-                        
+
                         <div class="d-flex justify-content-center gap-3 mb-4">
                             <div class="text-center">
                                 <h5 class="text-white fw-bold mb-0" id="profile-posts-count">0</h5>
@@ -420,7 +654,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
                             <p class="small text-light mb-0" id="profile-about-text">No about information yet.</p>
                             <textarea class="form-control form-control-steam small d-none" id="profile-about-input" maxlength="1000" rows="4" placeholder="Tell us about yourself..."></textarea>
                         </div>
-                        
+
                         <button class="btn btn-steam-outline w-100 py-2 mb-2" id="edit-about-btn">Edit About</button>
                         <button class="btn w-100 py-2" id="delete-account-btn" style="background: rgba(255, 107, 107, 0.1); border: 1px solid rgba(255, 107, 107, 0.4); color: #ff6b6b; font-weight: 500; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(255, 107, 107, 0.2)'" onmouseout="this.style.background='rgba(255, 107, 107, 0.1)'"><i class="fas fa-trash-alt"></i> Delete Account</button>
                     </div>
@@ -429,7 +663,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
                 <div class="col-lg-8 col-md-7">
                     <h4 class="text-white mb-4 ps-2 border-start border-4" style="border-color: var(--z-highlight) !important;">Recent Activity</h4>
                     <div class="bg-steam-secondary rounded-steam p-4" id="activity-log-container">
-                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -447,7 +681,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body pt-4">
-                     <div class="d-flex align-items-center mb-3">
+                    <div class="d-flex align-items-center mb-3">
                         <img id="modal-author-avatar" src="../assets/images/avatars/default.jpg" class="rounded-circle me-3" style="width: 40px; height: 40px; object-fit: cover; border: 2px solid var(--steam-accent);">
                         <div>
                             <h5 class="modal-title text-white mb-0" id="modal-title">Post Title</h5>
@@ -455,15 +689,15 @@ $isLoggedIn = isset($_SESSION['user_id']);
                         </div>
                     </div>
                     <p class="text-light lead fs-6" id="modal-body-text">Text</p>
-                    
+
                     <div class="d-flex align-items-center py-3 border-top border-bottom border-secondary my-4" id="post-actions-bar">
-                        </div>
+                    </div>
 
                     <h6 class="text-accent mb-4">Replies</h6>
                     <div id="modal-replies-container"></div>
                 </div>
                 <div class="modal-footer bg-steam-secondary justify-content-start">
-                     <div class="input-group w-100">
+                    <div class="input-group w-100">
                         <input type="text" id="reply-input" class="form-control form-control-steam rounded-start-pill" placeholder="Write a reply...">
                         <button class="btn btn-white rounded-end-pill" type="button" id="reply-btn">Post Reply</button>
                     </div>
@@ -510,14 +744,14 @@ $isLoggedIn = isset($_SESSION['user_id']);
     <script>
         // Check if user is logged in
         const isLoggedIn = <?php echo $isLoggedIn ? 'true' : 'false'; ?>;
-        
+
         // Prevent all interactions if not logged in
         if (!isLoggedIn) {
             // Disable all interactions
             document.addEventListener('DOMContentLoaded', function() {
                 // Prevent scrolling
                 document.body.style.overflow = 'hidden';
-                
+
                 // Prevent any clicks on the page content
                 document.addEventListener('click', function(e) {
                     if (!e.target.closest('.login-overlay')) {
@@ -525,30 +759,40 @@ $isLoggedIn = isset($_SESSION['user_id']);
                         e.stopPropagation();
                     }
                 }, true);
-                
+
                 // Prevent keyboard navigation
                 document.addEventListener('keydown', function(e) {
                     e.preventDefault();
                 }, true);
-                
+
                 // Prevent mouse wheel scrolling
                 document.addEventListener('wheel', function(e) {
                     e.preventDefault();
-                }, { passive: false });
-                
+                }, {
+                    passive: false
+                });
+
                 // Prevent touch scrolling
                 document.addEventListener('touchmove', function(e) {
                     e.preventDefault();
-                }, { passive: false });
+                }, {
+                    passive: false
+                });
             });
-            
+
             // Stop execution of other scripts
             throw new Error('Login required');
         }
-        
+
         // --- DATA STORE ---
         let postsData = [];
-        
+
+        // Helper: Update everything in My Zone
+        function refreshMyZoneUI() {
+            renderActivityLog();
+            loadProfileData(); // Refresh the stats (Posts/Likes count)
+        }
+
         // Load posts from database
         function loadPosts() {
             fetch('../php_backend/get_community_posts.php')
@@ -573,6 +817,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
                         }));
                         renderPosts();
                         updateSidebarCounts();
+                        renderActivityLog();
                     } else {
                         console.error('Failed to load posts:', data.error);
                         postsData = [];
@@ -614,41 +859,52 @@ $isLoggedIn = isset($_SESSION['user_id']);
 
             postsData.forEach(post => {
                 // 1. Posts by You
-                if(post.author === 'You') {
-                    activities.push({ type: 'post', time: post.realTimestamp, data: post });
-                }
-                
-                // 2. Likes & Dislikes (Check Generic userAction)
-                if(post.userAction) {
-                    // Uses the capture timestamp if available, else fallback to post time
-                    let actionTime = post.actionTimestamp || post.realTimestamp;
-                    activities.push({ 
-                        type: 'reaction', 
-                        time: actionTime, 
-                        actionType: post.userAction, 
-                        data: post 
+                if (post.author === 'You') {
+                    activities.push({
+                        type: 'post',
+                        time: post.realTimestamp,
+                        data: post
                     });
                 }
-                
+
+                // 2. Likes & Dislikes (Check Generic userAction)
+                if (post.userAction) {
+                    // Uses the capture timestamp if available, else fallback to post time
+                    let actionTime = post.actionTimestamp || post.realTimestamp;
+                    activities.push({
+                        type: 'reaction',
+                        time: actionTime,
+                        actionType: post.userAction,
+                        data: post
+                    });
+                }
+
                 // 3. Replies by You
                 post.replies.forEach(rep => {
-                    if(rep.user === 'You') {
-                        activities.push({ type: 'reply', time: rep.timestamp, data: { postTitle: post.title, text: rep.text } });
+                    if (rep.user === 'You') {
+                        activities.push({
+                            type: 'reply',
+                            time: rep.timestamp,
+                            data: {
+                                postTitle: post.title,
+                                text: rep.text
+                            }
+                        });
                     }
                 });
             });
 
             // Strict Numeric Sort: Descending (Newest first)
-            activities.sort((a,b) => b.time - a.time);
+            activities.sort((a, b) => b.time - a.time);
 
             let html = '';
-            if(activities.length === 0) {
+            if (activities.length === 0) {
                 html = '<p class="text-secondary text-center">No recent activity.</p>';
             } else {
                 activities.forEach(act => {
                     const timeStr = timeAgo(act.time);
-                    
-                    if(act.type === 'post') {
+
+                    if (act.type === 'post') {
                         html += `
                         <div class="activity-item">
                             <small class="text-secondary mb-1 d-block">${timeStr}</small>
@@ -656,20 +912,18 @@ $isLoggedIn = isset($_SESSION['user_id']);
                             <a class="text-accent fw-bold text-decoration-none" onclick="switchToPost(${act.data.id})">${act.data.title}</a>
                             <div class="mt-2 p-2 bg-dark rounded border border-secondary text-secondary small fst-italic">"${act.data.content.substring(0,60)}..."</div>
                         </div>`;
-                    } 
-                    else if(act.type === 'reaction') {
+                    } else if (act.type === 'reaction') {
                         // Determine text based on action type (like/dislike)
                         const actionText = act.actionType === 'like' ? 'liked' : 'disliked';
                         const colorClass = act.actionType === 'like' ? 'text-accent' : 'text-danger'; // Blue for like, Red for dislike
-                        
+
                         html += `
                         <div class="activity-item">
                             <small class="text-secondary mb-1 d-block">${timeStr}</small>
                             <span class="text-white">You ${actionText} a post: </span>
                             <span class="${colorClass} fw-bold">${act.data.title}</span>
                         </div>`;
-                    } 
-                    else if(act.type === 'reply') {
+                    } else if (act.type === 'reply') {
                         html += `
                         <div class="activity-item">
                             <small class="text-secondary mb-1 d-block">${timeStr}</small>
@@ -719,7 +973,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
         }
 
         function renderPosts() {
-            postsContainer.innerHTML = ''; 
+            postsContainer.innerHTML = '';
             let filteredPosts = [];
             if (currentFilter === 'all') filteredPosts = [...postsData];
             else if (currentFilter === 'mine') filteredPosts = postsData.filter(p => p.author === 'You');
@@ -736,10 +990,10 @@ $isLoggedIn = isset($_SESSION['user_id']);
 
             filteredPosts.forEach((post, index) => {
                 let badgeClass = 'bg-secondary';
-                if(post.category === 'general') badgeClass = 'bg-info text-dark';
-                if(post.category === 'feedback') badgeClass = 'bg-danger';
-                if(post.category === 'help') badgeClass = 'bg-warning text-dark';
-                if(post.category === 'guide') badgeClass = 'bg-success';
+                if (post.category === 'general') badgeClass = 'bg-info text-dark';
+                if (post.category === 'feedback') badgeClass = 'bg-danger';
+                if (post.category === 'help') badgeClass = 'bg-warning text-dark';
+                if (post.category === 'guide') badgeClass = 'bg-success';
 
                 const colClass = (index === 0) ? 'col-12' : 'col-md-6 col-12';
                 const displayTime = timeAgo(post.realTimestamp);
@@ -762,7 +1016,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
                 postsContainer.innerHTML += cardHTML;
             });
 
-            if(filteredPosts.length === 0) {
+            if (filteredPosts.length === 0) {
                 postsContainer.innerHTML = '<div class="col-12 text-center text-secondary py-5">No posts found.</div>';
             }
             updateSidebarCounts();
@@ -771,7 +1025,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
         function filterPosts(category) {
             currentFilter = category;
             document.querySelectorAll('.category-link').forEach(link => link.classList.remove('active'));
-            if(category !== 'mine' && category !== 'all') document.getElementById(`cat-${category}`).classList.add('active');
+            if (category !== 'mine' && category !== 'all') document.getElementById(`cat-${category}`).classList.add('active');
             else if (category === 'all') document.getElementById('cat-all').classList.add('active');
             const myPostBtn = document.getElementById('my-posts-btn');
             category === 'mine' ? myPostBtn.classList.add('active') : myPostBtn.classList.remove('active');
@@ -787,77 +1041,78 @@ $isLoggedIn = isset($_SESSION['user_id']);
         }
 
         const createModalObj = new bootstrap.Modal(document.getElementById('createPostModal'));
-        
+
         function submitNewPost() {
             const title = document.getElementById('new-post-title').value.trim();
             const cat = document.getElementById('new-post-category').value;
             const content = document.getElementById('new-post-content').value.trim();
-            
-            if(!title || !content) {
+
+            if (!title || !content) {
                 alert("Please fill in all fields");
                 return;
             }
-            
+
             // Disable the submit button to prevent double submission
             const submitBtn = event.target;
             submitBtn.disabled = true;
             submitBtn.textContent = 'Posting...';
-            
+
             // Send post to backend via AJAX
             fetch('../php_backend/create_post.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    title: title,
-                    content: content,
-                    category: cat
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        title: title,
+                        content: content,
+                        category: cat
+                    })
                 })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Add new post to local data array
-                    const newPost = {
-                        id: data.data.post_id,
-                        realTimestamp: Date.now(),
-                        title: data.data.title,
-                        content: data.data.content,
-                        category: data.data.category,
-                        author: 'You',
-                        authorId: data.data.user_id,
-                        likes: 0,
-                        dislikes: 0,
-                        userAction: null,
-                        replies: [],
-                        replyCount: 0,
-                        avatarUrl: data.data.avatar_url.startsWith('assets/') ? '../' + data.data.avatar_url : data.data.avatar_url
-                    };
-                    postsData.unshift(newPost);
-                    
-                    // Clear form fields
-                    document.getElementById('new-post-title').value = '';
-                    document.getElementById('new-post-content').value = '';
-                    
-                    // Close modal
-                    createModalObj.hide();
-                    
-                    // Refresh posts display
-                    filterPosts('all');
-                } else {
-                    alert(data.error || 'Failed to create post. Please try again.');
-                }
-            })
-            .catch(error => {
-                console.error('Error creating post:', error);
-                alert('Failed to create post. Please check your connection and try again.');
-            })
-            .finally(() => {
-                // Re-enable submit button
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Post Now';
-            });
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Add new post to local data array
+                        const newPost = {
+                            id: data.data.post_id,
+                            realTimestamp: Date.now(),
+                            title: data.data.title,
+                            content: data.data.content,
+                            category: data.data.category,
+                            author: 'You',
+                            authorId: data.data.user_id,
+                            likes: 0,
+                            dislikes: 0,
+                            userAction: null,
+                            replies: [],
+                            replyCount: 0,
+                            avatarUrl: data.data.avatar_url.startsWith('assets/') ? '../' + data.data.avatar_url : data.data.avatar_url
+                        };
+                        postsData.unshift(newPost);
+
+                        // Clear form fields
+                        document.getElementById('new-post-title').value = '';
+                        document.getElementById('new-post-content').value = '';
+
+                        // Close modal
+                        createModalObj.hide();
+
+                        // Refresh posts display
+                        filterPosts('all');
+                        renderActivityLog();
+                    } else {
+                        alert(data.error || 'Failed to create post. Please try again.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error creating post:', error);
+                    alert('Failed to create post. Please check your connection and try again.');
+                })
+                .finally(() => {
+                    // Re-enable submit button
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Post Now';
+                });
         }
 
         const fullPostModal = new bootstrap.Modal(document.getElementById('fullPostModal'));
@@ -866,7 +1121,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
         function openPostView(id) {
             currentPostId = id;
             const post = postsData.find(p => p.id === id);
-            if(!post) return;
+            if (!post) return;
             document.getElementById('modal-title').innerText = post.title;
             document.getElementById('modal-body-text').innerText = post.content;
             document.getElementById('modal-category').innerText = "#" + post.category;
@@ -874,18 +1129,18 @@ $isLoggedIn = isset($_SESSION['user_id']);
             document.getElementById('modal-author-avatar').src = post.avatarUrl || '../assets/images/avatars/default.jpg';
             document.getElementById('modal-author-name').innerText = post.author;
             updatePostActionsUI(post);
-            
+
             // Load replies from database
             loadRepliesForPost(id);
-            
+
             fullPostModal.show();
         }
-        
+
         // Load replies from database
         function loadRepliesForPost(postId) {
             const container = document.getElementById('modal-replies-container');
             container.innerHTML = '<p class="text-secondary small">Loading replies...</p>';
-            
+
             fetch(`../php_backend/get_post_replies.php?post_id=${postId}`)
                 .then(response => response.json())
                 .then(data => {
@@ -904,6 +1159,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
                                 userId: reply.user_id
                             }));
                             renderReplies(post.replies);
+                            renderActivityLog();
                         }
                     } else {
                         container.innerHTML = '<p class="text-secondary small">Failed to load replies.</p>';
@@ -932,48 +1188,49 @@ $isLoggedIn = isset($_SESSION['user_id']);
         function handlePostReaction(id, action) {
             const post = postsData.find(p => p.id === id);
             if (!post) return;
-            
+
             // Determine what reaction to send to backend
             let reactionType = action;
             if (post.userAction === action) {
                 // User clicked same reaction - remove it
                 reactionType = 'remove';
             }
-            
+
             // Send reaction to backend
             fetch('../php_backend/react_to_post.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    post_id: id,
-                    reaction_type: reactionType
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        post_id: id,
+                        reaction_type: reactionType
+                    })
                 })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Update local post data with response from server
-                    post.likes = data.likes;
-                    post.dislikes = data.dislikes;
-                    post.userAction = data.current_reaction; // 'like', 'dislike', or null
-                    post.actionTimestamp = data.current_reaction ? Date.now() : null;
-                    updatePostActionsUI(post);
-                } else {
-                    alert(data.error || 'Failed to update reaction.');
-                }
-            })
-            .catch(error => {
-                console.error('Error updating reaction:', error);
-                alert('Failed to update reaction. Please try again.');
-            });
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Update local post data with response from server
+                        post.likes = data.likes;
+                        post.dislikes = data.dislikes;
+                        post.userAction = data.current_reaction; // 'like', 'dislike', or null
+                        post.actionTimestamp = data.current_reaction ? Date.now() : null;
+                        updatePostActionsUI(post);
+                        renderActivityLog();
+                    } else {
+                        alert(data.error || 'Failed to update reaction.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error updating reaction:', error);
+                    alert('Failed to update reaction. Please try again.');
+                });
         }
 
         function renderReplies(replies) {
             const container = document.getElementById('modal-replies-container');
             container.innerHTML = '';
-            if(replies.length === 0) {
+            if (replies.length === 0) {
                 container.innerHTML = '<p class="text-secondary small fst-italic">No replies yet. Be the first!</p>';
                 return;
             }
@@ -1003,71 +1260,85 @@ $isLoggedIn = isset($_SESSION['user_id']);
         function handleReplyLike(replyIndex) {
             const post = postsData.find(p => p.id === currentPostId);
             const reply = post.replies[replyIndex];
-            if (reply.userLiked) { reply.likes--; reply.userLiked = false; } 
-            else { reply.likes = (reply.likes || 0) + 1; reply.userLiked = true; }
+            if (reply.userLiked) {
+                reply.likes--;
+                reply.userLiked = false;
+            } else {
+                reply.likes = (reply.likes || 0) + 1;
+                reply.userLiked = true;
+            }
             renderReplies(post.replies);
         }
 
         const replyInput = document.getElementById('reply-input');
         const replyBtn = document.getElementById('reply-btn');
-        function replyToUser(username) { replyInput.value = `@${username} ` + replyInput.value; replyInput.focus(); }
+
+        function replyToUser(username) {
+            replyInput.value = `@${username} ` + replyInput.value;
+            replyInput.focus();
+        }
 
         replyBtn.addEventListener('click', () => {
             const text = replyInput.value.trim();
-            if(!text || !currentPostId) return;
-            
+            if (!text || !currentPostId) return;
+
             // Disable button during submission
             replyBtn.disabled = true;
             replyBtn.textContent = 'Posting...';
-            
+
             // Send reply to backend
             fetch('../php_backend/post_reply.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    post_id: currentPostId,
-                    content: text
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        post_id: currentPostId,
+                        content: text
+                    })
                 })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    const post = postsData.find(p => p.id === currentPostId);
-                    if (post) {
-                        // Increment reply count locally
-                        post.replyCount = (post.replyCount || 0) + 1;
-                        // Reload replies from database to get the new one
-                        loadRepliesForPost(currentPostId);
-                        replyInput.value = '';
-                        renderPosts(); // Update reply count in post cards
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const post = postsData.find(p => p.id === currentPostId);
+                        if (post) {
+                            // Increment reply count locally
+                            post.replyCount = (post.replyCount || 0) + 1;
+                            // Reload replies from database to get the new one
+                            loadRepliesForPost(currentPostId);
+                            replyInput.value = '';
+                            renderPosts(); // Update reply count in post cards
+                        }
+                    } else {
+                        alert(data.error || 'Failed to post reply.');
                     }
-                } else {
-                    alert(data.error || 'Failed to post reply.');
-                }
-            })
-            .catch(error => {
-                console.error('Error posting reply:', error);
-                alert('Failed to post reply. Please try again.');
-            })
-            .finally(() => {
-                replyBtn.disabled = false;
-                replyBtn.textContent = 'Post Reply';
-            });
+                })
+                .catch(error => {
+                    console.error('Error posting reply:', error);
+                    alert('Failed to post reply. Please try again.');
+                })
+                .finally(() => {
+                    replyBtn.disabled = false;
+                    replyBtn.textContent = 'Post Reply';
+                });
         });
 
         function toggleChat() {
             const ui = document.getElementById('chat-interface-wrapper');
             const bar = document.getElementById('chat-collapsed-bar');
-            if(ui.style.display==='none'){ ui.style.display='block'; bar.style.display='none'; } 
-            else { ui.style.display='none'; bar.style.display='flex'; }
+            if (ui.style.display === 'none') {
+                ui.style.display = 'block';
+                bar.style.display = 'none';
+            } else {
+                ui.style.display = 'none';
+                bar.style.display = 'flex';
+            }
         }
 
         const chatInput = document.getElementById('chat-input');
         const sendBtn = document.getElementById('send-btn');
         const chatBox = document.getElementById('chat-box');
-        
+
         // Load chat messages from database
         function loadChatMessages() {
             fetch('../php_backend/get_chat_messages.php')
@@ -1093,55 +1364,57 @@ $isLoggedIn = isset($_SESSION['user_id']);
                     chatBox.innerHTML = '<div class="chat-message"><img src="../assets/images/avatars/default.jpg" class="chat-avatar" alt="system"><div class="chat-content-wrapper"><div class="chat-meta">System</div><div class="chat-bubble">Unable to load messages. Please refresh the page.</div></div></div>';
                 });
         }
-        
+
         function sendMessage() {
             const text = chatInput.value.trim();
-            if(!text) return;
-            
+            if (!text) return;
+
             // Disable send button to prevent double-sending
             sendBtn.disabled = true;
             chatInput.disabled = true;
-            
+
             // Send message to backend via AJAX
             fetch('../php_backend/send_chat_message.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    message: text
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: text
+                    })
                 })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Display the message in the chat box
-                    const div = document.createElement('div');
-                    div.className = 'chat-message';
-                    const avatarUrl = data.data.avatar_url.startsWith('assets/') ? '../' + data.data.avatar_url : data.data.avatar_url;
-                    div.innerHTML = `<img src="${avatarUrl}" class="chat-avatar" alt="user"><div class="chat-content-wrapper"><div class="chat-meta text-accent">${data.data.display_name}</div><div class="chat-bubble">${data.data.message}</div></div>`;
-                    chatBox.appendChild(div);
-                    chatInput.value = '';
-                    chatBox.scrollTop = chatBox.scrollHeight;
-                } else {
-                    // Show error message
-                    alert(data.error || 'Failed to send message. Please try again.');
-                }
-            })
-            .catch(error => {
-                console.error('Error sending message:', error);
-                alert('Failed to send message. Please check your connection and try again.');
-            })
-            .finally(() => {
-                // Re-enable send button
-                sendBtn.disabled = false;
-                chatInput.disabled = false;
-                chatInput.focus();
-            });
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Display the message in the chat box
+                        const div = document.createElement('div');
+                        div.className = 'chat-message';
+                        const avatarUrl = data.data.avatar_url.startsWith('assets/') ? '../' + data.data.avatar_url : data.data.avatar_url;
+                        div.innerHTML = `<img src="${avatarUrl}" class="chat-avatar" alt="user"><div class="chat-content-wrapper"><div class="chat-meta text-accent">${data.data.display_name}</div><div class="chat-bubble">${data.data.message}</div></div>`;
+                        chatBox.appendChild(div);
+                        chatInput.value = '';
+                        chatBox.scrollTop = chatBox.scrollHeight;
+                    } else {
+                        // Show error message
+                        alert(data.error || 'Failed to send message. Please try again.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error sending message:', error);
+                    alert('Failed to send message. Please check your connection and try again.');
+                })
+                .finally(() => {
+                    // Re-enable send button
+                    sendBtn.disabled = false;
+                    chatInput.disabled = false;
+                    chatInput.focus();
+                });
         }
-        
+
         sendBtn.addEventListener('click', sendMessage);
-        chatInput.addEventListener('keypress', (e) => { if(e.key==='Enter') sendMessage(); });
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
 
         // Load profile data
         function loadProfileData() {
@@ -1150,22 +1423,22 @@ $isLoggedIn = isset($_SESSION['user_id']);
                 .then(data => {
                     if (data.success) {
                         const profile = data.data;
-                        
+
                         // Update avatar
-                        const avatarUrl = (profile.avatar_url && profile.avatar_url.startsWith('assets/')) 
-                            ? '../' + profile.avatar_url 
-                            : (profile.avatar_url || '../assets/images/avatars/default.jpg');
+                        const avatarUrl = (profile.avatar_url && profile.avatar_url.startsWith('assets/')) ?
+                            '../' + profile.avatar_url :
+                            (profile.avatar_url || '../assets/images/avatars/default.jpg');
                         document.getElementById('profile-avatar').src = avatarUrl;
-                        
+
                         // Update display name and username
                         document.getElementById('profile-display-name').textContent = profile.display_name || 'User';
                         document.getElementById('profile-username').textContent = '@' + (profile.username || 'username');
-                        
+
                         // Update stats
                         document.getElementById('profile-posts-count').textContent = profile.posts_count || 0;
                         document.getElementById('profile-likes-count').textContent = profile.total_likes || 0;
                         document.getElementById('profile-games-count').textContent = profile.games_count || 0;
-                        
+
                         // Update about
                         const aboutText = profile.about || 'No about information yet.';
                         document.getElementById('profile-about-text').textContent = aboutText;
@@ -1176,6 +1449,8 @@ $isLoggedIn = isset($_SESSION['user_id']);
                     console.error('Error loading profile:', error);
                 });
         }
+
+
 
         // Edit About functionality
         const editAboutBtn = document.getElementById('edit-about-btn');
@@ -1198,35 +1473,37 @@ $isLoggedIn = isset($_SESSION['user_id']);
                 const newAbout = aboutInput.value.trim();
                 editAboutBtn.disabled = true;
                 editAboutBtn.textContent = 'Saving...';
-                
+
                 fetch('../php_backend/update_about.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ about: newAbout })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        aboutText.textContent = newAbout || 'No about information yet.';
-                        aboutText.classList.remove('d-none');
-                        aboutInput.classList.add('d-none');
-                        editAboutBtn.textContent = 'Edit About';
-                        editAboutBtn.classList.add('btn-steam-outline');
-                        editAboutBtn.classList.remove('btn-white');
-                        isEditingAbout = false;
-                    } else {
-                        alert(data.message || 'Failed to update about');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error updating about:', error);
-                    alert('Failed to update about. Please try again.');
-                })
-                .finally(() => {
-                    editAboutBtn.disabled = false;
-                });
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            about: newAbout
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            aboutText.textContent = newAbout || 'No about information yet.';
+                            aboutText.classList.remove('d-none');
+                            aboutInput.classList.add('d-none');
+                            editAboutBtn.textContent = 'Edit About';
+                            editAboutBtn.classList.add('btn-steam-outline');
+                            editAboutBtn.classList.remove('btn-white');
+                            isEditingAbout = false;
+                        } else {
+                            alert(data.message || 'Failed to update about');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error updating about:', error);
+                        alert('Failed to update about. Please try again.');
+                    })
+                    .finally(() => {
+                        editAboutBtn.disabled = false;
+                    });
             }
         });
 
@@ -1235,6 +1512,31 @@ $isLoggedIn = isset($_SESSION['user_id']);
         loadChatMessages();
         loadPosts();
         loadProfileData();
+        
+
+        // Check URL for #myzone hash and switch tabs automatically
+        function handleHashChange() {
+            if (window.location.hash === '#myzone') {
+                // Call your existing switchTab function
+                switchTab('myzone');
+                
+                
+
+                // Optional: Scroll slightly to ensure the profile is visible
+                const profileCard = document.querySelector('.profile-header-card');
+                if (profileCard) {
+                    profileCard.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            }
+        }
+
+        // Run on page load
+        window.addEventListener('DOMContentLoaded', handleHashChange);
+
+        // Run if the hash changes while already on the page
+        window.addEventListener('hashchange', handleHashChange);
     </script>
 
     <!-- Delete Account Confirmation Modal -->
@@ -1320,5 +1622,6 @@ $isLoggedIn = isset($_SESSION['user_id']);
             }
         });
     </script>
-</body>
+    </body>
+
 </html>

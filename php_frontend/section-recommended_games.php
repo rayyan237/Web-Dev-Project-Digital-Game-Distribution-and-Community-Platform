@@ -4,7 +4,7 @@
         <h2 class="section-title text-white fw-bold text-uppercase" style="letter-spacing: 0.05em; font-size: 1.2rem;">Recommended</h2>
     </div>
 
-    <div id="gameCarousel" class="carousel slide" data-bs-ride="false" data-bs-interval="false">
+    <div id="gameCarousel" class="carousel slide" data-bs-ride="false">
 
         <div class="store-carousel-box carousel-inner rounded-3 overflow-hidden shadow-lg" id="recommended-carousel-items-container">
             <div class="text-center p-5 text-secondary w-100 h-100 d-flex align-items-center justify-content-center">
@@ -47,13 +47,13 @@
             if (mainImage) {
                 const originalSrc = mainImage.getAttribute('data-original');
 
-                screenshotImg.addEventListener('mouseover', function () {
+                screenshotImg.addEventListener('mouseover', function() {
                     if (window.innerWidth >= 768) {
                         mainImage.src = this.src;
                     }
                 });
 
-                screenshotImg.addEventListener('mouseout', function () {
+                screenshotImg.addEventListener('mouseout', function() {
                     if (window.innerWidth >= 768) {
                         mainImage.src = originalSrc;
                     }
@@ -62,7 +62,7 @@
         });
 
         // Reset Main Image on Slide Change
-        carouselElement.addEventListener('slid.bs.carousel', function (event) {
+        carouselElement.addEventListener('slid.bs.carousel', function(event) {
             const activeItem = event.relatedTarget;
             const mainImage = activeItem.querySelector('.featured-game-image');
             if (mainImage) {
@@ -86,18 +86,18 @@
             if (data.success && data.games.length > 0) {
                 const carouselInner = document.getElementById('recommended-carousel-items-container');
                 const indicatorsContainer = document.getElementById('recommended-carousel-indicators-container');
-                
+
                 carouselInner.innerHTML = '';
                 indicatorsContainer.innerHTML = '';
 
                 data.games.forEach((game, index) => {
                     const isActive = index === 0 ? 'active' : '';
                     const priceDisplay = game.price == 0 ? 'Free to Play' : `$${parseFloat(game.price).toFixed(2)} USD`;
-                    
+
                     // Limit tags to 3
-                    const tagsHTML = game.tags && game.tags.length > 0 
-                        ? game.tags.slice(0, 3).map(tag => `<span class="status-badge-blue">${tag}</span>`).join('')
-                        : '<span class="status-badge-gray">No Tags</span>';
+                    const tagsHTML = game.tags && game.tags.length > 0 ?
+                        game.tags.slice(0, 3).map(tag => `<span class="status-badge-blue">${tag}</span>`).join('') :
+                        '<span class="status-badge-gray">No Tags</span>';
 
                     // Generate Screenshots Grid (Limit to 4)
                     let screenshotsHTML = '';
@@ -137,7 +137,7 @@
                             </div>
                         </div>
                     `;
-                    
+
                     carouselInner.innerHTML += slide;
 
                     // Create Indicator Button
@@ -151,8 +151,9 @@
                 // Re-initialize carousel functionality from Bootstrap
                 const carouselEl = document.getElementById('gameCarousel');
                 new bootstrap.Carousel(carouselEl, {
-                    interval: false, 
-                    ride: false
+                    interval: 5000, // Change 'false' to time in milliseconds (e.g., 5000 = 5 seconds)
+                    ride: 'carousel', // Change 'false' to 'carousel' to start animation immediately
+                    pause: 'hover' // Optional: Pauses the slide when user hovers over it
                 });
 
                 // Call the interaction logic AFTER DOM is ready

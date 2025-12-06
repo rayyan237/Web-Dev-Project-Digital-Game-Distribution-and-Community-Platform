@@ -9,8 +9,8 @@
             <div class="row align-items-center gy-4">
                 <div class="col-lg-6">
                     <div>
-                        <h2 class="footer-brand-heading">Steam Clone</h2>
-                        <p class="footer-tagline mb-0">Where Worlds Collide.</p>
+                        <h2 class="footer-brand-heading">Steam</h2>
+                        <p class="footer-tagline mb-0">Buy Your Game Now!</p>
                     </div>
                 </div>
 
@@ -52,13 +52,13 @@
         <div class="container">
             <div class="row align-items-center py-3 gy-2">
                 <div class="col-md-6 text-center text-md-start">
-                    <small class="footer-copyright">© 2025 Steam Clone. All Rights Reserved.</small>
+                    <small class="footer-copyright">© 2025 Steam. All Rights Reserved.</small>
                 </div>
                 <div class="col-md-6">
                     <div class="d-flex gap-3 gap-md-4 justify-content-center justify-content-md-end">
-                        <a class="footer-legal-link" href="#"><small>Terms of Service</small></a>
-                        <a class="footer-legal-link" href="#"><small>Privacy Policy</small></a>
-                        <a class="footer-legal-link" href="#"><small>Refund Policy</small></a>
+                        <a class="footer-legal-link" href="terms.php"><small>Terms of Service</small></a>
+                        <a class="footer-legal-link" href="privacy.php"><small>Privacy Policy</small></a>
+                        <a class="footer-legal-link" href="refund.php"><small>Refund Policy</small></a>
                     </div>
                 </div>
             </div>

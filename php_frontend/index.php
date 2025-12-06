@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Steam Navbar - Included PHP</title>
+    <title>Steam - A Game Distribution Platform</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -30,7 +30,7 @@
 
     <div class="section-spacer"></div>
 
-    <section id="#cat">
+    <section id="cat">
         <?php include 'section-category_browse.php'; ?>
     </section>
     
