@@ -30,6 +30,33 @@ if (!in_array($media_type, ['screenshot', 'gif', 'thumbnail', 'video'])) {
     exit;
 }
 
+// Check media limits before upload
+// Count existing media for this game
+$count_stmt = $conn->prepare("SELECT COUNT(*) as count FROM game_media WHERE game_id = ? AND media_type = ?");
+$count_stmt->bind_param("is", $game_id, $media_type);
+$count_stmt->execute();
+$count_result = $count_stmt->get_result();
+$count_row = $count_result->fetch_assoc();
+$existing_count = $count_row['count'];
+$count_stmt->close();
+
+// Enforce limits: max 4 screenshots, max 1 video
+if ($media_type === 'screenshot' && $existing_count >= 4) {
+    echo json_encode([
+        'success' => false, 
+        'message' => 'Maximum limit reached: You can only upload 4 screenshots per game. Please delete an existing screenshot to add a new one.'
+    ]);
+    exit;
+}
+
+if ($media_type === 'video' && $existing_count >= 1) {
+    echo json_encode([
+        'success' => false, 
+        'message' => 'Maximum limit reached: You can only upload 1 video per game. Please delete the existing video to add a new one.'
+    ]);
+    exit;
+}
+
 // Check if file was uploaded
 if (!isset($_FILES['media_file'])) {
     echo json_encode(['success' => false, 'message' => 'No file uploaded']);

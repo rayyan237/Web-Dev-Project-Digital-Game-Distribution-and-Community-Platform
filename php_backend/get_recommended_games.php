@@ -16,7 +16,7 @@ try {
         FROM games g
         WHERE g.is_published = 1 AND g.is_recommended = 1
         ORDER BY g.game_id ASC
-        LIMIT 2
+        LIMIT 4
     ");
     
     $stmt->execute();

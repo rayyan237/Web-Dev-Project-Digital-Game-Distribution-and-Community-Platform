@@ -58,11 +58,11 @@ try {
 
     $currently_recommended = $game_data['is_recommended'];
 
-    // Validate constraints (min 1, max 2)
+    // Validate constraints (min 1, max 4)
     if ($is_recommended == 1 && $currently_recommended == 0) {
         // Adding to recommended
-        if ($current_recommended >= 2) {
-            echo json_encode(['success' => false, 'message' => 'Maximum 2 games can be recommended. Remove one first.']);
+        if ($current_recommended >= 4) {
+            echo json_encode(['success' => false, 'message' => 'Maximum 4 games can be recommended. Remove one first.']);
             exit;
         }
     } elseif ($is_recommended == 0 && $currently_recommended == 1) {

@@ -40,7 +40,11 @@ try {
         FROM games g
         LEFT JOIN game_media gm ON g.game_id = gm.game_id AND gm.media_type = 'video'
         WHERE g.is_published = 1
-        ORDER BY g.is_featured DESC, g.title ASC
+        ORDER BY 
+            g.is_featured DESC,
+            g.is_special_offer DESC,
+            g.is_recommended DESC,
+            g.title ASC
     ");
     
     $stmt->execute();

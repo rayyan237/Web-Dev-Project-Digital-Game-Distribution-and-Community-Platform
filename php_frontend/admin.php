@@ -582,7 +582,7 @@ $conn->close();
         const MIN_SPECIAL_OFFERS = 4;
         const MAX_SPECIAL_OFFERS = 8;
         const MIN_RECOMMENDED = 1;
-        const MAX_RECOMMENDED = 2;
+        const MAX_RECOMMENDED = 4;
 
         async function loadGames() {
             try {
