@@ -30,7 +30,7 @@
             <span class="visually-hidden">Next</span>
         </button>
 
-        <div class="carousel-indicators" id="under10Indicators"></div>
+        <div class="carousel-indicators custom-indicators-style" id="under10Indicators"></div>
 
     </div>
 

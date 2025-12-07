@@ -6,7 +6,7 @@
 
     <div id="categoryCarousel" class="carousel slide" data-bs-ride="false" data-bs-touch="true">
 
-        <div class="carousel-indicators" id="categoryIndicators">
+        <div class="carousel-indicators custom-indicators-style" id="categoryIndicators">
             </div>
 
         <div class="carousel-inner" id="categoryCarouselInner">

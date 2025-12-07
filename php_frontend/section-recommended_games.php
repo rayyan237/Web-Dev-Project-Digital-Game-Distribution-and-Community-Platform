@@ -14,7 +14,7 @@
             </div>
         </div>
 
-        <div class="carousel-indicators-custom carousel-indicators" id="recommended-carousel-indicators-container"></div>
+        <div class="carousel-indicators-custom custom-indicators-style carousel-indicators" id="recommended-carousel-indicators-container"></div>
 
         <button class="custom-nav-arrow carousel-control-prev" type="button"
             data-bs-target="#gameCarousel" data-bs-slide="prev"

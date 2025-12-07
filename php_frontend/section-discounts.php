@@ -7,7 +7,7 @@
 
     <div id="specialOffersCarousel" class="carousel slide" data-bs-ride="false">
 
-        <div class="carousel-indicators" id="specialOffersIndicators"></div>
+        <div class="carousel-indicators custom-indicators-style" id="specialOffersIndicators"></div>
 
         <div class="carousel-inner" id="specialOffersCarouselInner">
             <div class="carousel-item active">
