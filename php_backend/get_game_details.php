@@ -1,4 +1,8 @@
 <?php
+// php_backend/get_game_details.php
+
+session_start(); // <--- ADDED: Critical for checking ownership
+
 require_once '../config/db_connect.php';
 
 header('Content-Type: application/json');
@@ -9,6 +13,7 @@ if (!isset($_GET['game_id']) || !is_numeric($_GET['game_id'])) {
 }
 
 $game_id = intval($_GET['game_id']);
+$user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0; // <--- ADDED: Get current user
 
 try {
     // Get game basic info
@@ -23,21 +28,14 @@ try {
             average_rating,
             header_image,
             thumbnail_image,
-            min_os,
-            min_processor,
-            min_memory,
-            min_graphics,
-            min_directx,
-            min_storage,
-            rec_os,
-            rec_processor,
-            rec_memory,
-            rec_graphics,
-            rec_directx,
-            rec_storage
+            min_os, min_processor, min_memory, min_graphics, min_directx, min_storage,
+            rec_os, rec_processor, rec_memory, rec_graphics, rec_directx, rec_storage,
+            download_url  
         FROM games
         WHERE game_id = ? AND is_published = 1
     ");
+    // Note: I added 'download_url' to the SELECT list above ^
+    
     $stmt->bind_param("i", $game_id);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -49,6 +47,28 @@ try {
     
     $game = $result->fetch_assoc();
     $stmt->close();
+
+    // --- START OF NEW OWNERSHIP LOGIC ---
+    $is_owned = false;
+
+    if ($user_id > 0) {
+        // Check user_library table
+        $own_stmt = $conn->prepare("SELECT id FROM user_library WHERE user_id = ? AND game_id = ?");
+        $own_stmt->bind_param("ii", $user_id, $game_id);
+        $own_stmt->execute();
+        if ($own_stmt->get_result()->num_rows > 0) {
+            $is_owned = true;
+        }
+        $own_stmt->close();
+    }
+
+    $game['is_owned'] = $is_owned;
+
+    // Security: Hide download link if not owned
+    if (!$is_owned) {
+        $game['download_url'] = null; 
+    }
+    // --- END OF NEW OWNERSHIP LOGIC ---
     
     // Format release date
     $game['release_date'] = date('d M, Y', strtotime($game['release_date']));
@@ -89,7 +109,7 @@ try {
     }
     $stmt->close();
     
-    // Get media (videos and screenshots)
+    // Get media
     $stmt = $conn->prepare("
         SELECT media_url, media_type
         FROM game_media
@@ -109,7 +129,6 @@ try {
     }
     $stmt->close();
     
-    // If no media, add header image as fallback
     if (empty($media)) {
         $media[] = [
             'type' => 'screenshot',
@@ -120,13 +139,8 @@ try {
     // Get reviews
     $stmt = $conn->prepare("
         SELECT 
-            r.review_id,
-            r.rating,
-            r.comment,
-            r.created_at,
-            u.username,
-            u.display_name,
-            u.avatar_url
+            r.review_id, r.rating, r.comment, r.created_at,
+            u.username, u.display_name, u.avatar_url
         FROM reviews r
         INNER JOIN users u ON r.user_id = u.user_id
         WHERE r.game_id = ?

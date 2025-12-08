@@ -334,6 +334,57 @@ $game_id = intval($_GET['game_id']);
 
 <?php include 'section-footer.php'; ?>
 
+<div class="modal fade" id="paymentModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="background-color: #1b2838; color: #c6d4df; border: 1px solid #2a475e;">
+            <div class="modal-header" style="border-bottom: 1px solid #2a475e;">
+                <h5 class="modal-title">Checkout: <span id="modalGameTitle" style="color: #fff;"></span></h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-info" style="background: rgba(0,0,0,0.2); border: 1px solid #2a475e; color: #66c0f4; font-size: 12px;">
+                    <i class="fas fa-lock"></i> Secure Payment Environment
+                </div>
+
+                <form id="paymentForm">
+                    <div class="mb-3">
+                        <label class="form-label" style="font-size: 12px; text-transform: uppercase; color: #556772;">Cardholder Name</label>
+                        <input type="text" class="form-control form-control-steam" placeholder="JOHN DOE" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" style="font-size: 12px; text-transform: uppercase; color: #556772;">Card Number</label>
+                        <div class="input-group">
+                            <span class="input-group-text" style="background: #222b35; border: 1px solid #000; color: #66c0f4;"><i class="fas fa-credit-card"></i></span>
+                            <input type="text" class="form-control form-control-steam" placeholder="0000 0000 0000 0000" maxlength="19" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label class="form-label" style="font-size: 12px; text-transform: uppercase; color: #556772;">Expiry Date</label>
+                                <input type="text" class="form-control form-control-steam" placeholder="MM/YY" maxlength="5" required>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label class="form-label" style="font-size: 12px; text-transform: uppercase; color: #556772;">CVV / CVC</label>
+                                <input type="password" class="form-control form-control-steam" placeholder="123" maxlength="3" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <div style="font-size: 18px; color: #fff;">Total: <span id="modalPrice" style="color: #a4d007;"></span></div>
+                        <button type="submit" class="btn-add-cart" id="btnConfirmPay">Pay Now</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     const gameId = <?php echo $game_id; ?>;
@@ -361,6 +412,31 @@ $game_id = intval($_GET['game_id']);
         
         document.title = `${game.title} | Professional Distro`;
         
+        // --- PURCHASE LOGIC START ---
+        // Deciding which button to show based on "is_owned"
+        const isOwned = game.is_owned;
+        let purchaseButtonHtml = '';
+        const priceDisplay = game.price == 0 ? 'Free to Play' : '$' + parseFloat(game.price).toFixed(2);
+
+        if (isOwned) {
+            // User owns the game -> Show Blue Download Button
+            purchaseButtonHtml = `
+                <button class="btn-add-cart" 
+                    style="background: linear-gradient(to bottom, #47bfff 5%, #1a44c2 95%); color: #fff;" 
+                    onclick="startDownload('${game.download_url}')">
+                    <i class="fas fa-download"></i> Download Now
+                </button>`;
+        } else {
+            // User doesn't own it -> Show Green Buy Button (Triggers Modal)
+            // Note: We escape the title with replace to prevent JS errors on quotes
+            purchaseButtonHtml = `
+                <button class="btn-add-cart" 
+                    onclick="openPurchaseModal('${game.title.replace(/'/g, "\\'")}', '${priceDisplay}')">
+                    Buy ${priceDisplay}
+                </button>`;
+        }
+        // --- PURCHASE LOGIC END ---
+
         const content = `
             <h1 class="game-header-title" style="margin-top: 20px;">${game.title}</h1>
 
@@ -397,9 +473,9 @@ $game_id = intval($_GET['game_id']);
 
             <div class="purchase-widget">
                 <div class="purchase-inner">
-                    <h2 class="buy-game-title">Download ${game.title}</h2>
+                    <h2 class="buy-game-title">${isOwned ? 'Install ' + game.title : 'Buy ' + game.title}</h2>
                     <div class="price-actions">
-                        <button class="btn-add-cart">${game.price == 0 ? 'Free to Play' : '$' + parseFloat(game.price).toFixed(2) + ' USD'}</button>
+                        ${purchaseButtonHtml}
                     </div>
                 </div>
             </div>
@@ -565,6 +641,73 @@ $game_id = intval($_GET['game_id']);
         });
     }
 
+    // --- NEW PAYMENT FUNCTIONS ---
+
+    // 1. Open Modal
+    function openPurchaseModal(title, price) {
+        document.getElementById('modalGameTitle').innerText = title;
+        document.getElementById('modalPrice').innerText = price;
+        const payModal = new bootstrap.Modal(document.getElementById('paymentModal'));
+        payModal.show();
+    }
+
+    // 2. Handle Payment Submit
+    document.getElementById('paymentForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const btn = document.getElementById('btnConfirmPay');
+        const originalText = btn.innerText;
+        
+        // UI Feedback
+        btn.disabled = true;
+        btn.innerText = "Processing...";
+        
+        // Simulate Bank Delay (2 seconds)
+        await new Promise(r => setTimeout(r, 2000));
+
+        // Send to Backend
+        try {
+            const response = await fetch('../php_backend/buy_game.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `game_id=${gameId}`
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                // Close Modal
+                const modalEl = document.getElementById('paymentModal');
+                const modalInstance = bootstrap.Modal.getInstance(modalEl);
+                modalInstance.hide();
+                
+                alert("Payment Successful! The game is now in your library.");
+                
+                // Reload page to show "Download" button
+                loadGameDetails(); 
+            } else {
+                alert(result.message || "Payment Failed");
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Transaction Error");
+        } finally {
+            btn.disabled = false;
+            btn.innerText = originalText;
+        }
+    });
+
+    // 3. Handle Download Click
+    function startDownload(url) {
+        if(!url || url === 'null' || url === '') {
+            alert("Download link not available yet.");
+            return;
+        }
+        window.open(url, '_blank');
+    }
+
+    // --- END PAYMENT FUNCTIONS ---
+
     async function postReview() {
         const ratingInput = document.getElementById('reviewRating');
         const textInput = document.getElementById('reviewText');
@@ -599,7 +742,6 @@ $game_id = intval($_GET['game_id']);
                 alert(data.message);
                 textInput.value = "";
                 textInput.style.height = "auto";
-                // Reload game details to show updated review
                 loadGameDetails();
             } else {
                 alert(data.message || 'Failed to post review');
