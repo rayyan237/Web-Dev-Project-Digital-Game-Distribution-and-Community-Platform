@@ -1,10 +1,4 @@
-<?php
 
-/**
- * Navbar Include File
- * Updated with Profile Dropdown for Logged In Users
- */
-?>
 <style>
     /* Add specific styles for the profile dropdown to match Steam theme */
     .nav-profile-img {
@@ -130,6 +124,11 @@
     <div class="container d-flex align-items-center">
         <ul class="desktop-subnav-list d-none d-lg-flex flex-nowrap gap-4 me-auto mb-0 list-unstyled">
             <li class="nav-item dropdown">
+                <a class="nav-link subnav-link" href="../php_backend/random_game.php">
+                    <i class="fas fa-dice me-1"></i> Surprise Me
+                </a>
+            </li>
+            <li class="nav-item dropdown">
                 <a class="nav-link subnav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Browse</a>
                 <ul class="dropdown-menu custom-dropdown-menu">
                     <li><a class="dropdown-item custom-dropdown-item" href="index.php#dis">Discounts and Offers</a></li>
@@ -156,6 +155,7 @@
                     <li><a class="dropdown-item custom-dropdown-item" href="category-details.php?genre_id=11">Survival</a></li>
                 </ul>
             </li>
+
             <li class="nav-item dropdown">
                 <a class="nav-link subnav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">More</a>
                 <ul class="dropdown-menu custom-dropdown-menu">
