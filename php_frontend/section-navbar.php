@@ -1,3 +1,10 @@
+<?php
+
+/**
+ * Navbar Include File
+ * Updated with Profile Dropdown for Logged In Users
+ */
+?>
 <style>
     /* Add specific styles for the profile dropdown to match Steam theme */
     .nav-profile-img {
@@ -123,11 +130,6 @@
     <div class="container d-flex align-items-center">
         <ul class="desktop-subnav-list d-none d-lg-flex flex-nowrap gap-4 me-auto mb-0 list-unstyled">
             <li class="nav-item dropdown">
-                <a class="nav-link subnav-link" href="../php_backend/random_game.php">
-                    <i class="fas fa-dice me-1"></i> Surprise Me
-                </a>
-            </li>
-            <li class="nav-item dropdown">
                 <a class="nav-link subnav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Browse</a>
                 <ul class="dropdown-menu custom-dropdown-menu">
                     <li><a class="dropdown-item custom-dropdown-item" href="index.php#dis">Discounts and Offers</a></li>
@@ -154,7 +156,6 @@
                     <li><a class="dropdown-item custom-dropdown-item" href="category-details.php?genre_id=11">Survival</a></li>
                 </ul>
             </li>
-
             <li class="nav-item dropdown">
                 <a class="nav-link subnav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">More</a>
                 <ul class="dropdown-menu custom-dropdown-menu">
@@ -164,8 +165,15 @@
             </li>
         </ul>
 
-        <form class="header-search-group desktop-search-form d-none d-lg-flex input-group" role="search" action="games-list.php" method="get">
-            <input class="header-search-input form-control" type="search" placeholder="Search" name="q">
+        <form class="header-search-group desktop-search-form d-none d-lg-flex input-group position-relative" role="search" action="games-list.php" method="get">
+            <input id="search-bar" class="header-search-input form-control" type="search" placeholder="Search" name="q" autocomplete="off">
+
+    <!-- Live Search Results Box -->
+                    <div id="search-results"
+                         style="position:absolute; top:100%; left:0; width:100%; background:#2a2f38; border:1px solid #57cbde; display:none; z-index:9999;"
+                          class="text-white">
+                    </div>
+
             <button class="header-search-btn btn d-flex align-items-center justify-content-center" type="submit">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
@@ -173,56 +181,8 @@
             </button>
         </form>
 
-        <ul class="mobile-subnav-list d-lg-none w-100 ps-0 mb-0 list-unstyled d-flex flex-nowrap justify-content-start align-items-center">
-
-            <li class="nav-item me-3">
-                <a class="nav-link subnav-link text-nowrap" href="../php_backend/random_game.php">
-                    <i class="fas fa-dice text-info me-1"></i> Surprise Me
-                </a>
-            </li>
-
-            <li class="nav-item dropdown me-3 position-static">
-                <a class="nav-link subnav-link dropdown-toggle text-nowrap" href="#" data-bs-toggle="dropdown">
-                    Browse
-                </a>
-                <ul class="dropdown-menu custom-dropdown-menu shadow w-100 start-0 border-0 rounded-0 mt-2" style="position: absolute;">
-                    <li><a class="dropdown-item custom-dropdown-item" href="index.php#dis">Discounts and Offers</a></li>
-                    <li><a class="dropdown-item custom-dropdown-item" href="index.php#rec">Recommended Games</a></li>
-                    <li><a class="dropdown-item custom-dropdown-item" href="index.php#under">Browse Cheap</a></li>
-                </ul>
-            </li>
-
-            <li class="nav-item dropdown me-3 position-static">
-                <a class="nav-link subnav-link dropdown-toggle text-nowrap" href="#" data-bs-toggle="dropdown">
-                    Categories
-                </a>
-                <ul class="dropdown-menu custom-dropdown-menu shadow w-100 start-0 border-0 rounded-0 mt-2" style="position: absolute; max-height: 300px; overflow-y: auto;">
-                    <li><a class="dropdown-item custom-dropdown-item" href="category-details.php?genre_id=1">Action</a></li>
-                    <li><a class="dropdown-item custom-dropdown-item" href="category-details.php?genre_id=2">Adventure</a></li>
-                    <li><a class="dropdown-item custom-dropdown-item" href="category-details.php?genre_id=8">Fighting</a></li>
-                    <li><a class="dropdown-item custom-dropdown-item" href="category-details.php?genre_id=9">Horror</a></li>
-                    <li><a class="dropdown-item custom-dropdown-item" href="category-details.php?genre_id=10">MOBA</a></li>
-                    <li><a class="dropdown-item custom-dropdown-item" href="category-details.php?genre_id=13">Platformer</a></li>
-                    <li><a class="dropdown-item custom-dropdown-item" href="category-details.php?genre_id=7">Puzzle</a></li>
-                    <li><a class="dropdown-item custom-dropdown-item" href="category-details.php?genre_id=3">Role Playing</a></li>
-                    <li><a class="dropdown-item custom-dropdown-item" href="category-details.php?genre_id=12">Sandbox</a></li>
-                    <li><a class="dropdown-item custom-dropdown-item" href="category-details.php?genre_id=5">Simulation</a></li>
-                    <li><a class="dropdown-item custom-dropdown-item" href="category-details.php?genre_id=6">Sports</a></li>
-                    <li><a class="dropdown-item custom-dropdown-item" href="category-details.php?genre_id=14">Stealth</a></li>
-                    <li><a class="dropdown-item custom-dropdown-item" href="category-details.php?genre_id=4">Strategy</a></li>
-                    <li><a class="dropdown-item custom-dropdown-item" href="category-details.php?genre_id=11">Survival</a></li>
-                </ul>
-            </li>
-
-            <li class="nav-item dropdown me-3 position-static">
-                <a class="nav-link subnav-link dropdown-toggle text-nowrap" href="#" data-bs-toggle="dropdown">
-                    More
-                </a>
-                <ul class="dropdown-menu custom-dropdown-menu shadow w-100 start-0 border-0 rounded-0 mt-2" style="position: absolute;">
-                    <li><a class="dropdown-item custom-dropdown-item" href="browse-cheap.php?price=5">Under 5$</a></li>
-                    <li><a class="dropdown-item custom-dropdown-item" href="browse-cheap.php?price=10">Under 10$</a></li>
-                </ul>
-            </li>
+        <ul class="mobile-subnav-list d-lg-none w-100 ps-0 mb-0 list-unstyled d-flex flex-nowrap justify-content-start overflow-auto pb-2">
+            <li class="nav-item dropdown me-3"><a class="nav-link subnav-link" href="#">Browse</a></li>
         </ul>
     </div>
 </nav>
@@ -237,7 +197,6 @@
             // Elements
             const desktopLoginBtn = document.getElementById('desktopLoginBtn');
             const desktopProfileContainer = document.getElementById('desktopProfileContainer');
-
             const mobileLoginBtn = document.getElementById('mobileLoginBtn');
             const mobileProfileContainer = document.getElementById('mobileProfileContainer');
 
@@ -246,50 +205,95 @@
             const navHeaderName = document.getElementById('navHeaderName');
             const navDropdownAvatar = document.getElementById('navDropdownAvatar');
             const navDropdownName = document.getElementById('navDropdownName');
-
             const mobileNavAvatar = document.getElementById('mobileNavAvatar');
             const mobileNavName = document.getElementById('mobileNavName');
 
             if (data.logged_in) {
-                // Prepare Data
                 const displayName = data.user_data.display_name || 'User';
-                // Handle relative path for assets
                 let avatarSrc = data.user_data.avatar_url || 'assets/images/avatars/default.jpg';
+                
                 if (avatarSrc.startsWith('assets/')) {
                     avatarSrc = '../' + avatarSrc;
                 }
 
-                // Update Desktop UI
+                // Update UI Text & Images
                 if (navHeaderName) navHeaderName.textContent = displayName;
                 if (navDropdownName) navDropdownName.textContent = displayName;
                 if (navHeaderAvatar) navHeaderAvatar.src = avatarSrc;
                 if (navDropdownAvatar) navDropdownAvatar.src = avatarSrc;
-
-                // Update Mobile UI
                 if (mobileNavName) mobileNavName.textContent = displayName;
                 if (mobileNavAvatar) mobileNavAvatar.src = avatarSrc;
 
                 // Toggle Visibility
                 if (desktopLoginBtn) desktopLoginBtn.style.display = 'none';
                 if (desktopProfileContainer) desktopProfileContainer.style.display = 'block';
-
                 if (mobileLoginBtn) mobileLoginBtn.style.display = 'none';
                 if (mobileProfileContainer) mobileProfileContainer.style.display = 'block';
 
             } else {
-                // Show Login Buttons
                 if (desktopLoginBtn) desktopLoginBtn.style.display = 'block';
                 if (desktopProfileContainer) desktopProfileContainer.style.display = 'none';
-
                 if (mobileLoginBtn) mobileLoginBtn.style.display = 'block';
                 if (mobileProfileContainer) mobileProfileContainer.style.display = 'none';
             }
         } catch (error) {
             console.error('Error checking session:', error);
-            // Default to logged out state on error
             if (document.getElementById('desktopLoginBtn')) document.getElementById('desktopLoginBtn').style.display = 'block';
         }
     }
 
     document.addEventListener('DOMContentLoaded', checkSessionStatus);
+
+    // ==========================================
+    // ✅ LIVE SEARCH LOGIC (UPDATED)
+    // ==========================================
+    let searchInput = document.getElementById("search-bar");
+    let resultsBox = document.getElementById("search-results");
+
+    if (searchInput) {
+        searchInput.addEventListener("keyup", async function () {
+            let query = this.value.trim();
+
+            if (query.length < 2) {
+                resultsBox.style.display = "none";
+                return;
+            }
+
+            try {
+                const response = await fetch("../php_backend/live_search.php?q=" + query);
+                const data = await response.json();
+
+                let html = "";
+
+                if (data.length > 0) {
+                    data.forEach(game => {
+                        // ✅ FIX: Using 'game_id' and 'thumbnail_image' from DB
+                        html += `
+                            <a href="game-details.php?game_id=${game.game_id}" style="text-decoration:none;">
+                                <div class="p-2 border-bottom border-secondary d-flex align-items-center hover-bg-dark">
+                                    <img src="../${game.thumbnail_image}" width="50" height="50" class="me-2 rounded" style="object-fit:cover;">
+                                    <span class="text-white">${game.title}</span>
+                                </div>
+                            </a>
+                        `;
+                    });
+                } else {
+                    html = `<div class="p-2 text-center text-secondary">No Results Found</div>`;
+                }
+
+                resultsBox.innerHTML = html;
+                resultsBox.style.display = "block";
+                
+            } catch (error) {
+                console.error("Search Error:", error);
+            }
+        });
+
+        // Hide results on click outside
+        document.addEventListener("click", function (event) {
+            if (!resultsBox.contains(event.target) && event.target !== searchInput) {
+                resultsBox.style.display = "none";
+            }
+        });
+    }
 </script>
