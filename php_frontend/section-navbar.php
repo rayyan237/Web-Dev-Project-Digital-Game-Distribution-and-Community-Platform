@@ -1,4 +1,3 @@
-
 <style>
     /* Add specific styles for the profile dropdown to match Steam theme */
     .nav-profile-img {
@@ -174,8 +173,56 @@
             </button>
         </form>
 
-        <ul class="mobile-subnav-list d-lg-none w-100 ps-0 mb-0 list-unstyled d-flex flex-nowrap justify-content-start overflow-auto pb-2">
-            <li class="nav-item dropdown me-3"><a class="nav-link subnav-link" href="#">Browse</a></li>
+        <ul class="mobile-subnav-list d-lg-none w-100 ps-0 mb-0 list-unstyled d-flex flex-nowrap justify-content-start align-items-center">
+
+            <li class="nav-item me-3">
+                <a class="nav-link subnav-link text-nowrap" href="../php_backend/random_game.php">
+                    <i class="fas fa-dice text-info me-1"></i> Surprise Me
+                </a>
+            </li>
+
+            <li class="nav-item dropdown me-3 position-static">
+                <a class="nav-link subnav-link dropdown-toggle text-nowrap" href="#" data-bs-toggle="dropdown">
+                    Browse
+                </a>
+                <ul class="dropdown-menu custom-dropdown-menu shadow w-100 start-0 border-0 rounded-0 mt-2" style="position: absolute;">
+                    <li><a class="dropdown-item custom-dropdown-item" href="index.php#dis">Discounts and Offers</a></li>
+                    <li><a class="dropdown-item custom-dropdown-item" href="index.php#rec">Recommended Games</a></li>
+                    <li><a class="dropdown-item custom-dropdown-item" href="index.php#under">Browse Cheap</a></li>
+                </ul>
+            </li>
+
+            <li class="nav-item dropdown me-3 position-static">
+                <a class="nav-link subnav-link dropdown-toggle text-nowrap" href="#" data-bs-toggle="dropdown">
+                    Categories
+                </a>
+                <ul class="dropdown-menu custom-dropdown-menu shadow w-100 start-0 border-0 rounded-0 mt-2" style="position: absolute; max-height: 300px; overflow-y: auto;">
+                    <li><a class="dropdown-item custom-dropdown-item" href="category-details.php?genre_id=1">Action</a></li>
+                    <li><a class="dropdown-item custom-dropdown-item" href="category-details.php?genre_id=2">Adventure</a></li>
+                    <li><a class="dropdown-item custom-dropdown-item" href="category-details.php?genre_id=8">Fighting</a></li>
+                    <li><a class="dropdown-item custom-dropdown-item" href="category-details.php?genre_id=9">Horror</a></li>
+                    <li><a class="dropdown-item custom-dropdown-item" href="category-details.php?genre_id=10">MOBA</a></li>
+                    <li><a class="dropdown-item custom-dropdown-item" href="category-details.php?genre_id=13">Platformer</a></li>
+                    <li><a class="dropdown-item custom-dropdown-item" href="category-details.php?genre_id=7">Puzzle</a></li>
+                    <li><a class="dropdown-item custom-dropdown-item" href="category-details.php?genre_id=3">Role Playing</a></li>
+                    <li><a class="dropdown-item custom-dropdown-item" href="category-details.php?genre_id=12">Sandbox</a></li>
+                    <li><a class="dropdown-item custom-dropdown-item" href="category-details.php?genre_id=5">Simulation</a></li>
+                    <li><a class="dropdown-item custom-dropdown-item" href="category-details.php?genre_id=6">Sports</a></li>
+                    <li><a class="dropdown-item custom-dropdown-item" href="category-details.php?genre_id=14">Stealth</a></li>
+                    <li><a class="dropdown-item custom-dropdown-item" href="category-details.php?genre_id=4">Strategy</a></li>
+                    <li><a class="dropdown-item custom-dropdown-item" href="category-details.php?genre_id=11">Survival</a></li>
+                </ul>
+            </li>
+
+            <li class="nav-item dropdown me-3 position-static">
+                <a class="nav-link subnav-link dropdown-toggle text-nowrap" href="#" data-bs-toggle="dropdown">
+                    More
+                </a>
+                <ul class="dropdown-menu custom-dropdown-menu shadow w-100 start-0 border-0 rounded-0 mt-2" style="position: absolute;">
+                    <li><a class="dropdown-item custom-dropdown-item" href="browse-cheap.php?price=5">Under 5$</a></li>
+                    <li><a class="dropdown-item custom-dropdown-item" href="browse-cheap.php?price=10">Under 10$</a></li>
+                </ul>
+            </li>
         </ul>
     </div>
 </nav>
