@@ -185,6 +185,12 @@ if ($tags_result) {
                             </div>
                         </div>
 
+                        <div class="mb-3">
+                            <label for="download_url" class="form-label">Download URL</label>
+                            <input type="text" class="form-control" id="download_url" name="download_url" placeholder="https://example.com/game-download-link" value="<?php echo $edit_mode ? htmlspecialchars($game_data['download_url']) : ''; ?>">
+                            <small class="text-muted">Enter the download link for the game (optional)</small>
+                        </div>
+
                         <!-- System Requirements -->
                         <h4 class="section-title">System Requirements</h4>
                         
