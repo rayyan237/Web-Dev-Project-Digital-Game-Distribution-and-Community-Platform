@@ -1,6 +1,7 @@
 <?php
 session_start();
 $isLoggedIn = isset($_SESSION['user_id']);
+$isAdmin = isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == 1;
 ?>
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="dark">
@@ -106,6 +107,33 @@ $isLoggedIn = isset($_SESSION['user_id']);
             height: 120px;
             border-radius: 50%;
             border: 4px solid var(--steam-card-bg);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .profile-avatar-lg:hover {
+            border-color: var(--steam-accent);
+            opacity: 0.8;
+            transform: scale(1.05);
+        }
+
+        .avatar-edit-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            font-size: 0.9rem;
+        }
+
+        .position-relative:hover .avatar-edit-overlay {
+            opacity: 1;
         }
 
         .activity-item {
@@ -627,10 +655,14 @@ $isLoggedIn = isset($_SESSION['user_id']);
             <div class="row">
                 <div class="col-lg-4 col-md-5 mb-4">
                     <div class="profile-header-card p-4 rounded-steam text-center shadow-lg">
-                        <div class="position-relative d-inline-block mb-3">
+                        <div class="position-relative d-inline-block mb-3" style="cursor: pointer;" onclick="document.getElementById('avatarInput').click()">
                             <img id="profile-avatar" src="../assets/images/avatars/default.jpg" class="profile-avatar-lg shadow">
+                            <div class="avatar-edit-overlay">
+                                <i class="fas fa-camera me-1"></i> Change Photo
+                            </div>
                             <div class="position-absolute bottom-0 end-0 bg-success border border-dark rounded-circle p-2" style="width: 20px; height: 20px;"></div>
                         </div>
+                        <input type="file" id="avatarInput" accept="image/jpeg,image/jpg,image/png,image/gif,image/webp" style="display: none;">
                         <h2 class="text-white fw-bold mb-1" id="profile-display-name">Loading...</h2>
                         <p class="text-accent mb-3" id="profile-username">@username</p>
 
@@ -656,6 +688,11 @@ $isLoggedIn = isset($_SESSION['user_id']);
                         </div>
 
                         <button class="btn btn-steam-outline w-100 py-2 mb-2" id="edit-about-btn">Edit About</button>
+                        <?php if ($isAdmin): ?>
+                        <a href="admin.php" class="btn w-100 py-2 mb-2" style="background: linear-gradient(90deg, #06bfff 0%, #2d73ff 100%); color: white; font-weight: 500; transition: all 0.3s ease; text-decoration: none; display: block;" onmouseover="this.style.background='linear-gradient(90deg, #2d73ff 0%, #06bfff 100%)'" onmouseout="this.style.background='linear-gradient(90deg, #06bfff 0%, #2d73ff 100%)'">
+                            <i class="fas fa-cogs"></i> Manage Games
+                        </a>
+                        <?php endif; ?>
                         <button class="btn w-100 py-2" id="delete-account-btn" style="background: rgba(255, 107, 107, 0.1); border: 1px solid rgba(255, 107, 107, 0.4); color: #ff6b6b; font-weight: 500; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(255, 107, 107, 0.2)'" onmouseout="this.style.background='rgba(255, 107, 107, 0.1)'"><i class="fas fa-trash-alt"></i> Delete Account</button>
                     </div>
                 </div>
@@ -1507,6 +1544,60 @@ $isLoggedIn = isset($_SESSION['user_id']);
             }
         });
 
+
+        // Handle avatar upload
+        document.getElementById('avatarInput').addEventListener('change', async function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            // Validate file type
+            const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+            if (!validTypes.includes(file.type)) {
+                alert('Please select a valid image file (JPEG, PNG, GIF, or WEBP)');
+                return;
+            }
+            
+            // Validate file size (max 5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('Image size must be less than 5MB');
+                return;
+            }
+            
+            // Create form data
+            const formData = new FormData();
+            formData.append('avatar', file);
+            
+            try {
+                // Show loading state
+                const avatarImg = document.getElementById('profile-avatar');
+                const originalSrc = avatarImg.src;
+                avatarImg.style.opacity = '0.5';
+                
+                const response = await fetch('../php_backend/update_avatar.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Update avatar image
+                    avatarImg.src = '../' + data.avatar_url + '?t=' + new Date().getTime();
+                    avatarImg.style.opacity = '1';
+                    alert('Profile picture updated successfully!');
+                } else {
+                    avatarImg.style.opacity = '1';
+                    alert(data.message || 'Failed to update profile picture');
+                }
+            } catch (error) {
+                console.error('Error uploading avatar:', error);
+                alert('Failed to upload profile picture. Please try again.');
+                document.getElementById('profile-avatar').style.opacity = '1';
+            }
+            
+            // Reset input
+            e.target.value = '';
+        });
 
         // Load chat messages and posts on page load
         loadChatMessages();

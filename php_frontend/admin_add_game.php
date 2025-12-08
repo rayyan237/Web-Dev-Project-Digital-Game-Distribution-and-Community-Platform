@@ -138,7 +138,7 @@ if ($tags_result) {
                         <?php echo $edit_mode ? 'Edit Game' : 'Add New Game'; ?>
                     </h2>
                     
-                    <form action="../php_backend/<?php echo $edit_mode ? 'update_game.php' : 'add_game_process.php'; ?>" method="POST" enctype="multipart/form-data">
+                    <form id="gameForm" action="../php_backend/<?php echo $edit_mode ? 'update_game.php' : 'add_game_process.php'; ?>" method="POST" enctype="multipart/form-data">
                         <?php if ($edit_mode): ?>
                             <input type="hidden" name="game_id" value="<?php echo $game_data['game_id']; ?>">
                         <?php endif; ?>
@@ -278,7 +278,7 @@ if ($tags_result) {
                         </div>
 
                         <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-primary btn-lg">
+                            <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
                                 <?php echo $edit_mode ? 'Update Game' : 'Add Game'; ?>
                             </button>
                             <a href="admin.php" class="btn btn-outline-secondary">Cancel</a>
@@ -291,5 +291,50 @@ if ($tags_result) {
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Handle form submission with AJAX and redirect on success
+        document.getElementById('gameForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const originalText = submitBtn.textContent;
+            
+            // Disable button and show loading state
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Processing...';
+            
+            try {
+                const formData = new FormData(this);
+                const response = await fetch(this.action, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Show success message
+                    submitBtn.innerHTML = '<i class="fas fa-check me-2"></i>Success!';
+                    submitBtn.classList.remove('btn-primary');
+                    submitBtn.classList.add('btn-success');
+                    
+                    // Redirect to admin panel after short delay
+                    setTimeout(() => {
+                        window.location.href = 'admin.php';
+                    }, 1000);
+                } else {
+                    // Show error message
+                    alert('Error: ' + (data.message || 'Failed to save game. Please try again.'));
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = originalText;
+                }
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                alert('An error occurred while saving the game. Please try again.');
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+            }
+        });
+    </script>
 </body>
 </html>
