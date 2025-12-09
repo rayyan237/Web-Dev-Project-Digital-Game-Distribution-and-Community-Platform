@@ -304,6 +304,54 @@ $game_id = intval($_GET['game_id']);
         }
         .review-text { font-family: "Georgia", serif; font-size: 13px; color: #acb2b8; line-height: 1.5; }
 
+        /* Star Rating System */
+        .star-rating-container {
+            margin-bottom: 15px;
+        }
+        
+        .star-rating-label {
+            color: #66c0f4;
+            font-size: 14px;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .star-rating {
+            display: inline-flex;
+            gap: 5px;
+            cursor: pointer;
+        }
+        
+        .star {
+            font-size: 28px;
+            color: #66c0f4;
+            transition: color 0.2s ease;
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .star.active {
+            color: #FFD700;
+        }
+        
+        .star:hover {
+            transform: scale(1.1);
+        }
+        
+        .review-stars {
+            display: inline-flex;
+            gap: 3px;
+        }
+        
+        .review-stars .star {
+            font-size: 16px;
+            cursor: default;
+        }
+        
+        .review-stars .star:hover {
+            transform: none;
+        }
+
         .loading-spinner {
             text-align: center;
             padding: 100px 20px;
@@ -489,13 +537,17 @@ $game_id = intval($_GET['game_id']);
 
                     <div class="write-review-box">
                         <div style="color: #66c0f4; font-size: 16px; margin-bottom: 10px;">Write a Review</div>
-                        <div class="row">
-                            <div class="col-md-8">
-                                <select id="reviewRating" class="form-control form-control-steam">
-                                    <option value="5">Recommended</option>
-                                    <option value="1">Not Recommended</option>
-                                </select>
+                        
+                        <div class="star-rating-container">
+                            <span class="star-rating-label">Your Rating:</span>
+                            <div class="star-rating" id="starRating">
+                                <span class="star" data-rating="1">★</span>
+                                <span class="star" data-rating="2">★</span>
+                                <span class="star" data-rating="3">★</span>
+                                <span class="star" data-rating="4">★</span>
+                                <span class="star" data-rating="5">★</span>
                             </div>
+                            <input type="hidden" id="reviewRating" value="0">
                         </div>
                         
                         <textarea id="reviewText" class="form-control form-control-steam" rows="1" placeholder="Share your thoughts..." oninput="autoResize(this)"></textarea>
@@ -553,6 +605,9 @@ $game_id = intval($_GET['game_id']);
         
         renderGallery(media);
         renderReviews(reviews);
+        
+        // Initialize star rating after content is rendered
+        initStarRating();
     }
 
     function renderGallery(media) {
@@ -613,8 +668,15 @@ $game_id = intval($_GET['game_id']);
         }
         
         reviews.forEach(review => {
-            const isRec = review.rating >= 3;
+            const rating = parseInt(review.rating) || 0;
             const avatarPath = review.avatar_url.startsWith('assets/') ? `../${review.avatar_url}` : review.avatar_url;
+            
+            // Generate 5 stars, fill based on rating
+            let starsHTML = '';
+            for (let i = 1; i <= 5; i++) {
+                const starColor = i <= rating ? '#FFD700' : '#2a475e';
+                starsHTML += `<span style="color: ${starColor}; font-size: 20px; margin-right: 2px;">★</span>`;
+            }
             
             const html = `
             <div class="review-card">
@@ -627,10 +689,10 @@ $game_id = intval($_GET['game_id']);
                 </div>
                 <div class="review-body">
                     <div class="review-rating-bar">
-                        <div class="thumb-icon">
-                            <i class="fas ${isRec ? 'fa-thumbs-up' : 'fa-thumbs-down'}" style="color: ${isRec ? '#f0f0f0' : '#d83030'}"></i>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            ${starsHTML}
+                            <span style="color: #8f98a0; font-size: 14px;">(${rating}/5)</span>
                         </div>
-                        <div class="rec-text">${isRec ? 'Recommended' : 'Not Recommended'}</div>
                     </div>
                     <div class="posted-date">Posted: ${review.created_at}</div>
                     <div class="review-text">${review.comment}</div>
@@ -716,6 +778,11 @@ $game_id = intval($_GET['game_id']);
             alert("Please write a comment.");
             return;
         }
+        
+        if(parseInt(ratingInput.value) === 0) {
+            alert("Please select a star rating (1-5 stars).");
+            return;
+        }
 
         const reviewData = {
             game_id: gameId,
@@ -742,6 +809,12 @@ $game_id = intval($_GET['game_id']);
                 alert(data.message);
                 textInput.value = "";
                 textInput.style.height = "auto";
+                ratingInput.value = "0";
+                
+                // Reset star visual state
+                const stars = document.querySelectorAll('.star');
+                stars.forEach(s => s.classList.remove('active'));
+                
                 loadGameDetails();
             } else {
                 alert(data.message || 'Failed to post review');
@@ -753,6 +826,53 @@ $game_id = intval($_GET['game_id']);
             button.disabled = false;
             button.textContent = 'Post Review';
         }
+    }
+
+    // Star rating interaction
+    function initStarRating() {
+        const stars = document.querySelectorAll('.star');
+        const ratingInput = document.getElementById('reviewRating');
+        
+        stars.forEach(star => {
+            star.addEventListener('click', function() {
+                const rating = parseInt(this.getAttribute('data-rating'));
+                ratingInput.value = rating;
+                
+                // Update visual state
+                stars.forEach(s => {
+                    const starRating = parseInt(s.getAttribute('data-rating'));
+                    if (starRating <= rating) {
+                        s.classList.add('active');
+                    } else {
+                        s.classList.remove('active');
+                    }
+                });
+            });
+            
+            // Hover preview
+            star.addEventListener('mouseenter', function() {
+                const rating = parseInt(this.getAttribute('data-rating'));
+                stars.forEach(s => {
+                    const starRating = parseInt(s.getAttribute('data-rating'));
+                    if (starRating <= rating) {
+                        s.style.color = '#FFD700';
+                    }
+                });
+            });
+        });
+        
+        // Reset hover effect
+        document.getElementById('starRating').addEventListener('mouseleave', function() {
+            const currentRating = parseInt(ratingInput.value);
+            stars.forEach(s => {
+                const starRating = parseInt(s.getAttribute('data-rating'));
+                if (starRating <= currentRating) {
+                    s.style.color = '#FFD700';
+                } else {
+                    s.style.color = '#66c0f4';
+                }
+            });
+        });
     }
 
     function autoResize(el) {
@@ -776,7 +896,9 @@ $game_id = intval($_GET['game_id']);
         `;
     }
 
-    document.addEventListener('DOMContentLoaded', loadGameDetails);
+    document.addEventListener('DOMContentLoaded', () => {
+        loadGameDetails();
+    });
 </script>
 
 </body>
