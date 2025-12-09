@@ -24,6 +24,7 @@ $price = isset($_POST['price']) ? floatval($_POST['price']) : 0;
 $description = $_POST['description'] ?? '';
 $thumbnail_image = $_POST['thumbnail_image'] ?? '';
 $header_image = $_POST['header_image'] ?? '';
+$download_url = $_POST['download_url'] ?? '';
 // Note: video_url and has_video are preserved from existing game data
 $genres = $_POST['genres'] ?? [];
 $tags = $_POST['tags'] ?? [];
@@ -67,6 +68,7 @@ try {
             description = ?,
             thumbnail_image = ?,
             header_image = ?,
+            download_url = ?,
             min_os = ?,
             min_processor = ?,
             min_memory = ?,
@@ -83,7 +85,7 @@ try {
     ");
     
     $stmt->bind_param(
-        "sssdsssssssssssssssi",
+        "sssdssssssssssssssssi",
         $title,
         $developer_name,
         $release_date,
@@ -91,6 +93,7 @@ try {
         $description,
         $thumbnail_image,
         $header_image,
+        $download_url,
         $min_os,
         $min_processor,
         $min_memory,
