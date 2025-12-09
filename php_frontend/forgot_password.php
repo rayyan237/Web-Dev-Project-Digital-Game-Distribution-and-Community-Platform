@@ -20,7 +20,6 @@
         .forgot-scoped-wrapper {
             background-color: #1b2838;
             color: #c7d5e0;
-            font-family: "Motiva Sans", "Segoe UI", "Arial", sans-serif;
             /* Subtract approx navbar height to center vertically in remaining space */
             min-height: calc(100vh - 56px); 
             display: flex;

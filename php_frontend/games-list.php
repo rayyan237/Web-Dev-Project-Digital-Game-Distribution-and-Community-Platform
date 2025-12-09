@@ -21,7 +21,6 @@
     body {
         background: linear-gradient(to bottom, var(--steam-darker) 0%, var(--steam-dark) 100%);
         color: var(--steam-text);
-        font-family: Arial, Helvetica, sans-serif;
         min-height: 100vh;
         padding-bottom: 50px;
     }

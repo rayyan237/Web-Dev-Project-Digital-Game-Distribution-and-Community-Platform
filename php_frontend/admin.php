@@ -40,7 +40,6 @@ $conn->close();
         body {
             background-color: #1b2838;
             color: #c7d5e0;
-            font-family: "Motiva Sans", "Segoe UI", "Arial", sans-serif;
             min-height: 100vh;
         }
 

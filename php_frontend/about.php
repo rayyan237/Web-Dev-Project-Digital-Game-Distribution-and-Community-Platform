@@ -20,7 +20,6 @@
             color: #fff;
             overflow-x: hidden;
             /* Combined font families: Poppins added for footer */
-            font-family: "Motiva Sans", "Roboto", "Poppins", sans-serif;
             display: flex;
             flex-direction: column;
             min-height: 100vh;

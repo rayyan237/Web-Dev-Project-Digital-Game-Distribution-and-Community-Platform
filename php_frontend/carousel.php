@@ -13,7 +13,6 @@
         body {
             background-color: #1b2838;
             color: #c7d5e0;
-            font-family: "Segoe UI", sans-serif;
         }
 
         .main-container {

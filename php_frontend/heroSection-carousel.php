@@ -12,7 +12,6 @@
         /* --- GLOBAL RESET --- */
         body {
             background-color: #1b2838;
-            font-family: "Arial", sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;

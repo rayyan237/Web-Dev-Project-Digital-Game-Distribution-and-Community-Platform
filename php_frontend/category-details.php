@@ -23,7 +23,6 @@ $genre_id = intval($_GET['genre_id']);
            ========================================= */
         body {
             background-color: #1b2838;
-            font-family: "Arial", sans-serif;
             color: #c7d5e0;
             overflow-x: hidden;
         }

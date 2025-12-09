@@ -20,7 +20,6 @@
         .login-scoped-wrapper {
             background-color: #1b2838;
             color: #c7d5e0;
-            font-family: "Motiva Sans", "Segoe UI", "Arial", sans-serif;
             min-height: calc(100vh - 56px); /* Subtract approx navbar height */
             display: flex;
             flex-direction: column;

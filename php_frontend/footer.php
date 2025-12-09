@@ -15,7 +15,6 @@
            1. BASE STYLES
            ========================================= */
         body {
-            font-family: 'Poppins', sans-serif;
             background-color: #0F172A;
             color: #E0E0E0;
             display: flex;
