@@ -16,7 +16,6 @@
         body {
             background: #1b2838;
             color: #c7d5e0;
-            font-family: "Motiva Sans", "Roboto", sans-serif;
             overflow-x: hidden;
         }
 

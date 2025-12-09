@@ -15,7 +15,6 @@
         .refund-scoped-wrapper {
             background-color: #1b2838; /* Global Steam BG */
             color: #8f98a0;
-            font-family: "Motiva Sans", "Segoe UI", "Arial", sans-serif;
             min-height: calc(100vh - 56px);
             padding: 40px 0;
         }

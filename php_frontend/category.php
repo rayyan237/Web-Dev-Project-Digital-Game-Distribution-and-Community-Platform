@@ -12,7 +12,6 @@
         body {
             background-color: #1b2838;
             padding-bottom: 50px;
-            font-family: "Motiva Sans", Sans-serif, Arial, sans-serif;
             overflow-x: hidden;
         }
 

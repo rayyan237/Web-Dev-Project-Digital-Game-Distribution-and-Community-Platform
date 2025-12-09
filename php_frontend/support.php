@@ -17,7 +17,6 @@
             background: #171a21 !important;
             color: #fff;
             overflow-x: hidden;
-            font-family: "Motiva Sans", "Roboto", "Poppins", sans-serif;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
