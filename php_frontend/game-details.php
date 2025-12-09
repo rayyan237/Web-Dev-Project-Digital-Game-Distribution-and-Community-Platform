@@ -724,6 +724,11 @@ $game_id = intval($_GET['game_id']);
                             <input type="hidden" id="reviewRating" value="0">
                         </div>
                         
+                        <div class="played-on-container" style="margin-bottom: 15px;">
+                            <label for="playedOn" class="star-rating-label">Played on:</label>
+                            <input type="text" id="playedOn" class="form-control form-control-steam" placeholder="e.g., PC, PlayStation 5, Xbox Series X" maxlength="100" style="font-size: 13px; padding: 8px 12px;">
+                        </div>
+                        
                         <textarea id="reviewText" class="form-control form-control-steam" rows="1" placeholder="Share your thoughts..." oninput="autoResize(this)"></textarea>
                         
                         <button onclick="postReview()" class="btn-post-review">Post Review</button>
@@ -869,6 +874,7 @@ $game_id = intval($_GET['game_id']);
                         </div>
                     </div>
                     <div class="posted-date">Posted: ${review.created_at}</div>
+                    ${review.played_on ? `<div style="color: #8f98a0; font-size: 12px; margin-top: 4px; font-style: italic;"><i class="fas fa-gamepad" style="margin-right: 5px;"></i>Played on: ${review.played_on}</div>` : ''}
                     <div class="review-text">${review.comment}</div>
                 </div>
             </div>`;
@@ -1002,6 +1008,7 @@ $game_id = intval($_GET['game_id']);
         async function postReview() {
             const ratingInput = document.getElementById('reviewRating');
             const textInput = document.getElementById('reviewText');
+            const playedOnInput = document.getElementById('playedOn');
 
             if (textInput.value.trim() === "") {
                 alert("Please write a comment.");
@@ -1016,7 +1023,8 @@ $game_id = intval($_GET['game_id']);
             const reviewData = {
                 game_id: gameId,
                 rating: parseInt(ratingInput.value),
-                comment: textInput.value.trim()
+                comment: textInput.value.trim(),
+                played_on: playedOnInput.value.trim()
             };
 
             const button = document.querySelector('.btn-post-review');
@@ -1039,6 +1047,7 @@ $game_id = intval($_GET['game_id']);
                 textInput.value = "";
                 textInput.style.height = "auto";
                 ratingInput.value = "0";
+                playedOnInput.value = "";
                 
                 // Reset star visual state
                 const stars = document.querySelectorAll('.star');

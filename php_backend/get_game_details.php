@@ -139,7 +139,7 @@ try {
     // Get reviews
     $stmt = $conn->prepare("
         SELECT 
-            r.review_id, r.rating, r.comment, r.created_at,
+            r.review_id, r.rating, r.comment, r.played_on, r.created_at,
             u.username, u.display_name, u.avatar_url
         FROM reviews r
         INNER JOIN users u ON r.user_id = u.user_id
@@ -158,6 +158,7 @@ try {
             'avatar_url' => $row['avatar_url'] ?: 'assets/images/default-avatar.png',
             'rating' => $row['rating'],
             'comment' => $row['comment'],
+            'played_on' => $row['played_on'],
             'created_at' => date('d M, Y', strtotime($row['created_at']))
         ];
     }

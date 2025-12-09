@@ -22,6 +22,7 @@ $user_id = $_SESSION['user_id'];
 $game_id = intval($input['game_id']);
 $rating = intval($input['rating']);
 $comment = trim($input['comment']);
+$played_on = isset($input['played_on']) ? trim($input['played_on']) : null;
 
 if (empty($comment)) {
     echo json_encode(['success' => false, 'message' => 'Review comment cannot be empty']);
@@ -43,14 +44,14 @@ try {
     if ($result->num_rows > 0) {
         // Update existing review
         $stmt->close();
-        $stmt = $conn->prepare("UPDATE reviews SET rating = ?, comment = ?, created_at = NOW() WHERE user_id = ? AND game_id = ?");
-        $stmt->bind_param("isii", $rating, $comment, $user_id, $game_id);
+        $stmt = $conn->prepare("UPDATE reviews SET rating = ?, comment = ?, played_on = ?, created_at = NOW() WHERE user_id = ? AND game_id = ?");
+        $stmt->bind_param("issii", $rating, $comment, $played_on, $user_id, $game_id);
         $message = 'Review updated successfully';
     } else {
         // Insert new review
         $stmt->close();
-        $stmt = $conn->prepare("INSERT INTO reviews (user_id, game_id, rating, comment) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("iiis", $user_id, $game_id, $rating, $comment);
+        $stmt = $conn->prepare("INSERT INTO reviews (user_id, game_id, rating, comment, played_on) VALUES (?, ?, ?, ?, ?)");
+        $stmt->bind_param("iiiss", $user_id, $game_id, $rating, $comment, $played_on);
         $message = 'Review posted successfully';
     }
     
